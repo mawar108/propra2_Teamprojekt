@@ -1,0 +1,54 @@
+= Arc Dokumentation
+:icons: font
+:icon-set: fa
+:source-highlighter: rouge
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:stem: latexmath
+endif::[]
+
+
+== Einführung
+
+
+=== Aufgabenstellung
+* Anmeldungssystem zu den praktischen Übungen mit Individual- und Gruppenanmeldung
+* Repositories werden automatisch in einer Organisation auf Github erstellt
+
+=== Qualitätsziele
+* Wartbarkeit
+* Benutzerfreundlichkeit
+* Stabilität, Verfügbarkeit
+
+
+=== Stakeholder
+* Propra Organisationsteam
+* Studenten
+
+[cols="1,1,1"]
+|===
+| *Rolle*
+| *Kontakt*
+| *Erwartungshaltung*
+
+| Jens
+| propra@cs.uni-duesseldorf.de
+| Auftraggeber
+
+
+| Propra Organisationsteam
+| propra@cs.uni-duesseldorf.de
+| Benutzer und Admins des Systems
+
+
+| Studenten
+| -
+| Benutzer
+
+
+|===
