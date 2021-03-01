@@ -52,3 +52,31 @@ endif::[]
 
 
 |===
+
+=== Randbedingungen
+
+* Spring
+* Docker
+* Datenbank im externen Prozess
+
+=== Kontextabgrenzung
+To Do: noch in ein Diagramm umwandeln
+
+* Kommunikation mit github
+* Keycloak
+
+=== Fachlicher Kontext
+
+* Admin -> Login Seite -> Admin Ansicht (z.B. neue Übung erstellen oder Gruppenaufteilung ändern)
+* Tutoren -> Login Seite -> Tutoren Ansicht (Liste der Gruppen mit Tutoren)
+* Studenten -> Login Seite -> Studenten Ansicht (belegen eines Zeitslots)
+
+=== Ebene 1 der Bausteinsicht
+To Do
+
+=== Risiken
+
+* Datensicherheit
+
+
+
