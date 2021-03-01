@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.4.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+
+	id 'checkstyle'
 }
 
 group = 'de.hhu.propra.nimasichi'
@@ -12,6 +14,12 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+checkstyle {
+	toolVersion '8.37'
+	ignoreFailures = false
+	maxWarnings = 0
 }
 
 repositories {
