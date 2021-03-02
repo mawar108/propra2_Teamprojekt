@@ -27,6 +27,13 @@ jobs:
         cd praktikumsplaner
         chmod +x gradlew
     - name: Test Gradle
-      run: ./gradlew test
+      run: |
+        cd praktikumsplaner
+        ./gradlew test
     - name: Check Gradle
+      run: |
+        cd praktikumsplaner
+        ./gradlew check   
+    
+    
       run: ./gradlew check
