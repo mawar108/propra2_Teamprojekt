@@ -23,8 +23,14 @@ jobs:
         fail-fast: true
         commit-filter: '[ci-skip]'
     - name: Grant execute permission for gradlew
-      run: chmod +x Praktikumsplaner/gradlew
+      run: |
+        cd praktikumsplaner
+        chmod +x gradlew
     - name: Test Gradle
-      run: ./Praktikumsplaner/gradlew test
+      run: |
+        cd praktikumsplaner
+        ./gradlew test
     - name: Check Gradle
-      run: ./Praktikumsplaner/gradlew check
+      run: |
+        cd praktikumsplaner
+        ./gradlew check  
