@@ -42,7 +42,7 @@ public class OrgaController {
 
     @Data
     @AllArgsConstructor
-    private class PraktischeUbungswocheKonfigurationPostAdapter {
+    private static class PraktischeUbungswocheKonfigurationPostAdapter {
 
         String name;
         int modus;
