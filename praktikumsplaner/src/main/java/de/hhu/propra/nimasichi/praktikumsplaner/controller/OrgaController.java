@@ -33,7 +33,8 @@ public class OrgaController {
 
 
     @PostMapping("/konfiguration")
-    public String handleConfigPost(Model model, PraktischeUbungswocheKonfigurationPostAdapter config) {
+    public String handleConfigPost(Model model,
+                                   PraktischeUbungswocheKonfigurationPostAdapter config) {
         System.out.println("Bin im controller");
         config.create();
         return "redirect:/tutorenansicht";
@@ -55,24 +56,7 @@ public class OrgaController {
         int minPersonen;
         int maxPersonen;
 
-        /*
-        public PraktischeUbungswocheKonfigurationPostAdapter(String name, int modus, String anmeldestartdatum, String anmeldestartzeit, String anmeldeschlussdatum, String anmeldeschlusszeit, int minPersonen, int maxPersonen) {
-            this.name = name;
-            this.modus = modus;
-            System.out.println("Datum im Construktor:"+ anmeldestartdatum);
-            this.anmeldestartdatum = stringToLocalDate(anmeldestartdatum);
-            this.anmeldestartzeit = stringToLocalTime(anmeldestartzeit);
-            this.anmeldeschlussdatum = stringToLocalDate(anmeldeschlussdatum);
-            this.anmeldeschlusszeit =  stringToLocalTime(anmeldeschlusszeit);
-            this.minPersonen = minPersonen;
-            this.maxPersonen = maxPersonen;
-        }
-
-         */
-
-
-
-        private LocalDate stringToLocalDate(String datum){
+        private LocalDate stringToLocalDate(String datum) {
             System.out.println(datum);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             formatter = formatter.withLocale(Locale.GERMANY);
@@ -94,11 +78,15 @@ public class OrgaController {
         }
 
         private PraktischeUbungswocheConfig create() {
-            PraktischeUbungswocheConfig praktischeUbungswocheConfig = new PraktischeUbungswocheConfig();
+            var praktischeUbungswocheConfig = new PraktischeUbungswocheConfig();
 
             praktischeUbungswocheConfig.setName(name);
-            praktischeUbungswocheConfig.setAnmeldestart(LocalDateTime.of(stringToLocalDate(anmeldestartdatum), stringToLocalTime(anmeldestartzeit)));
-            praktischeUbungswocheConfig.setAnmeldeschluss(LocalDateTime.of(stringToLocalDate(anmeldeschlussdatum), stringToLocalTime(anmeldeschlusszeit)));
+            praktischeUbungswocheConfig.setAnmeldestart(
+                    LocalDateTime.of(stringToLocalDate(anmeldestartdatum),
+                            stringToLocalTime(anmeldestartzeit)));
+            praktischeUbungswocheConfig.setAnmeldeschluss(
+                    LocalDateTime.of(stringToLocalDate(anmeldeschlussdatum),
+                            stringToLocalTime(anmeldeschlusszeit)));
             praktischeUbungswocheConfig.setModus(Gruppenmodus.from(modus));
             praktischeUbungswocheConfig.setMinPersonen(minPersonen);
             praktischeUbungswocheConfig.setMaxPersonen(maxPersonen);

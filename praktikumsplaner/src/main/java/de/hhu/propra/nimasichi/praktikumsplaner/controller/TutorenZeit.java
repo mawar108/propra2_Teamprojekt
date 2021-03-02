@@ -25,8 +25,8 @@ class TutorenZeit {
             case THURSDAY: return "Do";
             case FRIDAY: return "Fr";
             case SATURDAY: return "Sa";
+            default: return "So";
         }
-        return "So";
     }
 
 }
