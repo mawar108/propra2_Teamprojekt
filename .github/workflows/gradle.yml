@@ -33,7 +33,4 @@ jobs:
     - name: Check Gradle
       run: |
         cd praktikumsplaner
-        ./gradlew check   
-    
-    
-      run: ./gradlew check
+        ./gradlew check  
