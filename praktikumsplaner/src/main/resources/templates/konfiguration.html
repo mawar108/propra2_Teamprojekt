@@ -96,40 +96,9 @@
                 <tr th:each="zeit : ${tutorenZeiten}">
                     <td th:text="${zeit.zeitFormattiert()}"></td>
                     <td th:text="${zeit.name}"></td>
-                    <td> <a href="/tutorenZeitLöschen">X</a> </td>
+                    <td> <a href="/tutorenZeitLoschen">X</a> </td>
                 </tr>
-
             </table>
-        </div>
-
-        <div class="container">
-           <form method="post" action="/tutorenZeitHinzufügen">
-               <div class="row">
-                   <label class="h4">Zeit:</label>
-
-                   <div class="form-group col-md-3">
-                       <input class="form-control" type="date" id="slotDatum" name="slotDatum">
-                   </div>
-
-                   <div class="form-group col-md-3">
-                       <input class="form-control" type="time" id="slotZeit" name="slotZeit">
-                   </div>
-               </div>
-
-               <br>
-
-               <div class="row">
-                   <div class="form-group col-md-6">
-                       <label class="h4" for="tutorenName">Tutor:</label>
-                       <input class="form-control" type="text" id="tutorenName" name="tutorenName">
-                   </div>
-               </div>
-
-               <br>
-
-               <input type="submit" class="btn-primary" value="Tutor hinzufügen">
-
-           </form>
         </div>
 
         <hr>
@@ -137,6 +106,40 @@
         <input type="submit" class="btn btn-success" value="Konfiguration abschließen">
 
     </form>
+
+    <div class="container">
+        <form method="post" action="/tutorenZeitHinzufugen">
+            <div class="row">
+                <label class="h4">Zeit:</label>
+
+                <div class="form-group col-md-3">
+                    <input class="form-control" type="date" id="slotDatum" name="slotDatum">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <input class="form-control" type="time" id="slotZeit" name="slotZeit">
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="h4" for="tutorenName">Tutor:</label>
+                    <input class="form-control" type="text" id="tutorenName" name="tutorenName">
+                </div>
+            </div>
+
+            <br>
+
+            <div th:each="tz : ${tutorenZeiten}">
+                <input type="text" name="tzs" th:value="${tz.toParseable}">
+            </div>
+
+            <input type="submit" class="btn-primary" value="Tutor hinzufügen">
+
+        </form>
+    </div>
 </div>
 
 </body>

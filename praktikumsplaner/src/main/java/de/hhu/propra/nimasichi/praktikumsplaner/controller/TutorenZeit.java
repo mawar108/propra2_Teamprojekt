@@ -1,10 +1,13 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +30,20 @@ class TutorenZeit {
             case SATURDAY: return "Sa";
             default: return "So";
         }
+    }
+
+    public static TutorenZeit fromParseable(String fmt) {
+        var parts = fmt.split(";");
+
+        LocalDateTime zeit =
+                LocalDateTime.of(DateService.stringToLocalDate(parts[0]),
+                        DateService.stringToLocalTime(parts[1]));
+
+        return new TutorenZeit(parts[2], zeit);
+    }
+
+    public String toParseable() {
+        return zeit.toLocalDate() + ";" + zeit.toLocalTime() + ";" + name;
     }
 
 }
