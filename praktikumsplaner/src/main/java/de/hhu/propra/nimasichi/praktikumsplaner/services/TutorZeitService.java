@@ -39,11 +39,6 @@ public class TutorZeitService {
 
     public void parseAndAdd(final String tutorenName, final String slotZeit, final String slotDatum) {
         var tutorenZeit = TutorenZeit.from(tutorenName, slotZeit, slotDatum);
-        //tzRepo.add(tutorenZeit);
         tzRepo.getCurrentConfig().getZeitslots().add(tutorenZeit);
     }
-//
-//    public void tryRemoveOrThrow(UUID uuid) {
-//        tzRepo.removeById(uuid);
-//    }
 }

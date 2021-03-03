@@ -27,35 +27,68 @@ public class OrgaController {
     }
 
     @PostMapping("/tutorenansicht")
-    public String handleTutorenansichtPost(final Model model, final PraktischeUbungswocheConfig config) {
-        var tutorenWoche = new TutorWoche(config.getZeitslots().get(0).getName());
+    public String handleTutorenansichtPost(final Model model,
+                                           final String name,
+                                           final int modus,
+                                           final String anmeldestartdatum,
+                                           final String anmeldestartzeit,
+                                           final String anmeldeschlussdatum,
+                                           final String anmeldeschlusszeit,
+                                           final int minPersonen,
+                                           final int maxPersonen) {
+
+        var tutorenZeiten = tzService.findAll();
+        var config =
+                PraktischeUbungswocheConfig
+                        .makeConfig(
+                                name,
+                                modus,
+                                anmeldestartdatum,
+                                anmeldestartzeit,
+                                anmeldeschlussdatum,
+                                anmeldeschlusszeit,
+                                minPersonen,
+                                maxPersonen
+                        );
+
+        config.setZeitslots(tutorenZeiten);
+
+        tzService.saveConfig(config);
+
+        var tutorenWoche =
+                new TutorWoche(config.getZeitslots().get(0).getName());
+
         tutorenWoche.addWochenZeiten(config.getZeitslots());
-        model.addAttribute("tutorenWoche", tutorenWoche.getWochenZeiten().entrySet());
+
+        model.addAttribute(
+                "tutorenWoche",
+                tutorenWoche.getWochenZeiten().entrySet());
+
         return "tutorenansicht";
     }
 
-    @PostMapping("/konfiguration")
-    public String handleConfigPost(final Model model,
-                                   final String name,
-                                   final int modus,
-                                   final String anmeldestartdatum,
-                                   final String anmeldestartzeit,
-                                   final String anmeldeschlussdatum,
-                                   final String anmeldeschlusszeit,
-                                   final int minPersonen,
-                                   final int maxPersonen) {
-
-        final var config = PraktischeUbungswocheConfig.makeConfig(
-                name, modus,
-                anmeldestartdatum, anmeldestartzeit,
-                anmeldeschlussdatum, anmeldeschlusszeit,
-                minPersonen, maxPersonen
-        );
-
-        model.addAttribute("config", config);
-
-        return "redirect:/tutorenansicht";
-    }
+//    @PostMapping("/konfiguration")
+//    public String handleConfigPost(final Model model,
+//                                   final String name,
+//                                   final int modus,
+//                                   final String anmeldestartdatum,
+//                                   final String anmeldestartzeit,
+//                                   final String anmeldeschlussdatum,
+//                                   final String anmeldeschlusszeit,
+//                                   final int minPersonen,
+//                                   final int maxPersonen) {
+//
+//        final var config = PraktischeUbungswocheConfig.makeConfig(
+//                name, modus,
+//                anmeldestartdatum, anmeldestartzeit,
+//                anmeldeschlussdatum, anmeldeschlusszeit,
+//                minPersonen, maxPersonen
+//        );
+//
+//        model.addAttribute("config", config);
+//
+//        return "redirect:/tutorenansicht";
+//    }
 
     @PostMapping("/tutorenZeitHinzufugen")
     public String handleAddTutor(final Model model,

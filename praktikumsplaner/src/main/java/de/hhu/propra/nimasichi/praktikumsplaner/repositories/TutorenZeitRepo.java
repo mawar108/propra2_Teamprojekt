@@ -11,14 +11,11 @@ import java.util.stream.Collectors;
 
 @Repository
 public class TutorenZeitRepo {
-    //private final List<TutorenZeit> tutorenZeitList;
-
     @Getter
     @Setter
     private PraktischeUbungswocheConfig currentConfig;
 
     public TutorenZeitRepo() {
-        //this.tutorenZeitList = new ArrayList<>();
         currentConfig = new PraktischeUbungswocheConfig();
     }
 
@@ -49,7 +46,7 @@ public class TutorenZeitRepo {
         }
     }
 
-    public void sortByDate() {
+    public void sortEntriesByDate() {
         currentConfig.getZeitslots().sort(Comparator.comparing(TutorenZeit::getZeit));
     }
 

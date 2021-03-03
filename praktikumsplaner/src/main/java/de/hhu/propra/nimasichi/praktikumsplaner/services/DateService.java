@@ -1,9 +1,12 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class DateService {
@@ -21,5 +24,15 @@ public class DateService {
 
     public static LocalDateTime mergeDateTimeStrings(String datum, String zeit) {
         return LocalDateTime.of(stringToLocalDate(datum), stringToLocalTime(zeit));
+    }
+
+    public static List<DayOfWeek> getDaysOfWeekUntil(int weekDay) {
+        List<DayOfWeek> daysOfWeek = new ArrayList<>();
+
+        for (int i = 1; i <= weekDay; ++i) {
+            daysOfWeek.add(DayOfWeek.of(i));
+        }
+
+        return daysOfWeek;
     }
 }
