@@ -15,8 +15,8 @@
 
 <div class="container">
     <form method="post">
-
         <br>
+
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="h4" for="name">Name:</label>
@@ -81,34 +81,36 @@
         </div>
 
         <br>
-        <hr>
-
-        <div class="container">
-            <label class="h4">Zeitslots:</label>
-
-            <table class="table">
-                <tr>
-                    <th>Zeit</th>
-                    <th>Tutoren</th>
-                    <th>Löschen</th>
-                </tr>
-
-                <tr th:each="zeit : ${tutorenZeiten}">
-                    <td th:text="${zeit.zeitFormattiert()}"></td>
-                    <td th:text="${zeit.name}"></td>
-                    <td> <form th:action="@{/tutorenZeitLoschen/(id=${zeit.id})}" method="post" >
-                        <input type="submit" class="btn btn-danger" value="X">
-                    </form>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <hr>
 
         <input type="submit" class="btn btn-success" value="Konfiguration abschließen">
 
     </form>
+
+    <div class="container">
+        <label class="h4">Zeitslots:</label>
+
+        <hr>
+
+        <table class="table">
+            <tr>
+                <th>Zeit</th>
+                <th>Tutoren</th>
+                <th>Löschen</th>
+            </tr>
+
+            <tr th:each="zeit : ${config.zeitslots}">
+                <td th:text="${zeit.zeitFormattiert()}"></td>
+                <td th:text="${zeit.name}"></td>
+                <td>
+                    <form th:action="@{/tutorenZeitLoschen/} + ${zeit.id}" method="post">
+                        <input type="submit" class="btn btn-danger" value="X">
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        <hr>
+    </div>
 
     <div class="container">
         <form method="post" action="/tutorenZeitHinzufugen">
@@ -134,13 +136,6 @@
             </div>
 
             <br>
-
-            <!--
-            <div th:each="tz : ${tutorenZeiten}">
-                <input type="hidden" name="tzs" th:value="${tz.toParseable}">
-            </div>
-            -->
-
 
             <input type="submit" class="btn-primary" value="Tutor hinzufügen">
 
