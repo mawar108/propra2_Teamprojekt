@@ -40,7 +40,7 @@ public class TutorenZeitRepo {
     }
 
     public void removeById(final UUID uuid) {
-        var optTutorenZeit = findById(uuid);
+        final var optTutorenZeit = findById(uuid);
 
         if (optTutorenZeit.isEmpty()) {
             throw new RuntimeException("uuid = "
