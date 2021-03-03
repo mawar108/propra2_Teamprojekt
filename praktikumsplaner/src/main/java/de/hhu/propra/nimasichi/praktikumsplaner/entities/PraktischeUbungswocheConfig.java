@@ -19,14 +19,15 @@ public class PraktischeUbungswocheConfig {
     private int minPersonen;
     private int maxPersonen;
 
-    public static PraktischeUbungswocheConfig makeConfig(final String name,
-                                                         final int modus,
-                                                         final String anmeldestartdatum,
-                                                         final String anmeldestartzeit,
-                                                         final String anmeldeschlussdatum,
-                                                         final String anmeldeschlusszeit,
-                                                         final int minPersonen,
-                                                         final int maxPersonen) {
+    public static PraktischeUbungswocheConfig makeConfig(
+            final String name,
+            final int modus,
+            final String anmeldestartdatum,
+            final String anmeldestartzeit,
+            final String anmeldeschlussdatum,
+            final String anmeldeschlusszeit,
+            final int minPersonen,
+            final int maxPersonen) {
 
         final var praktischeUbungswocheConfig =
                 new PraktischeUbungswocheConfig();

@@ -98,11 +98,11 @@
                 <th>Löschen</th>
             </tr>
 
-            <tr th:each="zeit : ${config.zeitslots}">
-                <td th:text="${zeit.zeitFormattiert()}"></td>
-                <td th:text="${zeit.name}"></td>
+            <tr th:each="zeitslot : ${config.zeitslots}">
+                <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(zeitslot.zeit)}"></td>
+                <td th:text="${zeitslot.name}"></td>
                 <td>
-                    <form th:action="@{/tutorenZeitLoschen/} + ${zeit.id}" method="post">
+                    <form th:action="@{/tutorenZeitLoschen/} + ${zeitslot.id}" method="post">
                         <input type="submit" class="btn btn-danger" value="X">
                     </form>
                 </td>

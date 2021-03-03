@@ -19,7 +19,7 @@ public class TutorWoche {
     @Getter
     private final String tutorName;
 
-    public TutorWoche(String tutorName) {
+    public TutorWoche(final String tutorName) {
         this.wochenZeiten = new HashMap<>();
         this.tutorName = tutorName;
 
@@ -27,19 +27,22 @@ public class TutorWoche {
     }
 
     private void initializeWochenZeitenMap() {
-        for (var dayOfWeek :
-                DateService.getDaysOfWeekUntil(DayOfWeek.FRIDAY.getValue())) {
+        for (var dayOfWeek
+                : DateService.getDaysOfWeekUntil(
+                        DayOfWeek.FRIDAY.getValue())) {
+
             wochenZeiten.put(dayOfWeek, new ArrayList<>());
+
         }
     }
 
-    public void addWochenZeiten(List<TutorenZeit> tutorenZeiten) {
+    public void addWochenZeiten(final List<TutorenZeit> tutorenZeiten) {
         for (var tutorenZeit : tutorenZeiten) {
             var dayOfWeek = tutorenZeit.getZeit().getDayOfWeek();
             var zeiten = wochenZeiten.get(dayOfWeek);
 
             zeiten.add(tutorenZeit.getZeit().toLocalTime());
-            wochenZeiten.put(dayOfWeek,zeiten);
+            wochenZeiten.put(dayOfWeek, zeiten);
         }
     }
 

@@ -1,7 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
-import lombok.Data;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import lombok.Data;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -9,43 +10,30 @@ import java.util.UUID;
 @Data
 public class TutorenZeit {
 
-    String name;
-    LocalDateTime zeit;
-    UUID id;
+    private final String name;
+    private final LocalDateTime zeit;
+    private final UUID id;
 
-    public TutorenZeit(String name, LocalDateTime zeit) {
+    public TutorenZeit(final String name,
+                       final LocalDateTime zeit) {
         this.name = name;
         this.zeit = zeit;
         this.id = UUID.randomUUID();
     }
 
-    public String zeitFormattiert() {
-        return dayOfWeekDeutsch(zeit.getDayOfWeek()) + " " + zeit.toLocalTime().toString();
-    }
+    public static TutorenZeit fromParseable(final String fmt) {
+        final var parts = fmt.split(";");
 
-    private String dayOfWeekDeutsch(DayOfWeek day) {
-        switch (day) {
-            case MONDAY: return "Mo";
-            case TUESDAY: return "Di";
-            case WEDNESDAY: return "Mi";
-            case THURSDAY: return "Do";
-            case FRIDAY: return "Fr";
-            case SATURDAY: return "Sa";
-            default: return "So";
-        }
-    }
-
-    public static TutorenZeit fromParseable(String fmt) {
-        var parts = fmt.split(";");
-
-        LocalDateTime zeit =
+        final var time =
                 LocalDateTime.of(DateService.stringToLocalDate(parts[0]),
                         DateService.stringToLocalTime(parts[1]));
 
-        return new TutorenZeit(parts[2], zeit);
+        return new TutorenZeit(parts[2], time);
     }
 
-    public static TutorenZeit from(String tutorenName, String slotZeit, String slotDatum) {
+    public static TutorenZeit from(final String tutorenName,
+                                   final String slotZeit,
+                                   final String slotDatum) {
         return fromParseable(slotDatum + ";" + slotZeit + ";" + tutorenName);
     }
 

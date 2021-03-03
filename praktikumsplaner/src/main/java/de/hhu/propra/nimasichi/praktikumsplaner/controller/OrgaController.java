@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
+import java.util.UUID;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWoche;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
@@ -9,15 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.UUID;
-
 @Controller
 public class OrgaController {
 
     private final TutorZeitService tzService;
 
-    public OrgaController(final TutorZeitService tzService) {
-        this.tzService = tzService;
+    public OrgaController(final TutorZeitService service) {
+        this.tzService = service;
     }
 
     @GetMapping("/konfiguration")
@@ -37,8 +36,8 @@ public class OrgaController {
                                            final int minPersonen,
                                            final int maxPersonen) {
 
-        var tutorenZeiten = tzService.findAll();
-        var config =
+        final var tutorenZeiten = tzService.findAll();
+        final var config =
                 PraktischeUbungswocheConfig
                         .makeConfig(
                                 name,
@@ -55,7 +54,7 @@ public class OrgaController {
 
         tzService.saveConfig(config);
 
-        var tutorenWoche =
+        final var tutorenWoche =
                 new TutorWoche(config.getZeitslots().get(0).getName());
 
         tutorenWoche.addWochenZeiten(config.getZeitslots());
