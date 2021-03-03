@@ -2,12 +2,15 @@ package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Gruppenmodus;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorenZeitRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +27,12 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.services.DateService.stri
 
 @Controller
 public class OrgaController {
+
+    private TutorZeitService tzService;
+
+    public OrgaController(TutorZeitService tzService) {
+        this.tzService = tzService;
+    }
 
     @GetMapping("/konfiguration")
     public String handleConfig(Model model) {
@@ -45,7 +54,16 @@ public class OrgaController {
     }
 
     @PostMapping("/tutorenZeitHinzufugen")
-    public String handleAddTutor(Model model, HttpServletRequest req, String tutorenName, String slotZeit, String slotDatum) {
+    public String handleAddTutor(Model model, String tutorenName, String slotZeit, String slotDatum) {
+        tzService.parseAndAdd(tutorenName,slotZeit,slotDatum);
+
+        model.addAttribute("tutorenZeiten", tzService.findAll());
+
+        return "konfiguration";
+    }
+
+    @PostMapping("/tutorenZeitLoschen/{id}")
+    public String handleDeleteTutor(Model model, @PathVariable(value="id") UUID id, HttpServletRequest req) {
         System.out.println("map = " + req.getParameterMap());
 
         String[] tz = req.getParameterMap().get("tzs");
@@ -63,9 +81,7 @@ public class OrgaController {
             tutorenZeiten = new ArrayList<>();
         }
 
-        tutorenZeiten.add(
-                new TutorenZeit(tutorenName,
-                        DateService.mergeDateTimeStrings(slotDatum, slotZeit)));
+        //tzService.removeByID(id);
 
         tutorenZeiten.forEach(elem -> System.out.println(elem.toParseable()));
 
@@ -73,6 +89,7 @@ public class OrgaController {
 
         return "konfiguration";
     }
+
 
     @Data
     @AllArgsConstructor

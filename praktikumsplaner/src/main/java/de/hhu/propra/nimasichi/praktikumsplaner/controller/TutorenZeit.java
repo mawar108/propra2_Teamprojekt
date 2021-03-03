@@ -8,13 +8,20 @@ import org.apache.tomcat.jni.Local;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
-@AllArgsConstructor
-class TutorenZeit {
+public class TutorenZeit {
 
     String name;
     LocalDateTime zeit;
+    UUID id;
+
+    public TutorenZeit(String name, LocalDateTime zeit) {
+        this.name = name;
+        this.zeit = zeit;
+        this.id = UUID.randomUUID();
+    }
 
     public String zeitFormattiert() {
         return dayOfWeekDeutsch(zeit.getDayOfWeek()) + " " + zeit.toLocalTime().toString();
@@ -40,6 +47,10 @@ class TutorenZeit {
                         DateService.stringToLocalTime(parts[1]));
 
         return new TutorenZeit(parts[2], zeit);
+    }
+
+    public static TutorenZeit from(String tutorenName, String slotZeit, String slotDatum) {
+        return fromParseable(slotDatum + ";" + slotZeit + ";" + tutorenName);
     }
 
     public String toParseable() {
