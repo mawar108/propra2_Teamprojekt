@@ -1,6 +1,5 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.controller.TutorenZeit;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import lombok.Data;
 
@@ -14,7 +13,7 @@ public class PraktischeUbungswocheConfig {
     LocalDateTime anmeldeschluss;
     String name;
     List<TutorenZeit> zeitslots = new ArrayList<>();
-    Gruppenmodus modus;
+    Gruppenmodus modus = Gruppenmodus.from(0);
     int minPersonen;
     int maxPersonen;
 

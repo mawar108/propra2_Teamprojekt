@@ -1,13 +1,9 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.controller;
+package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
-
+import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data

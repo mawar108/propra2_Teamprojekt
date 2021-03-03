@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.repositories;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.controller.TutorenZeit;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorenZeit;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
 import lombok.Getter;
 import lombok.Setter;

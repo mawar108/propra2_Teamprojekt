@@ -1,6 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWoche;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,14 @@ public class OrgaController {
     public String handleConfig(final Model model) {
         model.addAttribute("config", tzService.getCurrentConfig());
         return "konfiguration";
+    }
+
+    @PostMapping("/tutorenansicht")
+    public String handleTutorenansichtPost(final Model model, final PraktischeUbungswocheConfig config) {
+        var tutorenWoche = new TutorWoche(config.getZeitslots().get(0).getName());
+        tutorenWoche.addWochenZeiten(config.getZeitslots());
+        model.addAttribute("tutorenWoche", tutorenWoche.getWochenZeiten().entrySet());
+        return "tutorenansicht";
     }
 
     @PostMapping("/konfiguration")

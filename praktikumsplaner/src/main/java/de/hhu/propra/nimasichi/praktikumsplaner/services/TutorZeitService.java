@@ -1,14 +1,12 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.controller.TutorenZeit;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorenZeit;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorenZeitRepo;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class TutorZeitService {
