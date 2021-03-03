@@ -23,7 +23,7 @@ public class TutorZeitService {
     }
 
     public Optional<TutorenZeit> findById(final UUID id) {
-        return tzRepo.findByID(id);
+        return tzRepo.findById(id);
     }
 
     public void removeById(final UUID id) {

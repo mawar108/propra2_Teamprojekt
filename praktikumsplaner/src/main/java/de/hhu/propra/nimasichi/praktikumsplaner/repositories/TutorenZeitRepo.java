@@ -26,7 +26,7 @@ public class TutorenZeitRepo {
         return currentConfig.getZeitslots();
     }
 
-    public Optional<TutorenZeit> findByID(final UUID id) {
+    public Optional<TutorenZeit> findById(final UUID id) {
         final var elem = currentConfig.getZeitslots().stream()
                 .filter(x -> x.getId().equals(id))
                 .collect(Collectors.toList())
@@ -40,7 +40,7 @@ public class TutorenZeitRepo {
     }
 
     public void removeById(final UUID uuid) {
-        var optTutorenZeit = findByID(uuid);
+        var optTutorenZeit = findById(uuid);
 
         if (optTutorenZeit.isEmpty()) {
             throw new RuntimeException("uuid = "

@@ -66,29 +66,6 @@ public class OrgaController {
         return "tutorenansicht";
     }
 
-//    @PostMapping("/konfiguration")
-//    public String handleConfigPost(final Model model,
-//                                   final String name,
-//                                   final int modus,
-//                                   final String anmeldestartdatum,
-//                                   final String anmeldestartzeit,
-//                                   final String anmeldeschlussdatum,
-//                                   final String anmeldeschlusszeit,
-//                                   final int minPersonen,
-//                                   final int maxPersonen) {
-//
-//        final var config = PraktischeUbungswocheConfig.makeConfig(
-//                name, modus,
-//                anmeldestartdatum, anmeldestartzeit,
-//                anmeldeschlussdatum, anmeldeschlusszeit,
-//                minPersonen, maxPersonen
-//        );
-//
-//        model.addAttribute("config", config);
-//
-//        return "redirect:/tutorenansicht";
-//    }
-
     @PostMapping("/tutorenZeitHinzufugen")
     public String handleAddTutor(final Model model,
                                  final String tutorenName,
