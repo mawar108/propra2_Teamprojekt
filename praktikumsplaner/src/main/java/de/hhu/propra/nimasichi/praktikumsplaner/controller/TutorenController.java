@@ -4,9 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@SuppressWarnings("PMD.AtLeastOneConstructor")
 public class TutorenController {
-
-    public TutorenController() { }
 
     @GetMapping("/tutorenansicht")
     public String handleTutorenAnsicht() {
