@@ -7,9 +7,9 @@ import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorenZeit;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorenZeitRepo;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -33,13 +33,19 @@ public final class TutorZeitService {
         tzRepo.removeById(uuid);
     }
 
-    public void parseAndAdd(final String tutorenName,
-                            final String slotZeit,
-                            final String slotDatum) {
-        final var tutorenZeit =
-                TutorenZeit.from(tutorenName, slotZeit, slotDatum);
+//    public void parseAndAdd(final String tutorenName,
+//                            final String slotZeit,
+//                            final String slotDatum) {
+//        final var tutorenZeit =
+//                TutorenZeit.from(tutorenName, slotZeit, slotDatum);
+//
+//        tzRepo.addZeitslot(tutorenZeit);
+//    }
 
-        tzRepo.addZeitslot(tutorenZeit);
+    public TutorenZeit parseIntoTutorenZeit(final String tutorenName,
+                                            final String slotZeit,
+                                            final String slotDatum) {
+        return TutorenZeit.from(tutorenName, slotZeit, slotDatum);
     }
 
     public TutorWoche createPraktischeUebungswocheConfig(final FormParams params) {
@@ -52,4 +58,20 @@ public final class TutorZeitService {
         return TutorWoche.fromConfig(config);
     }
 
+    public List<TutorenZeit> parseTutorZeitenFromReq(final HttpServletRequest req) {
+        final var paramMap = req.getParameterMap();
+        final var zeitslots = paramMap.get("zeitslots");
+
+        List<TutorenZeit> parsedList;
+
+        if (zeitslots == null) {
+            parsedList = new ArrayList<>();
+        } else {
+            parsedList = Arrays.stream(zeitslots)
+                    .map(TutorenZeit::fromParseable)
+                    .collect(Collectors.toList());
+        }
+
+        return parsedList;
+    }
 }

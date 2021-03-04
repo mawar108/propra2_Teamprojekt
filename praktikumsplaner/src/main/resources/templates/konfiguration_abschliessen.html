@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Übersicht: Konfiguration</title>
+</head>
+<body>
+
+<div class="container">
+    <h4>Name der Übung:</h4>
+    <span th:text="${params.name}"></span>
+
+    <h4>Gruppenmodus:</h4>
+    <span th:text="${params.modus}"></span>
+
+    <h4>Anmeldestartdatum:</h4>
+    <span th:text="${params.anStartdatum}"></span>
+
+    <h4>Anmeldestartzeit:</h4>
+    <span th:text="${params.anStartzeit}"></span>
+
+    <h4>Anmeldeschlussdatum:</h4>
+    <span th:text="${params.anSchlussdatum}"></span>
+
+    <h4>Anmeldeschlusszeit:</h4>
+    <span th:text="${params.anSchlusszeit}"></span>
+
+    <h4>Minimale Personenanzahl:</h4>
+    <span th:text="${params.minPersonen}"></span>
+
+    <h4>Maximale Personenanzahl:</h4>
+    <span th:text="${params.maxPersonen}"></span>
+</div>
+
+<div class="container">
+    <br>
+
+    <label class="h4">Zeitslots:</label>
+
+    <hr>
+
+    <table class="table">
+        <tr>
+            <th>Zeit</th>
+            <th>Tutoren</th>
+        </tr>
+
+        <tr th:each="zeitslot : ${zeitslots}">
+            <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(zeitslot.zeit)}"></td>
+            <td th:text="${zeitslot.name}"></td>
+        </tr>
+    </table>
+
+</div>
+
+<div class="container">
+    <form method="post" action="/tutorenansicht">
+        <input type="hidden" name="name" th:value="${params.name}">
+        <input type="hidden" name="modus" th:value="${params.modus}">
+        <input type="hidden" name="anStartdatum" th:value="${params.anStartdatum}">
+        <input type="hidden" name="anStartzeit" th:value="${params.anStartzeit}">
+        <input type="hidden" name="anSchlussdatum" th:value="${params.anSchlussdatum}">
+        <input type="hidden" name="anSchlusszeit" th:value="${params.anSchlusszeit}">
+        <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
+        <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
+        <th:block th:each="zeitslot : ${zeitslots}">
+            <input type="hidden" name="zeitslots" th:value="${zeitslot.toParseable()}">
+        </th:block>
+
+        <input type="submit" class="btn btn-success" value="Bestätigen">
+    </form>
+
+    <form method="get" action="/konfiguration">
+        <input type="submit" class="btn btn-danger" value="Abbrechen">
+    </form>
+</div>
+
+</body>
+</html>
