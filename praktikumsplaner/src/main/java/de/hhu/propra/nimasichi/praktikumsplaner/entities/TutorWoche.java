@@ -1,49 +1,22 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @ToString
-public class TutorWoche {
-    @Getter
-    private final Map<DayOfWeek, List<LocalTime>> wochenZeiten;
+public final class TutorWoche {
 
     @Getter
-    private final String tutorName;
+    private final List<TutorenZeit> tutorenZeiten;
 
-    public TutorWoche(final String tutorName) {
-        this.wochenZeiten = new HashMap<>();
-        this.tutorName = tutorName;
+    private TutorWoche(final List<TutorenZeit> tutorenZeiten) {
+        this.tutorenZeiten = tutorenZeiten;
 
-        initializeWochenZeitenMap();
     }
 
-    private void initializeWochenZeitenMap() {
-        for (final var dayOfWeek
-                : DateService.getDaysOfWeekUntil(
-                        DayOfWeek.FRIDAY.getValue())) {
-
-            wochenZeiten.put(dayOfWeek, new ArrayList<>());
-
-        }
+    public static TutorWoche fromConfig(final PraktischeUbungswocheConfig config) {
+        return new TutorWoche(config.getZeitslots());
     }
-
-    public void addWochenZeiten(final List<TutorenZeit> tutorenZeiten) {
-        for (final var tutorenZeit : tutorenZeiten) {
-            final var dayOfWeek = tutorenZeit.getZeit().getDayOfWeek();
-            final var zeiten = wochenZeiten.get(dayOfWeek);
-
-            zeiten.add(tutorenZeit.getZeit().toLocalTime());
-            wochenZeiten.put(dayOfWeek, zeiten);
-        }
-    }
-
 }

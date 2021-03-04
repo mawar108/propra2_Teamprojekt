@@ -19,8 +19,10 @@ public class PraktischeUbungswocheConfig {
     private int minPersonen;
     private int maxPersonen;
 
-    public static PraktischeUbungswocheConfig makeConfig(final FormParams params) {
 
+    public static PraktischeUbungswocheConfig makeConfigAndFillZeiten(
+            final FormParams params,
+            final List<TutorenZeit> tutorenZeiten) {
         final var praUbungswocheCfg =
                 new PraktischeUbungswocheConfig();
 
@@ -29,8 +31,8 @@ public class PraktischeUbungswocheConfig {
         praUbungswocheCfg.setAnmeldestart(
                 DateService
                         .mergeDateTimeStrings(
-                            params.getAnStartdatum(),
-                            params.getAnStartzeit())
+                                params.getAnStartdatum(),
+                                params.getAnStartzeit())
         );
 
         praUbungswocheCfg.setAnmeldeschluss(
@@ -47,6 +49,15 @@ public class PraktischeUbungswocheConfig {
         praUbungswocheCfg
                 .setMaxPersonen(params.getMaxPersonen());
 
+        praUbungswocheCfg.setZeitslots(tutorenZeiten);
         return praUbungswocheCfg;
+    }
+
+    public void addZeitslot(final TutorenZeit zeitslot) {
+        zeitslots.add(zeitslot);
+    }
+
+    public void removeZeitslot(final TutorenZeit tutorenZeit) {
+        zeitslots.remove(tutorenZeit);
     }
 }

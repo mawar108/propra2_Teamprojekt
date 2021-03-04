@@ -13,10 +13,13 @@ public enum Gruppenmodus {
         this.value = val;
     }
 
+    @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
     public static Gruppenmodus from(final int modus) {
-        var gruppenmodus = INDIVIDUAL;
+        Gruppenmodus gruppenmodus;
         if (modus == 1) {
             gruppenmodus = GRUPPE;
+        } else {
+            gruppenmodus = INDIVIDUAL;
         }
         return gruppenmodus;
     }

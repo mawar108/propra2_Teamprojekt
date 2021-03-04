@@ -98,7 +98,7 @@
                 <th>Löschen</th>
             </tr>
 
-            <tr th:each="zeitslot : ${config.zeitslots}">
+            <tr th:each="zeitslot : ${zeitslotList}">
                 <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(zeitslot.zeit)}"></td>
                 <td th:text="${zeitslot.name}"></td>
                 <td>

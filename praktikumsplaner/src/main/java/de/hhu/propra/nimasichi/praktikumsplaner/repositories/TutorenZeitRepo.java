@@ -1,33 +1,31 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.repositories;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorenZeit;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Repository
 public class TutorenZeitRepo {
-    @Getter
-    @Setter
-    private PraktischeUbungswocheConfig currentConfig;
+    private final transient List<TutorenZeit> tutorenZeiten;
 
     public TutorenZeitRepo() {
-        this.currentConfig = new PraktischeUbungswocheConfig();
+        this.tutorenZeiten = new ArrayList<>();
     }
 
     public List<TutorenZeit> findAll() {
-        return currentConfig.getZeitslots();
+        return tutorenZeiten;
     }
 
+    @SuppressWarnings("PMD.LawOfDemeter")
     public Optional<TutorenZeit> findById(final UUID uuid) {
-        final var elem = currentConfig.getZeitslots().stream()
+        final var elem = tutorenZeiten.stream()
                 .filter(x -> x.getUuid().equals(uuid))
                 .collect(Collectors.toList())
                 .get(0);
@@ -36,24 +34,25 @@ public class TutorenZeitRepo {
     }
 
     public void add(final TutorenZeit tutorenZeit) {
-        currentConfig.getZeitslots().add(tutorenZeit);
+        tutorenZeiten.add(tutorenZeit);
     }
 
+    @SuppressWarnings("PMD.LawOfDemeter")
     public void removeById(final UUID uuid) {
         final var optTutorenZeit = findById(uuid);
 
-        if (optTutorenZeit.isEmpty()) {
-            throw new RuntimeException("uuid = "
-                    + uuid + ", optTutorenZeit war null");
-        } else {
-            currentConfig.getZeitslots().remove(optTutorenZeit.get());
+        if (!optTutorenZeit.isEmpty()) {
+            tutorenZeiten.remove(optTutorenZeit.get());
         }
     }
 
     public void sortEntriesByDate() {
-        currentConfig.getZeitslots()
-                .sort(Comparator
-                        .comparing(TutorenZeit::getZeit));
+        tutorenZeiten.sort(Comparator
+                .comparing(TutorenZeit::getZeit));
+    }
+
+    public void addZeitslot(final TutorenZeit zeitslot) {
+        tutorenZeiten.add(zeitslot);
     }
 
 }

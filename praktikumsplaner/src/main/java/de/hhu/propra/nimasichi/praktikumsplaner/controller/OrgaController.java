@@ -3,8 +3,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 import java.util.UUID;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.FormParams;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWoche;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,7 @@ public class OrgaController {
 
     @GetMapping("/konfiguration")
     public String handleConfig(final Model model) {
-        model.addAttribute("config", tzService.getCurrentConfig());
+        model.addAttribute("zeitslotList", tzService.findAll());
         return "konfiguration";
     }
 
@@ -31,23 +29,11 @@ public class OrgaController {
     public String handleTutorenansichtPost(final Model model,
                                            final FormParams params) {
 
-        final var tutorenZeiten = tzService.findAll();
-        final var config =
-                PraktischeUbungswocheConfig
-                        .makeConfig(params);
-
-        config.setZeitslots(tutorenZeiten);
-
-        tzService.saveConfig(config);
-
-        final var tutorenWoche =
-                new TutorWoche(config.getZeitslots().get(0).getName());
-
-        tutorenWoche.addWochenZeiten(config.getZeitslots());
+        final var tutorenWoche = tzService.createPraktischeUebungswocheConfig(params);
 
         model.addAttribute(
                 "tutorenWoche",
-                tutorenWoche.getWochenZeiten().entrySet());
+                tutorenWoche);
 
         return "tutorenansicht";
     }
@@ -59,7 +45,7 @@ public class OrgaController {
                                  final String slotDatum) {
 
         tzService.parseAndAdd(tutorenName, slotZeit, slotDatum);
-        model.addAttribute("config", tzService.getCurrentConfig());
+        model.addAttribute("zeitslotList", tzService.findAll());
 
         return "konfiguration";
     }
@@ -69,7 +55,7 @@ public class OrgaController {
                                     @PathVariable("id") final UUID uuid) {
 
         tzService.removeById(uuid);
-        model.addAttribute("config", tzService.getCurrentConfig());
+        model.addAttribute("zeitslotList", tzService.findAll());
 
         return "konfiguration";
     }
