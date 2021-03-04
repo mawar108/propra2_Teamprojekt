@@ -1,6 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
 import java.util.UUID;
+
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.FormParams;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWoche;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class OrgaController {
 
-    private final TutorZeitService tzService;
+    private final transient TutorZeitService tzService;
 
     public OrgaController(final TutorZeitService service) {
         this.tzService = service;
@@ -27,28 +29,12 @@ public class OrgaController {
 
     @PostMapping("/tutorenansicht")
     public String handleTutorenansichtPost(final Model model,
-                                           final String name,
-                                           final int modus,
-                                           final String anmeldestartdatum,
-                                           final String anmeldestartzeit,
-                                           final String anmeldeschlussdatum,
-                                           final String anmeldeschlusszeit,
-                                           final int minPersonen,
-                                           final int maxPersonen) {
+                                           final FormParams params) {
 
         final var tutorenZeiten = tzService.findAll();
         final var config =
                 PraktischeUbungswocheConfig
-                        .makeConfig(
-                                name,
-                                modus,
-                                anmeldestartdatum,
-                                anmeldestartzeit,
-                                anmeldeschlussdatum,
-                                anmeldeschlusszeit,
-                                minPersonen,
-                                maxPersonen
-                        );
+                        .makeConfig(params);
 
         config.setZeitslots(tutorenZeiten);
 

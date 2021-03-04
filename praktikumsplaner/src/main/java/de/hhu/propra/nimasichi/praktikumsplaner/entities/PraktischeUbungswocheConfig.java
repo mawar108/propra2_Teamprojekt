@@ -19,42 +19,34 @@ public class PraktischeUbungswocheConfig {
     private int minPersonen;
     private int maxPersonen;
 
-    public static PraktischeUbungswocheConfig makeConfig(
-            final String name,
-            final int modus,
-            final String anmeldestartdatum,
-            final String anmeldestartzeit,
-            final String anmeldeschlussdatum,
-            final String anmeldeschlusszeit,
-            final int minPersonen,
-            final int maxPersonen) {
+    public static PraktischeUbungswocheConfig makeConfig(final FormParams params) {
 
-        final var praktischeUbungswocheConfig =
+        final var praUbungswocheCfg =
                 new PraktischeUbungswocheConfig();
 
-        praktischeUbungswocheConfig.setName(name);
+        praUbungswocheCfg.setName(params.getName());
 
-        praktischeUbungswocheConfig.setAnmeldestart(
+        praUbungswocheCfg.setAnmeldestart(
                 DateService
                         .mergeDateTimeStrings(
-                            anmeldestartdatum,
-                            anmeldestartzeit)
+                            params.getAnStartdatum(),
+                            params.getAnStartzeit())
         );
 
-        praktischeUbungswocheConfig.setAnmeldeschluss(
+        praUbungswocheCfg.setAnmeldeschluss(
                 DateService
                         .mergeDateTimeStrings(
-                                anmeldeschlussdatum,
-                                anmeldeschlusszeit)
+                                params.getAnSchlussdatum(),
+                                params.getAnSchlusszeit())
         );
 
-        praktischeUbungswocheConfig
-                .setModus(Gruppenmodus.from(modus));
-        praktischeUbungswocheConfig
-                .setMinPersonen(minPersonen);
-        praktischeUbungswocheConfig
-                .setMaxPersonen(maxPersonen);
+        praUbungswocheCfg
+                .setModus(Gruppenmodus.from(params.getModus()));
+        praUbungswocheCfg
+                .setMinPersonen(params.getMinPersonen());
+        praUbungswocheCfg
+                .setMaxPersonen(params.getMaxPersonen());
 
-        return praktischeUbungswocheConfig;
+        return praUbungswocheCfg;
     }
 }

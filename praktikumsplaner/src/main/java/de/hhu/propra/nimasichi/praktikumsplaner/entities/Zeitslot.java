@@ -4,9 +4,10 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
+@Deprecated
+@SuppressWarnings({"PMD.DefaultPackage", "PMD.CommentDefaultAccessModifier"})
 public class Zeitslot {
     LocalDateTime ubungsAnfang;
     List<String> tutoren;

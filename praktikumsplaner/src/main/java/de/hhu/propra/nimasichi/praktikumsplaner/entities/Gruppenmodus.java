@@ -14,11 +14,11 @@ public enum Gruppenmodus {
     }
 
     public static Gruppenmodus from(final int modus) {
-        if (modus == 0) {
-            return INDIVIDUAL;
-        } else {
-            return GRUPPE;
+        var gruppenmodus = INDIVIDUAL;
+        if (modus == 1) {
+            gruppenmodus = GRUPPE;
         }
+        return gruppenmodus;
     }
 
 }

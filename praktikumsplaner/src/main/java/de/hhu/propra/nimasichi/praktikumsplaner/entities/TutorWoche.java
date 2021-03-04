@@ -27,7 +27,7 @@ public class TutorWoche {
     }
 
     private void initializeWochenZeitenMap() {
-        for (var dayOfWeek
+        for (final var dayOfWeek
                 : DateService.getDaysOfWeekUntil(
                         DayOfWeek.FRIDAY.getValue())) {
 
@@ -37,9 +37,9 @@ public class TutorWoche {
     }
 
     public void addWochenZeiten(final List<TutorenZeit> tutorenZeiten) {
-        for (var tutorenZeit : tutorenZeiten) {
-            var dayOfWeek = tutorenZeit.getZeit().getDayOfWeek();
-            var zeiten = wochenZeiten.get(dayOfWeek);
+        for (final var tutorenZeit : tutorenZeiten) {
+            final var dayOfWeek = tutorenZeit.getZeit().getDayOfWeek();
+            final var zeiten = wochenZeiten.get(dayOfWeek);
 
             zeiten.add(tutorenZeit.getZeit().toLocalTime());
             wochenZeiten.put(dayOfWeek, zeiten);

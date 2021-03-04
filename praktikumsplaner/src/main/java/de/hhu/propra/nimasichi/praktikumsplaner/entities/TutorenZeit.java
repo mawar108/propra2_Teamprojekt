@@ -3,7 +3,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import lombok.Data;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,13 +11,13 @@ public class TutorenZeit {
 
     private final String name;
     private final LocalDateTime zeit;
-    private final UUID id;
+    private final UUID uuid;
 
     public TutorenZeit(final String name,
                        final LocalDateTime zeit) {
         this.name = name;
         this.zeit = zeit;
-        this.id = UUID.randomUUID();
+        this.uuid = UUID.randomUUID();
     }
 
     public static TutorenZeit fromParseable(final String fmt) {

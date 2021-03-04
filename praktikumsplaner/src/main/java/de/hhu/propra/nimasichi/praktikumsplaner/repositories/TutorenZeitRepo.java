@@ -26,17 +26,17 @@ public class TutorenZeitRepo {
         return currentConfig.getZeitslots();
     }
 
-    public Optional<TutorenZeit> findById(final UUID id) {
+    public Optional<TutorenZeit> findById(final UUID uuid) {
         final var elem = currentConfig.getZeitslots().stream()
-                .filter(x -> x.getId().equals(id))
+                .filter(x -> x.getUuid().equals(uuid))
                 .collect(Collectors.toList())
                 .get(0);
 
         return Optional.ofNullable(elem);
     }
 
-    public void add(final TutorenZeit tz) {
-        currentConfig.getZeitslots().add(tz);
+    public void add(final TutorenZeit tutorenZeit) {
+        currentConfig.getZeitslots().add(tutorenZeit);
     }
 
     public void removeById(final UUID uuid) {
