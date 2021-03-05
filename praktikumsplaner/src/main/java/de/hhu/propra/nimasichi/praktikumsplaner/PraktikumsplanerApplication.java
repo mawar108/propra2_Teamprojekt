@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.github.GithubConnector;
+import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,9 +15,13 @@ public class PraktikumsplanerApplication {
 	}
 
 	@Bean
-	public CommandLineRunner init() {
+	public CommandLineRunner init(final GitHubService ghService) {
 		return args -> {
-			GithubConnector.connect();
+			ghService.connect();
+
+//			final var users = new String[] { "mawar108", "Christopher-Schmitz", "Nina181", "Couraxe" };
+//
+//			ghService.createRepository("test", users);
 		};
 	}
 

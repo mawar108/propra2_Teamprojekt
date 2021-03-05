@@ -4,53 +4,74 @@ import com.google.common.io.Files;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.kohsuke.github.*;
+import org.kohsuke.github.GHOrganization;
+import org.kohsuke.github.GHUser;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
-
+import java.io.IOException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class GithubConnector {
+@Component
+public class GitHubService {
     @Value("${key_location}")
-    private static String keyLoc;
+    private String keyLoc;
 
     @Value("${app_id}")
-    private static String appId;
+    private String appId;
 
     @Value("${installation}")
-    private static long installation;
+    private long installation;
 
     @Value("${organization_name}")
-    private static String organizationName;
+    private String organizationName;
 
-    public static void connect() throws Exception {
+    private GHOrganization organization;
+
+    public void connect() throws Exception {
         final String jwtToken = createJWT(keyLoc, appId, 600000);
-
         final var preAuth = new GitHubBuilder().withJwtToken(jwtToken).build();
         final var appInstallation = preAuth.getApp().getInstallationById(installation);
         final var token = appInstallation.createToken().create();
         final var gitHub = new GitHubBuilder().withAppInstallationToken(token.getToken()).build();
-        final var organization = gitHub.getOrganization(organizationName);
 
+        organization = gitHub.getOrganization(organizationName);
+    }
 
+    public void createRepository(final String repoName,
+                                 final String... collaborators) throws IOException {
+        final var ghRepository = organization.createRepository(repoName).create();
+        final var connect = GitHub.connect();
+        final var users = new ArrayList<>();
+
+        for (final var collaborator : collaborators) {
+            users.add(connect.getUser(collaborator));
+        }
+
+        ghRepository.addCollaborators(users.toArray(new GHUser[0]));
     }
 
     private static PrivateKey get(final String filename) throws Exception {
         final var keyBytes = Files.toByteArray(new File(filename));
 
         final var spec = new PKCS8EncodedKeySpec(keyBytes);
-        final var kf = KeyFactory.getInstance("RSA");
-        return kf.generatePrivate(spec);
+        final var keyFactory = KeyFactory.getInstance("RSA");
+        return keyFactory.generatePrivate(spec);
     }
 
-    public static String createJWT(final String keyLocation, String githubAppId, long ttlMillis) throws Exception {
+    public static String createJWT(final String keyLocation,
+                                   final String githubAppId,
+                                   final long ttlMillis) throws Exception {
         //The JWT signature algorithm we will be using to sign the token
-        final var signatureAlgorithm = SignatureAlgorithm.RS256;
+        final var sigAlg = SignatureAlgorithm.RS256;
 
         final long nowMillis = System.currentTimeMillis();
         final Date now = new Date(nowMillis);
@@ -62,7 +83,7 @@ public class GithubConnector {
         final JwtBuilder builder = Jwts.builder()
                 .setIssuedAt(now)
                 .setIssuer(githubAppId)
-                .signWith(signingKey, signatureAlgorithm);
+                .signWith(signingKey, sigAlg);
 
         //if it has been specified, let's add the expiration
         if (ttlMillis > 0) {
