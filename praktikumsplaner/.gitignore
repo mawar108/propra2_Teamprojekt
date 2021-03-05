@@ -25,7 +25,10 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-*.env
+<<<<<<< HEAD
+=======
+.env
+>>>>>>> 1e885d898379b702c52fa486656e2e94d8f56941
 
 ### NetBeans ###
 /nbproject/private/
