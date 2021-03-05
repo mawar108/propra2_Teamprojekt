@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.config;
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -19,6 +20,11 @@ public class SecurityConfig {
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
 		return new RegisterSessionAuthenticationStrategy(
 				new SessionRegistryImpl());
+	}
+
+	@Bean
+	public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
+		return new KeycloakSpringBootConfigResolver();
 	}
 
 	@Bean
