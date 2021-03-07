@@ -21,23 +21,24 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Component
+@SuppressWarnings("PMD.AtLeastOneConstructor")
 public class GitHubService {
     @Value("${key_location}")
-    private String keyLoc;
+    private transient String keyLoc;
 
     @Value("${app_id}")
-    private String appId;
+    private transient String appId;
 
     @Value("${installation}")
-    private long installation;
+    private transient long installation;
 
     @Value("${organization_name}")
-    private String organizationName;
+    private transient String organizationName;
 
-    private GHOrganization organization;
+    private transient GHOrganization organization;
 
     public void connect() throws Exception {
-        final String jwtToken = createJWT(keyLoc, appId, 600000);
+        final String jwtToken = createJWT(keyLoc, appId, 600_000);
         final var preAuth = new GitHubBuilder().withJwtToken(jwtToken).build();
         final var appInstallation = preAuth.getApp().getInstallationById(installation);
         final var token = appInstallation.createToken().create();

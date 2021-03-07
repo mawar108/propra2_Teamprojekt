@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
@@ -29,10 +28,10 @@ public class SecurityConfig {
 
 	@Bean
 	public OAuth2AuthorizedClientManager authorizedClientManager(
-			ClientRegistrationRepository clientRegistrationRepository,
-			OAuth2AuthorizedClientRepository authorizedClientRepository) {
+			final ClientRegistrationRepository crp,
+			final OAuth2AuthorizedClientRepository acr) {
 
-		OAuth2AuthorizedClientProvider authorizedClientProvider =
+		final var authorizedClientProvider =
 				OAuth2AuthorizedClientProviderBuilder.builder()
 						.authorizationCode()
 						.refreshToken()
@@ -40,11 +39,10 @@ public class SecurityConfig {
 						.password()
 						.build();
 
-		DefaultOAuth2AuthorizedClientManager authorizedClientManager =
-				new DefaultOAuth2AuthorizedClientManager(
-						clientRegistrationRepository, authorizedClientRepository);
-		authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
+		final var acm =
+				new DefaultOAuth2AuthorizedClientManager(crp, acr);
+		acm.setAuthorizedClientProvider(authorizedClientProvider);
 
-		return authorizedClientManager;
+		return acm;
 	}
 }

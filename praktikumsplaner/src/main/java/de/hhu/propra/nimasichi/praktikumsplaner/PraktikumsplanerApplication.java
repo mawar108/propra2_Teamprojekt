@@ -19,8 +19,11 @@ public class PraktikumsplanerApplication {
 		return args -> {
 			ghService.connect();
 
-//			final var users = new String[] { "mawar108", "Christopher-Schmitz", "Nina181", "Couraxe" };
-//
+//			final var users =
+//			new String[] { "mawar108",
+//			"Christopher-Schmitz",
+//			"Nina181",
+//			"Couraxe" };
 //			ghService.createRepository("test", users);
 		};
 	}
