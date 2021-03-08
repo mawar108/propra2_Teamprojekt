@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter"})
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(final HttpSecurity http) throws Exception {

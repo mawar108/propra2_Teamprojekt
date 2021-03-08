@@ -7,8 +7,8 @@ import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorTerminRepo;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Service
+@SuppressWarnings("PMD.LawOfDemeter")
 public final class TutorTerminService {
 
   private final transient TutorTerminRepo tzRepo;
@@ -46,24 +47,22 @@ public final class TutorTerminService {
     final var tutorenZeiten = findAll();
 
     final var config =
-        PraktischeUbungswocheConfig
-            .makeConfigAndFillZeiten(params, tutorenZeiten);
+            PraktischeUbungswocheConfig
+                    .makeConfigAndFillZeiten(params, tutorenZeiten);
 
     return TutorWochenbelegung.fromConfig(config);
   }
 
-  public List<TutorTermin> parseTutorZeitenFromReq(final HttpServletRequest req) {
-    final var paramMap = req.getParameterMap();
-    final var zeitslots = paramMap.get("zeitslots");
-
+  public List<TutorTermin> parseTutorZeitenFromReq(final Map<String, String[]> paramMap) {
+    final String[] tutorTermin = paramMap.get("zeitslots");
     List<TutorTermin> parsedList;
 
-    if (zeitslots == null) {
+    if (tutorTermin == null) {
       parsedList = new ArrayList<>();
     } else {
-      parsedList = Arrays.stream(zeitslots)
-          .map(TutorTermin::fromParseable)
-          .collect(Collectors.toList());
+      parsedList = Arrays.stream(tutorTermin)
+              .map(TutorTermin::fromParseable)
+              .collect(Collectors.toList());
     }
 
     return parsedList;

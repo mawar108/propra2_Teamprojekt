@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@SuppressWarnings("PMD.UseUtilityClass")
+@SuppressWarnings({"PMD.UseUtilityClass", "PMD.AtLeastOneConstructor"})
 public class PraktikumsplanerApplication {
 
   public static void main(final String[] args) {

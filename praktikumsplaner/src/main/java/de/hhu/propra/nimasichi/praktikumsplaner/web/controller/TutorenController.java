@@ -29,7 +29,7 @@ public class TutorenController {
                                     final ConfigParamsForm params,
                                     final HttpServletRequest req) {
     final var parsedZeitslots
-        = tzService.parseTutorZeitenFromReq(req);
+        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
     model.addAttribute("params", params);
     model.addAttribute("zeitslots", parsedZeitslots);
 

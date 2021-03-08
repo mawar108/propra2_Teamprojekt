@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@SuppressWarnings("PMD.LawOfDemeter")
 public class KonfigurationController {
 
   private final transient TutorTerminService tzService;
+  private static final transient String PARAMS_MO_NAME = "params";
+  private static final transient String ZEITSLOTS_MO_NAME = "zeitslots";
 
   public KonfigurationController(final TutorTerminService service) {
     this.tzService = service;
@@ -28,8 +31,8 @@ public class KonfigurationController {
   public String handleTutorenansichtPost(final Model model,
                                          final ConfigParamsForm params) {
 
-    model.addAttribute("params", params);
-    model.addAttribute("zeitslots", tzService.findAll());
+    model.addAttribute(PARAMS_MO_NAME, params);
+    model.addAttribute(ZEITSLOTS_MO_NAME, tzService.findAll());
 
     return "konfiguration_zeitslots";
   }
@@ -43,12 +46,12 @@ public class KonfigurationController {
                                final String slotDatum) {
 
     final var parsedZeitslots
-        = tzService.parseTutorZeitenFromReq(req);
+        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
     final var parsedSlot = tzService.parseIntoTutorenZeit(tutorenName, slotZeit, slotDatum);
     parsedZeitslots.add(parsedSlot);
 
-    model.addAttribute("params", params);
-    model.addAttribute("zeitslots", parsedZeitslots);
+    model.addAttribute(PARAMS_MO_NAME, params);
+    model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
 
     return "konfiguration_zeitslots";
   }
@@ -60,11 +63,11 @@ public class KonfigurationController {
                                   final HttpServletRequest req) {
 
     final var parsedZeitslots
-        = tzService.parseTutorZeitenFromReq(req);
+        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
     parsedZeitslots.remove(index);
 
-    model.addAttribute("params", params);
-    model.addAttribute("zeitslots", parsedZeitslots);
+    model.addAttribute(PARAMS_MO_NAME, params);
+    model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
 
     return "konfiguration_zeitslots";
   }
@@ -75,10 +78,10 @@ public class KonfigurationController {
                                                 final HttpServletRequest req) {
 
     final var parsedZeitslots
-        = tzService.parseTutorZeitenFromReq(req);
+        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
 
-    model.addAttribute("params", params);
-    model.addAttribute("zeitslots", parsedZeitslots);
+    model.addAttribute(PARAMS_MO_NAME, params);
+    model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
 
     return "konfiguration_abschliessen";
   }

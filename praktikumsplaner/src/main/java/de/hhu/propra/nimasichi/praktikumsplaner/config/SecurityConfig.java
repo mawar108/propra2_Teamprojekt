@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 @Configuration
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter"})
 public class SecurityConfig {
 
   @Bean
@@ -31,7 +32,7 @@ public class SecurityConfig {
       final ClientRegistrationRepository crp,
       final OAuth2AuthorizedClientRepository acr) {
 
-    final var authorizedClientProvider =
+    final var acp =
         OAuth2AuthorizedClientProviderBuilder.builder()
             .authorizationCode()
             .refreshToken()
@@ -41,7 +42,7 @@ public class SecurityConfig {
 
     final var acm =
         new DefaultOAuth2AuthorizedClientManager(crp, acr);
-    acm.setAuthorizedClientProvider(authorizedClientProvider);
+    acm.setAuthorizedClientProvider(acp);
 
     return acm;
   }
