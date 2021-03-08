@@ -23,7 +23,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="h4" for="name">Name:</label>
-                <input class="form-control" type="text" id="name" name="name" value="PÜ 1">
+                <input required class="form-control" type="text" id="name" name="name" value="PÜ 1">
             </div>
         </div>
 
@@ -47,11 +47,11 @@
             <label class="h4">Anmeldestart:</label>
 
             <div class="form-group col-md-3">
-                <input class="form-control" type="date" id="anmeldestartdatum" name="anStartdatum" value="2021-03-03">
+                <input required class="form-control" type="date" id="anmeldestartdatum" name="anStartdatum" value="2021-03-03">
             </div>
 
             <div class="form-group col-md-3">
-                <input class="form-control" type="time" id="anmeldestartzeit" name="anStartzeit" value="12:30">
+                <input required class="form-control" type="time" id="anmeldestartzeit" name="anStartzeit" value="12:30">
             </div>
         </div>
 
@@ -61,11 +61,11 @@
             <label class="h4">Anmeldeschluss:</label>
 
             <div class="form-group col-md-3">
-                <input class="form-control" type="date" id="anmeldeschlussdatum" name="anSchlussdatum" value="2021-03-03">
+                <input required class="form-control" type="date" id="anmeldeschlussdatum" name="anSchlussdatum" value="2021-03-03">
             </div>
 
             <div class="form-group col-md-3">
-                <input class="form-control" type="time" id="anmeldeschlusszeit" name="anSchlusszeit" value="12:30">
+                <input required class="form-control" type="time" id="anmeldeschlusszeit" name="anSchlusszeit" value="12:30">
             </div>
         </div>
 
@@ -74,12 +74,12 @@
         <div class="row">
             <div class="form-group col-md-3">
                 <label for="minPersonen" class="h4">Mindestgruppengröße:</label>
-                <input class="form-control" type="number" id="minPersonen" name="minPersonen" value="3" min="0">
+                <input required class="form-control" type="number" id="minPersonen" name="minPersonen" value="3" min="0">
             </div>
 
             <div class="form-group col-md-3">
                 <label for="maxPersonen" class="h4">Maximalgruppengröße:</label>
-                <input class="form-control" type="number" id="maxPersonen" name="maxPersonen" value="5" min="0">
+                <input required class="form-control" type="number" id="maxPersonen" name="maxPersonen" value="5" min="0">
             </div>
         </div>
 
