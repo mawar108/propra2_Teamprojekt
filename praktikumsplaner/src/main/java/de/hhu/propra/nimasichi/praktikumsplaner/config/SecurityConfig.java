@@ -1,6 +1,5 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.config;
 
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -14,17 +13,12 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 
 @Configuration
 @SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter"})
-public class SecurityConfig {
+class SecurityConfig {
 
   @Bean
   protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
     return new RegisterSessionAuthenticationStrategy(
         new SessionRegistryImpl());
-  }
-
-  @Bean
-  public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
-    return new KeycloakSpringBootConfigResolver();
   }
 
   @Bean

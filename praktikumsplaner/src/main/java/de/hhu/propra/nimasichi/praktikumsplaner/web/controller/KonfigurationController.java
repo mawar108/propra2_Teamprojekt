@@ -24,7 +24,7 @@ public class KonfigurationController {
 
   @GetMapping("/konfiguration")
   public String handleConfig() {
-    return "konfiguration_index";
+    return "konfiguration/konfiguration_index";
   }
 
   @PostMapping("/konfiguration_zeitslots")
@@ -34,7 +34,7 @@ public class KonfigurationController {
     model.addAttribute(PARAMS_MO_NAME, params);
     model.addAttribute(ZEITSLOTS_MO_NAME, tzService.findAll());
 
-    return "konfiguration_zeitslots";
+    return "konfiguration/konfiguration_zeitslots";
   }
 
   @PostMapping("/tutorenZeitHinzufugen")
@@ -53,7 +53,7 @@ public class KonfigurationController {
     model.addAttribute(PARAMS_MO_NAME, params);
     model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
 
-    return "konfiguration_zeitslots";
+    return "konfiguration/konfiguration_zeitslots";
   }
 
   @PostMapping("/tutorenZeitLoschen/{idx}")
@@ -69,7 +69,7 @@ public class KonfigurationController {
     model.addAttribute(PARAMS_MO_NAME, params);
     model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
 
-    return "konfiguration_zeitslots";
+    return "konfiguration/konfiguration_zeitslots";
   }
 
   @PostMapping("/konfiguration_abschliessen")
@@ -83,6 +83,6 @@ public class KonfigurationController {
     model.addAttribute(PARAMS_MO_NAME, params);
     model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
 
-    return "konfiguration_abschliessen";
+    return "konfiguration/konfiguration_abschliessen";
   }
 }

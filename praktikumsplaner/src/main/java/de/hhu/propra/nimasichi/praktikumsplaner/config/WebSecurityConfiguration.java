@@ -13,8 +13,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
     http.authorizeRequests(a -> a
-        .antMatchers("/", "/error").permitAll()
-        .anyRequest().authenticated())
+        .antMatchers("/**").permitAll())
         .exceptionHandling(e -> e.authenticationEntryPoint(
             new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
         .csrf(c -> c.csrfTokenRepository(
