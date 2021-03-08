@@ -1,7 +1,7 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.controller;
+package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.FormParams;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
+import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class KonfigurationController {
 
-    private final transient TutorZeitService tzService;
+    private final transient TutorTerminService tzService;
 
-    public KonfigurationController(final TutorZeitService service) {
+    public KonfigurationController(final TutorTerminService service) {
         this.tzService = service;
     }
 
@@ -26,7 +26,7 @@ public class KonfigurationController {
 
     @PostMapping("/konfiguration_zeitslots")
     public String handleTutorenansichtPost(final Model model,
-                                           final FormParams params) {
+                                           final ConfigParamsForm params) {
 
         model.addAttribute("params", params);
         model.addAttribute("zeitslots", tzService.findAll());
@@ -36,7 +36,7 @@ public class KonfigurationController {
 
     @PostMapping("/tutorenZeitHinzufugen")
     public String handleAddTutor(final Model model,
-                                 final FormParams params,
+                                 final ConfigParamsForm params,
                                  final HttpServletRequest req,
                                  final String tutorenName,
                                  final String slotZeit,
@@ -56,7 +56,7 @@ public class KonfigurationController {
     @PostMapping("/tutorenZeitLoschen/{idx}")
     public String handleDeleteTutor(final Model model,
                                     @PathVariable("idx") final int index,
-                                    final FormParams params,
+                                    final ConfigParamsForm params,
                                     final HttpServletRequest req) {
 
         final var parsedZeitslots
@@ -71,7 +71,7 @@ public class KonfigurationController {
 
     @PostMapping("/konfiguration_abschliessen")
     public String handleKonfigurationAbschliessen(final Model model,
-                                                  final FormParams params,
+                                                  final ConfigParamsForm params,
                                                   final HttpServletRequest req) {
 
         final var parsedZeitslots

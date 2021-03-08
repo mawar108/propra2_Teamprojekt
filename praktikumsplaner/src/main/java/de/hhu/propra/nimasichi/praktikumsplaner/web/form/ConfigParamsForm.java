@@ -1,10 +1,10 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.entities;
+package de.hhu.propra.nimasichi.praktikumsplaner.web.form;
 
 import lombok.Value;
 
 @Value
 @SuppressWarnings({"PMD.DefaultPackage", "PMD.CommentDefaultAccessModifier"})
-public class FormParams {
+public class ConfigParamsForm {
 
 	String name;
 	int modus;

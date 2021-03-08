@@ -1,7 +1,7 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.controller;
+package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.FormParams;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorZeitService;
+import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 @SuppressWarnings("PMD.AtLeastOneConstructor")
 public class TutorenController {
 
-    private final transient TutorZeitService tzService;
+    private final transient TutorTerminService tzService;
 
-    public TutorenController(final TutorZeitService tzService) {
+    public TutorenController(final TutorTerminService tzService) {
         this.tzService = tzService;
     }
 
@@ -26,7 +26,7 @@ public class TutorenController {
 
     @PostMapping("/tutorenansicht")
     public String handlePraUebungPost(final Model model,
-                                      final FormParams params,
+                                      final ConfigParamsForm params,
                                       final HttpServletRequest req) {
         final var parsedZeitslots
                 = tzService.parseTutorZeitenFromReq(req);

@@ -1,6 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,15 +15,15 @@ public class PraktischeUbungswocheConfig {
     private LocalDateTime anmeldestart;
     private LocalDateTime anmeldeschluss;
     private String name;
-    private List<TutorenZeit> zeitslots = new ArrayList<>();
+    private List<TutorTermin> zeitslots = new ArrayList<>();
     private Gruppenmodus modus = Gruppenmodus.from(0);
     private int minPersonen;
     private int maxPersonen;
 
 
     public static PraktischeUbungswocheConfig makeConfigAndFillZeiten(
-            final FormParams params,
-            final List<TutorenZeit> tutorenZeiten) {
+            final ConfigParamsForm params,
+            final List<TutorTermin> tutorenZeiten) {
         final var praUbungswocheCfg =
                 new PraktischeUbungswocheConfig();
 
@@ -53,11 +54,11 @@ public class PraktischeUbungswocheConfig {
         return praUbungswocheCfg;
     }
 
-    public void addZeitslot(final TutorenZeit zeitslot) {
+    public void addZeitslot(final TutorTermin zeitslot) {
         zeitslots.add(zeitslot);
     }
 
-    public void removeZeitslot(final TutorenZeit tutorenZeit) {
-        zeitslots.remove(tutorenZeit);
+    public void removeZeitslot(final TutorTermin tutorTermin) {
+        zeitslots.remove(tutorTermin);
     }
 }

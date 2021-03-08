@@ -1,10 +1,10 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.FormParams;
+import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWoche;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorenZeit;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorenZeitRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWochenbelegung;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorTerminRepo;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +16,19 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Service
-public final class TutorZeitService {
+public final class TutorTerminService {
 
-    private final transient TutorenZeitRepo tzRepo;
+    private final transient TutorTerminRepo tzRepo;
 
-    public TutorZeitService(final TutorenZeitRepo repo) {
+    public TutorTerminService(final TutorTerminRepo repo) {
         this.tzRepo = repo;
     }
 
-    public List<TutorenZeit> findAll() {
+    public List<TutorTermin> findAll() {
         return tzRepo.findAll();
     }
 
-    public Optional<TutorenZeit> findById(final UUID uuid) {
+    public Optional<TutorTermin> findById(final UUID uuid) {
         return tzRepo.findById(uuid);
     }
 
@@ -40,38 +40,38 @@ public final class TutorZeitService {
 //                            final String slotZeit,
 //                            final String slotDatum) {
 //        final var tutorenZeit =
-//                TutorenZeit.from(tutorenName, slotZeit, slotDatum);
+//                TutorTermin.from(tutorenName, slotZeit, slotDatum);
 //
 //        tzRepo.addZeitslot(tutorenZeit);
 //    }
 
-    public TutorenZeit parseIntoTutorenZeit(final String tutorenName,
+    public TutorTermin parseIntoTutorenZeit(final String tutorenName,
                                             final String slotZeit,
                                             final String slotDatum) {
-        return TutorenZeit.from(tutorenName, slotZeit, slotDatum);
+        return TutorTermin.from(tutorenName, slotZeit, slotDatum);
     }
 
-    public TutorWoche createPraktischeUebungswocheConfig(final FormParams params) {
+    public TutorWochenbelegung createPraktischeUebungswocheConfig(final ConfigParamsForm params) {
         final var tutorenZeiten = findAll();
 
         final var config =
                 PraktischeUbungswocheConfig
                         .makeConfigAndFillZeiten(params, tutorenZeiten);
 
-        return TutorWoche.fromConfig(config);
+        return TutorWochenbelegung.fromConfig(config);
     }
 
-    public List<TutorenZeit> parseTutorZeitenFromReq(final HttpServletRequest req) {
+    public List<TutorTermin> parseTutorZeitenFromReq(final HttpServletRequest req) {
         final var paramMap = req.getParameterMap();
         final var zeitslots = paramMap.get("zeitslots");
 
-        List<TutorenZeit> parsedList;
+        List<TutorTermin> parsedList;
 
         if (zeitslots == null) {
             parsedList = new ArrayList<>();
         } else {
             parsedList = Arrays.stream(zeitslots)
-                    .map(TutorenZeit::fromParseable)
+                    .map(TutorTermin::fromParseable)
                     .collect(Collectors.toList());
         }
 

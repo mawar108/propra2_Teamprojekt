@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.repositories;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorenZeit;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,19 +12,19 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Repository
-public class TutorenZeitRepo {
-    private final transient List<TutorenZeit> tutorenZeiten;
+public class TutorTerminRepo {
+    private final transient List<TutorTermin> tutorenZeiten;
 
-    public TutorenZeitRepo() {
+    public TutorTerminRepo() {
         this.tutorenZeiten = new ArrayList<>();
     }
 
-    public List<TutorenZeit> findAll() {
+    public List<TutorTermin> findAll() {
         return tutorenZeiten;
     }
 
     @SuppressWarnings("PMD.LawOfDemeter")
-    public Optional<TutorenZeit> findById(final UUID uuid) {
+    public Optional<TutorTermin> findById(final UUID uuid) {
         final var elem = tutorenZeiten.stream()
                 .filter(x -> x.getUuid().equals(uuid))
                 .collect(Collectors.toList())
@@ -33,8 +33,8 @@ public class TutorenZeitRepo {
         return Optional.ofNullable(elem);
     }
 
-    public void add(final TutorenZeit tutorenZeit) {
-        tutorenZeiten.add(tutorenZeit);
+    public void add(final TutorTermin tutorTermin) {
+        tutorenZeiten.add(tutorTermin);
     }
 
     @SuppressWarnings("PMD.LawOfDemeter")
@@ -48,10 +48,10 @@ public class TutorenZeitRepo {
 
     public void sortEntriesByDate() {
         tutorenZeiten.sort(Comparator
-                .comparing(TutorenZeit::getZeit));
+                .comparing(TutorTermin::getZeit));
     }
 
-    public void addZeitslot(final TutorenZeit zeitslot) {
+    public void addZeitslot(final TutorTermin zeitslot) {
         tutorenZeiten.add(zeitslot);
     }
 
