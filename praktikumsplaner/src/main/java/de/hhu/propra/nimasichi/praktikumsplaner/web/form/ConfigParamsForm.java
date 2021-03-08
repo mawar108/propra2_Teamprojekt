@@ -6,12 +6,12 @@ import lombok.Value;
 @SuppressWarnings({"PMD.DefaultPackage", "PMD.CommentDefaultAccessModifier"})
 public class ConfigParamsForm {
 
-	String name;
-	int modus;
-	String anStartdatum;
-	String anStartzeit;
-	String anSchlussdatum;
-	String anSchlusszeit;
-	int minPersonen;
-	int maxPersonen;
+  String name;
+  int modus;
+  String anStartdatum;
+  String anStartzeit;
+  String anSchlussdatum;
+  String anSchlusszeit;
+  int minPersonen;
+  int maxPersonen;
 }

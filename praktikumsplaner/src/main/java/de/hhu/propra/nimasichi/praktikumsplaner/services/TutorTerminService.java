@@ -18,63 +18,54 @@ import java.util.stream.Collectors;
 @Service
 public final class TutorTerminService {
 
-    private final transient TutorTerminRepo tzRepo;
+  private final transient TutorTerminRepo tzRepo;
 
-    public TutorTerminService(final TutorTerminRepo repo) {
-        this.tzRepo = repo;
+  public TutorTerminService(final TutorTerminRepo repo) {
+    this.tzRepo = repo;
+  }
+
+  public List<TutorTermin> findAll() {
+    return tzRepo.findAll();
+  }
+
+  public Optional<TutorTermin> findById(final UUID uuid) {
+    return tzRepo.findById(uuid);
+  }
+
+  public void removeById(final UUID uuid) {
+    tzRepo.removeById(uuid);
+  }
+
+  public TutorTermin parseIntoTutorenZeit(final String tutorenName,
+                                          final String slotZeit,
+                                          final String slotDatum) {
+    return TutorTermin.from(tutorenName, slotZeit, slotDatum);
+  }
+
+  public TutorWochenbelegung createPraktischeUebungswocheConfig(final ConfigParamsForm params) {
+    final var tutorenZeiten = findAll();
+
+    final var config =
+        PraktischeUbungswocheConfig
+            .makeConfigAndFillZeiten(params, tutorenZeiten);
+
+    return TutorWochenbelegung.fromConfig(config);
+  }
+
+  public List<TutorTermin> parseTutorZeitenFromReq(final HttpServletRequest req) {
+    final var paramMap = req.getParameterMap();
+    final var zeitslots = paramMap.get("zeitslots");
+
+    List<TutorTermin> parsedList;
+
+    if (zeitslots == null) {
+      parsedList = new ArrayList<>();
+    } else {
+      parsedList = Arrays.stream(zeitslots)
+          .map(TutorTermin::fromParseable)
+          .collect(Collectors.toList());
     }
 
-    public List<TutorTermin> findAll() {
-        return tzRepo.findAll();
-    }
-
-    public Optional<TutorTermin> findById(final UUID uuid) {
-        return tzRepo.findById(uuid);
-    }
-
-    public void removeById(final UUID uuid) {
-        tzRepo.removeById(uuid);
-    }
-
-//    public void parseAndAdd(final String tutorenName,
-//                            final String slotZeit,
-//                            final String slotDatum) {
-//        final var tutorenZeit =
-//                TutorTermin.from(tutorenName, slotZeit, slotDatum);
-//
-//        tzRepo.addZeitslot(tutorenZeit);
-//    }
-
-    public TutorTermin parseIntoTutorenZeit(final String tutorenName,
-                                            final String slotZeit,
-                                            final String slotDatum) {
-        return TutorTermin.from(tutorenName, slotZeit, slotDatum);
-    }
-
-    public TutorWochenbelegung createPraktischeUebungswocheConfig(final ConfigParamsForm params) {
-        final var tutorenZeiten = findAll();
-
-        final var config =
-                PraktischeUbungswocheConfig
-                        .makeConfigAndFillZeiten(params, tutorenZeiten);
-
-        return TutorWochenbelegung.fromConfig(config);
-    }
-
-    public List<TutorTermin> parseTutorZeitenFromReq(final HttpServletRequest req) {
-        final var paramMap = req.getParameterMap();
-        final var zeitslots = paramMap.get("zeitslots");
-
-        List<TutorTermin> parsedList;
-
-        if (zeitslots == null) {
-            parsedList = new ArrayList<>();
-        } else {
-            parsedList = Arrays.stream(zeitslots)
-                    .map(TutorTermin::fromParseable)
-                    .collect(Collectors.toList());
-        }
-
-        return parsedList;
-    }
+    return parsedList;
+  }
 }

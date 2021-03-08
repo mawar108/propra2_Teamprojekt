@@ -15,34 +15,34 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 public class SecurityConfig {
 
-	@Bean
-	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-		return new RegisterSessionAuthenticationStrategy(
-				new SessionRegistryImpl());
-	}
+  @Bean
+  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+    return new RegisterSessionAuthenticationStrategy(
+        new SessionRegistryImpl());
+  }
 
-	@Bean
-	public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
-		return new KeycloakSpringBootConfigResolver();
-	}
+  @Bean
+  public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
+    return new KeycloakSpringBootConfigResolver();
+  }
 
-	@Bean
-	public OAuth2AuthorizedClientManager authorizedClientManager(
-			final ClientRegistrationRepository crp,
-			final OAuth2AuthorizedClientRepository acr) {
+  @Bean
+  public OAuth2AuthorizedClientManager authorizedClientManager(
+      final ClientRegistrationRepository crp,
+      final OAuth2AuthorizedClientRepository acr) {
 
-		final var authorizedClientProvider =
-				OAuth2AuthorizedClientProviderBuilder.builder()
-						.authorizationCode()
-						.refreshToken()
-						.clientCredentials()
-						.password()
-						.build();
+    final var authorizedClientProvider =
+        OAuth2AuthorizedClientProviderBuilder.builder()
+            .authorizationCode()
+            .refreshToken()
+            .clientCredentials()
+            .password()
+            .build();
 
-		final var acm =
-				new DefaultOAuth2AuthorizedClientManager(crp, acr);
-		acm.setAuthorizedClientProvider(authorizedClientProvider);
+    final var acm =
+        new DefaultOAuth2AuthorizedClientManager(crp, acr);
+    acm.setAuthorizedClientProvider(authorizedClientProvider);
 
-		return acm;
-	}
+    return acm;
+  }
 }

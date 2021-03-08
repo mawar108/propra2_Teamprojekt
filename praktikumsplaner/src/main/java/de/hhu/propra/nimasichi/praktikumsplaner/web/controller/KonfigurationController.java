@@ -13,73 +13,73 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class KonfigurationController {
 
-    private final transient TutorTerminService tzService;
+  private final transient TutorTerminService tzService;
 
-    public KonfigurationController(final TutorTerminService service) {
-        this.tzService = service;
-    }
+  public KonfigurationController(final TutorTerminService service) {
+    this.tzService = service;
+  }
 
-    @GetMapping("/konfiguration")
-    public String handleConfig() {
-        return "konfiguration_index";
-    }
+  @GetMapping("/konfiguration")
+  public String handleConfig() {
+    return "konfiguration_index";
+  }
 
-    @PostMapping("/konfiguration_zeitslots")
-    public String handleTutorenansichtPost(final Model model,
-                                           final ConfigParamsForm params) {
+  @PostMapping("/konfiguration_zeitslots")
+  public String handleTutorenansichtPost(final Model model,
+                                         final ConfigParamsForm params) {
 
-        model.addAttribute("params", params);
-        model.addAttribute("zeitslots", tzService.findAll());
+    model.addAttribute("params", params);
+    model.addAttribute("zeitslots", tzService.findAll());
 
-        return "konfiguration_zeitslots";
-    }
+    return "konfiguration_zeitslots";
+  }
 
-    @PostMapping("/tutorenZeitHinzufugen")
-    public String handleAddTutor(final Model model,
-                                 final ConfigParamsForm params,
-                                 final HttpServletRequest req,
-                                 final String tutorenName,
-                                 final String slotZeit,
-                                 final String slotDatum) {
+  @PostMapping("/tutorenZeitHinzufugen")
+  public String handleAddTutor(final Model model,
+                               final ConfigParamsForm params,
+                               final HttpServletRequest req,
+                               final String tutorenName,
+                               final String slotZeit,
+                               final String slotDatum) {
 
-        final var parsedZeitslots
-                = tzService.parseTutorZeitenFromReq(req);
-        final var parsedSlot = tzService.parseIntoTutorenZeit(tutorenName, slotZeit, slotDatum);
-        parsedZeitslots.add(parsedSlot);
+    final var parsedZeitslots
+        = tzService.parseTutorZeitenFromReq(req);
+    final var parsedSlot = tzService.parseIntoTutorenZeit(tutorenName, slotZeit, slotDatum);
+    parsedZeitslots.add(parsedSlot);
 
-        model.addAttribute("params", params);
-        model.addAttribute("zeitslots", parsedZeitslots);
+    model.addAttribute("params", params);
+    model.addAttribute("zeitslots", parsedZeitslots);
 
-        return "konfiguration_zeitslots";
-    }
+    return "konfiguration_zeitslots";
+  }
 
-    @PostMapping("/tutorenZeitLoschen/{idx}")
-    public String handleDeleteTutor(final Model model,
-                                    @PathVariable("idx") final int index,
-                                    final ConfigParamsForm params,
-                                    final HttpServletRequest req) {
+  @PostMapping("/tutorenZeitLoschen/{idx}")
+  public String handleDeleteTutor(final Model model,
+                                  @PathVariable("idx") final int index,
+                                  final ConfigParamsForm params,
+                                  final HttpServletRequest req) {
 
-        final var parsedZeitslots
-                = tzService.parseTutorZeitenFromReq(req);
-        parsedZeitslots.remove(index);
+    final var parsedZeitslots
+        = tzService.parseTutorZeitenFromReq(req);
+    parsedZeitslots.remove(index);
 
-        model.addAttribute("params", params);
-        model.addAttribute("zeitslots", parsedZeitslots);
+    model.addAttribute("params", params);
+    model.addAttribute("zeitslots", parsedZeitslots);
 
-        return "konfiguration_zeitslots";
-    }
+    return "konfiguration_zeitslots";
+  }
 
-    @PostMapping("/konfiguration_abschliessen")
-    public String handleKonfigurationAbschliessen(final Model model,
-                                                  final ConfigParamsForm params,
-                                                  final HttpServletRequest req) {
+  @PostMapping("/konfiguration_abschliessen")
+  public String handleKonfigurationAbschliessen(final Model model,
+                                                final ConfigParamsForm params,
+                                                final HttpServletRequest req) {
 
-        final var parsedZeitslots
-                = tzService.parseTutorZeitenFromReq(req);
+    final var parsedZeitslots
+        = tzService.parseTutorZeitenFromReq(req);
 
-        model.addAttribute("params", params);
-        model.addAttribute("zeitslots", parsedZeitslots);
+    model.addAttribute("params", params);
+    model.addAttribute("zeitslots", parsedZeitslots);
 
-        return "konfiguration_abschliessen";
-    }
+    return "konfiguration_abschliessen";
+  }
 }

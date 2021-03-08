@@ -10,22 +10,16 @@ import org.springframework.context.annotation.Bean;
 @SuppressWarnings("PMD.UseUtilityClass")
 public class PraktikumsplanerApplication {
 
-	public static void main(final String[] args) {
-		SpringApplication.run(PraktikumsplanerApplication.class, args);
-	}
+  public static void main(final String[] args) {
+    SpringApplication.run(PraktikumsplanerApplication.class, args);
+  }
 
-	@Bean
-	public CommandLineRunner init(final GitHubService ghService) {
-		return args -> {
-			ghService.connect();
+  @Bean
+  public CommandLineRunner init(final GitHubService ghService) {
+    return args -> {
+      ghService.connect();
 
-//			final var users =
-//			new String[] { "mawar108",
-//			"Christopher-Schmitz",
-//			"Nina181",
-//			"Couraxe" };
-//			ghService.createRepository("test", users);
-		};
-	}
+    };
+  }
 
 }

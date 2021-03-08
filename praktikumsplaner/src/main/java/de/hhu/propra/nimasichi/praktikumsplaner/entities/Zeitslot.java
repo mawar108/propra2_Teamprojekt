@@ -9,10 +9,10 @@ import java.util.List;
 @Deprecated
 @SuppressWarnings({"PMD.DefaultPackage", "PMD.CommentDefaultAccessModifier"})
 public class Zeitslot {
-    LocalDateTime ubungsAnfang;
-    List<String> tutoren;
+  LocalDateTime ubungsAnfang;
+  List<String> tutoren;
 
-    public String tutorenAuflistung() {
-        return String.join(", ", tutoren);
-    }
+  public String tutorenAuflistung() {
+    return String.join(", ", tutoren);
+  }
 }

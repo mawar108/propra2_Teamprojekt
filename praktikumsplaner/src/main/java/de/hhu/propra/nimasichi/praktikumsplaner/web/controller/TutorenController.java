@@ -13,27 +13,27 @@ import javax.servlet.http.HttpServletRequest;
 @SuppressWarnings("PMD.AtLeastOneConstructor")
 public class TutorenController {
 
-    private final transient TutorTerminService tzService;
+  private final transient TutorTerminService tzService;
 
-    public TutorenController(final TutorTerminService tzService) {
-        this.tzService = tzService;
-    }
+  public TutorenController(final TutorTerminService tzService) {
+    this.tzService = tzService;
+  }
 
-    @GetMapping("/tutorenansicht")
-    public String handleTutorenAnsicht() {
-        return "tutorenansicht";
-    }
+  @GetMapping("/tutorenansicht")
+  public String handleTutorenAnsicht() {
+    return "tutorenansicht";
+  }
 
-    @PostMapping("/tutorenansicht")
-    public String handlePraUebungPost(final Model model,
-                                      final ConfigParamsForm params,
-                                      final HttpServletRequest req) {
-        final var parsedZeitslots
-                = tzService.parseTutorZeitenFromReq(req);
-        model.addAttribute("params", params);
-        model.addAttribute("zeitslots", parsedZeitslots);
+  @PostMapping("/tutorenansicht")
+  public String handlePraUebungPost(final Model model,
+                                    final ConfigParamsForm params,
+                                    final HttpServletRequest req) {
+    final var parsedZeitslots
+        = tzService.parseTutorZeitenFromReq(req);
+    model.addAttribute("params", params);
+    model.addAttribute("zeitslots", parsedZeitslots);
 
-        return "tutorenansicht";
-    }
+    return "tutorenansicht";
+  }
 
 }
