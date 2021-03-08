@@ -56,6 +56,9 @@
 
 <div class="container">
     <form method="post" action="/tutorenansicht">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
         <input type="hidden" name="name" th:value="${params.name}">
         <input type="hidden" name="modus" th:value="${params.modus}">
         <input type="hidden" name="anStartdatum" th:value="${params.anStartdatum}">

@@ -18,7 +18,6 @@ public class PraktikumsplanerApplication {
   public CommandLineRunner init(final GitHubService ghService) {
     return args -> {
       ghService.connect();
-      System.out.println("in init");
     };
   }
 

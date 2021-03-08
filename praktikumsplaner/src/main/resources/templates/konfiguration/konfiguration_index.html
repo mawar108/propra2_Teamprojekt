@@ -15,6 +15,9 @@
 
 <div class="container">
     <form action="/konfiguration_zeitslots" method="post">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
         <br>
 
         <div class="row">
