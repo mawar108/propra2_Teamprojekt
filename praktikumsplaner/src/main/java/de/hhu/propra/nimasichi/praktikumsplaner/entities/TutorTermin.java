@@ -1,23 +1,29 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TutorTermin {
 
-  private final String name;
-  private final LocalDateTime zeit;
-  private final UUID uuid;
+  @Id
+  private Long id;
+
+  private String name;
+  private LocalDateTime zeit;
 
   public TutorTermin(final String name,
                      final LocalDateTime zeit) {
     this.name = name;
     this.zeit = zeit;
-    this.uuid = UUID.randomUUID();
   }
 
   public static TutorTermin fromParseable(final String fmt) {

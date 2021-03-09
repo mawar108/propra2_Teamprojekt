@@ -24,9 +24,9 @@ public class TutorTerminRepo {
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
-  public Optional<TutorTermin> findById(final UUID uuid) {
+  public Optional<TutorTermin> findById(final Long id) {
     final var elem = tutorenZeiten.stream()
-        .filter(x -> x.getUuid().equals(uuid))
+        .filter(x -> x.getId().equals(id))
         .collect(Collectors.toList())
         .get(0);
 
@@ -38,8 +38,8 @@ public class TutorTerminRepo {
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
-  public void removeById(final UUID uuid) {
-    final var optTutorenZeit = findById(uuid);
+  public void removeById(final Long id) {
+    final var optTutorenZeit = findById(id);
 
     if (!optTutorenZeit.isEmpty()) {
       tutorenZeiten.remove(optTutorenZeit.get());

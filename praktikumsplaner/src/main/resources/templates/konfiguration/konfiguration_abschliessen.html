@@ -46,9 +46,9 @@
             <th>Tutoren</th>
         </tr>
 
-        <tr th:each="zeitslot : ${zeitslots}">
-            <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(zeitslot.zeit)}"></td>
-            <td th:text="${zeitslot.name}"></td>
+        <tr th:each="termin : ${tutorenTermine}">
+            <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(termin.zeit)}"></td>
+            <td th:text="${termin.name}"></td>
         </tr>
     </table>
 
@@ -67,8 +67,8 @@
         <input type="hidden" name="anSchlusszeit" th:value="${params.anSchlusszeit}">
         <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
         <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
-        <th:block th:each="zeitslot : ${zeitslots}">
-            <input type="hidden" name="zeitslots" th:value="${zeitslot.toParseable()}">
+        <th:block th:each="termin : ${tutorenTermine}">
+            <input type="hidden" name="tutorenTermine" th:value="${termin.toParseable()}">
         </th:block>
 
         <input type="submit" class="btn btn-success" value="Bestätigen">

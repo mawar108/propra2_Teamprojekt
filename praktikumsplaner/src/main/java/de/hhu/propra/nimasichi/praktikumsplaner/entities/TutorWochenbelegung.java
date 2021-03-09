@@ -3,20 +3,20 @@ package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.List;
+import java.util.Set;
 
 @ToString
 public final class TutorWochenbelegung {
 
   @Getter
-  private final List<TutorTermin> tutorenZeiten;
+  private final Set<TutorTermin> tutorenZeiten;
 
-  private TutorWochenbelegung(final List<TutorTermin> tutorenZeiten) {
+  private TutorWochenbelegung(final Set<TutorTermin> tutorenZeiten) {
     this.tutorenZeiten = tutorenZeiten;
 
   }
 
   public static TutorWochenbelegung fromConfig(final PraktischeUbungswocheConfig config) {
-    return new TutorWochenbelegung(config.getZeitslots());
+    return new TutorWochenbelegung(config.getTutorTermine());
   }
 }

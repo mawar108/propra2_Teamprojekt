@@ -29,12 +29,12 @@ public final class TutorTerminService {
     return tzRepo.findAll();
   }
 
-  public Optional<TutorTermin> findById(final UUID uuid) {
-    return tzRepo.findById(uuid);
+  public Optional<TutorTermin> findById(final Long id) {
+    return tzRepo.findById(id);
   }
 
-  public void removeById(final UUID uuid) {
-    tzRepo.removeById(uuid);
+  public void removeById(final Long id) {
+    tzRepo.removeById(id);
   }
 
   public TutorTermin parseIntoTutorenZeit(final String tutorenName,
@@ -43,18 +43,8 @@ public final class TutorTerminService {
     return TutorTermin.from(tutorenName, slotZeit, slotDatum);
   }
 
-  public TutorWochenbelegung createPraktischeUebungswocheConfig(final ConfigParamsForm params) {
-    final var tutorenZeiten = findAll();
-
-    final var config =
-            PraktischeUbungswocheConfig
-                    .makeConfigAndFillZeiten(params, tutorenZeiten);
-
-    return TutorWochenbelegung.fromConfig(config);
-  }
-
   public List<TutorTermin> parseTutorZeitenFromReq(final Map<String, String[]> paramMap) {
-    final String[] tutorTermin = paramMap.get("zeitslots");
+    final String[] tutorTermin = paramMap.get("tutorenTermine");
     List<TutorTermin> parsedList;
 
     if (tutorTermin == null) {

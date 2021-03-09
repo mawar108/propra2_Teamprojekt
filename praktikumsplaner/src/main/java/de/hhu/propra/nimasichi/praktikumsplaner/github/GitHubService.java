@@ -44,7 +44,7 @@ public class GitHubService {
   public void connect() {
     String jwtToken;
     try {
-      jwtToken = createJwt(keyLoc, appId, 600_000);
+      jwtToken = createJwt(keyLoc, appId, 60_000);
       final var preAuth = new GitHubBuilder()
               .withJwtToken(jwtToken).build();
       final var appInstallation = preAuth.getApp()

@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 public class KonfigurationController {
 
   private final transient TutorTerminService tzService;
-  private static final transient String PARAMS_MO_NAME = "params";
-  private static final transient String ZEITSLOTS_MO_NAME = "zeitslots";
+  private static final transient String
+      PARAMS_MODEL_NAME = "params";
+  private static final transient String
+      TUTOREN_TERMINE_MODEL_NAME = "tutorenTermine";
 
   public KonfigurationController(final TutorTerminService service) {
     this.tzService = service;
@@ -31,8 +33,8 @@ public class KonfigurationController {
   public String handleTutorenansichtPost(final Model model,
                                          final ConfigParamsForm params) {
 
-    model.addAttribute(PARAMS_MO_NAME, params);
-    model.addAttribute(ZEITSLOTS_MO_NAME, tzService.findAll());
+    model.addAttribute(PARAMS_MODEL_NAME, params);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, tzService.findAll());
 
     return "konfiguration/konfiguration_zeitslots";
   }
@@ -50,8 +52,8 @@ public class KonfigurationController {
     final var parsedSlot = tzService.parseIntoTutorenZeit(tutorenName, slotZeit, slotDatum);
     parsedZeitslots.add(parsedSlot);
 
-    model.addAttribute(PARAMS_MO_NAME, params);
-    model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
+    model.addAttribute(PARAMS_MODEL_NAME, params);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
 
     return "konfiguration/konfiguration_zeitslots";
   }
@@ -66,8 +68,8 @@ public class KonfigurationController {
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
     parsedZeitslots.remove(index);
 
-    model.addAttribute(PARAMS_MO_NAME, params);
-    model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
+    model.addAttribute(PARAMS_MODEL_NAME, params);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
 
     return "konfiguration/konfiguration_zeitslots";
   }
@@ -80,8 +82,8 @@ public class KonfigurationController {
     final var parsedZeitslots
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
 
-    model.addAttribute(PARAMS_MO_NAME, params);
-    model.addAttribute(ZEITSLOTS_MO_NAME, parsedZeitslots);
+    model.addAttribute(PARAMS_MODEL_NAME, params);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
 
     return "konfiguration/konfiguration_abschliessen";
   }
