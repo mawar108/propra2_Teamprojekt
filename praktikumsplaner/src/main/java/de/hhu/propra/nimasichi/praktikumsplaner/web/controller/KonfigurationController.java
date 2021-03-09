@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @Controller
 @SuppressWarnings("PMD.LawOfDemeter")
@@ -19,14 +21,17 @@ public class KonfigurationController {
       PARAMS_MODEL_NAME = "params";
   private static final transient String
       TUTOREN_TERMINE_MODEL_NAME = "tutorenTermine";
+  private final transient UbungswocheConfigRepo ubungswocheConfigRepo;
 
-  public KonfigurationController(final TutorTerminService service) {
+  public KonfigurationController(final TutorTerminService service,
+                                 final UbungswocheConfigRepo ubungswocheConfigRepo) {
     this.tzService = service;
+    this.ubungswocheConfigRepo = ubungswocheConfigRepo;
   }
 
   @GetMapping("/konfiguration")
   public String handleConfig() {
-    return "konfiguration/konfiguration_index";
+    return "konfiguration";
   }
 
   @PostMapping("/konfiguration_zeitslots")
@@ -34,7 +39,7 @@ public class KonfigurationController {
                                          final ConfigParamsForm params) {
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, tzService.findAll());
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, new ArrayList());
 
     return "konfiguration/konfiguration_zeitslots";
   }
@@ -74,17 +79,5 @@ public class KonfigurationController {
     return "konfiguration/konfiguration_zeitslots";
   }
 
-  @PostMapping("/konfiguration_abschliessen")
-  public String handleKonfigurationAbschliessen(final Model model,
-                                                final ConfigParamsForm params,
-                                                final HttpServletRequest req) {
 
-    final var parsedZeitslots
-        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
-
-    model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
-
-    return "konfiguration/konfiguration_abschliessen";
-  }
 }

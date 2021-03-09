@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UebungswocheConfigRepo extends CrudRepository<PraktischeUbungswocheConfig, Long> {
+public interface UbungswocheConfigRepo extends CrudRepository<PraktischeUbungswocheConfig, Long> {
 
   List<PraktischeUbungswocheConfig> findAll();
 
