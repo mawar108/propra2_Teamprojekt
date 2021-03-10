@@ -2,37 +2,22 @@ package de.hhu.propra.nimasichi.praktikumsplaner;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.controller.KonfigurationController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,19 +30,24 @@ public class ConfigContollerTests {
   private MockMvc mvc;
 
   @SpyBean
-  TutorTerminService ttService;
+  private TutorTerminService ttService;
 
   @MockBean
-  GitHubService gitHubService;
+  private GitHubService gitHubService;
 
   @MockBean
-  UbungswocheConfigRepo repo;
+  private UbungswocheConfigRepo repo;
 
+  @MockBean
+  private WochenbelegungRepo wbRepo;
+
+  private ConfigContollerTests() { }
 
   @Test
   void configIndexTest() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.get("/konfiguration")
-        .session(OAuthFaker.makeSession()))
+    mvc.perform(MockMvcRequestBuilders
+        .get("/konfiguration")
+        .session(OauthFaker.makeSession()))
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(status().isOk())
@@ -67,9 +57,10 @@ public class ConfigContollerTests {
 
   @Test
   void configIndexPostTest() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.post("/konfiguration/tutor_termine")
+    mvc.perform(MockMvcRequestBuilders
+        .post("/konfiguration/tutor_termine")
             .with(csrf())
-            .session(OAuthFaker.makeSession())
+            .session(OauthFaker.makeSession())
             .param("name", "hallo welt!")
             .param("modus", "1")
             .param("anStartdatum", "2000-02-01")
@@ -86,14 +77,17 @@ public class ConfigContollerTests {
             .andExpect(content().string(
                     containsString("Zeitslot")))
             .andExpect(content().string(
-                    containsString("<input type=\"hidden\" name=\"anStartdatum\" value=\"2000-02-01\">")));
+                    containsString(
+                        "<input type=\"hidden\" name=\"anStartdatum\" value=\"2000-02-01\">"
+                    )));
   }
 
   @Test
   void tutorHinzufugenPostTest() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.post("/tutor_termin_hinzufugen")
+    mvc.perform(MockMvcRequestBuilders
+        .post("/tutor_termin_hinzufugen")
             .with(csrf())
-            .session(OAuthFaker.makeSession())
+            .session(OauthFaker.makeSession())
             .param("name", "hallo welt!")
             .param("modus", "1")
             .param("anStartdatum", "2000-02-01")
@@ -103,24 +97,32 @@ public class ConfigContollerTests {
             .param("minPersonen", "3")
             .param("maxPersonen", "5")
             .param("slotDatum", "2000-02-02")
-            .param("tutorName","Hans")
-            .param("slotZeit","14:00")
-            .param("tutorTermine","2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+            .param("tutorName", "Hans")
+            .param("slotZeit", "14:00")
+            .param("tutorTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
             .andExpect(status().isOk())
             .andDo(print())
             .andExpect(content().string(
-                containsString("<input type=\"hidden\" name=\"tutorTermine\" value=\"2000-02-02;14:00;Hans\">")))
+                containsString(
+                    "<input type=\"hidden\" name=\"tutorTermine\" value=\"2000-02-02;14:00;Hans\">"
+                )))
             .andExpect(content().string(
-                containsString("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-03-25;03:03;Max\">")))
+                containsString(
+                    "<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-03-25;03:03;Max\">"
+                )))
             .andExpect(content().string(
-                containsString("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-05-25;03:03;Peter\">")));
+                containsString(
+                    "<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-05-25;03:03;Peter\">"
+                )));
   }
 
   @Test
   void tutorLoschenPostTest() throws Exception {
-    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/tutor_zeit_loschen/1")
+    final MvcResult mvcResult
+        = mvc.perform(MockMvcRequestBuilders
+        .post("/tutor_termin_loschen/1")
         .with(csrf())
-        .session(OAuthFaker.makeSession())
+        .session(OauthFaker.makeSession())
         .param("name", "hallo welt!")
         .param("modus", "1")
         .param("anStartdatum", "2000-02-01")
@@ -129,22 +131,33 @@ public class ConfigContollerTests {
         .param("anSchlusszeit", "10:00")
         .param("minPersonen", "3")
         .param("maxPersonen", "5")
-        .param("tutorTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+        .param("tutorTermine",
+            "2021-03-25;03:03;Max",
+            "2021-05-25;03:03;Peter"))
         .andExpect(status().isOk())
         .andReturn();
 
-    String contentAsString = mvcResult.getResponse().getContentAsString();
+    final var contentAsString
+        = mvcResult
+        .getResponse()
+        .getContentAsString();
 
-    assertThat(contentAsString).contains("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-03-25;03:03;Max\">");
-    assertThat(contentAsString).doesNotContain("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-05-25;03:03;Peter\">");
+    assertThat(contentAsString)
+        .contains(
+            "<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-03-25;03:03;Max\">"
+        );
+    assertThat(contentAsString)
+        .doesNotContain(
+            "<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-05-25;03:03;Peter\">"
+        );
   }
-
 
   @Test
   void konfigurationAbschliessenPostTest() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.post("/konfiguration_abschliessen")
+    mvc.perform(MockMvcRequestBuilders
+        .post("/konfiguration_abschliessen")
         .with(csrf())
-        .session(OAuthFaker.makeSession())
+        .session(OauthFaker.makeSession())
         .param("name", "hallo welt!")
         .param("modus", "1")
         .param("anStartdatum", "2000-02-01")
@@ -153,7 +166,9 @@ public class ConfigContollerTests {
         .param("anSchlusszeit", "10:00")
         .param("minPersonen", "3")
         .param("maxPersonen", "5")
-        .param("tutorTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+        .param("tutorTermine",
+            "2021-03-25;03:03;Max",
+            "2021-05-25;03:03;Peter"))
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(content().string(
@@ -164,8 +179,5 @@ public class ConfigContollerTests {
             containsString("<td>Do 03:03</td>")))
         .andExpect(content().string(
             containsString("<td>Max</td>")));
-
   }
-
-
 }

@@ -4,12 +4,15 @@ import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@SuppressWarnings("PMD.LawOfDemeter")
 @NoArgsConstructor
+@SuppressWarnings("PMD.LawOfDemeter")
 public class TutorTerminService {
 
   public TutorTermin parseIntoTutorenZeit(final String tutorenName,
@@ -18,7 +21,9 @@ public class TutorTerminService {
     return TutorTermin.from(tutorenName, slotZeit, slotDatum);
   }
 
-  public List<TutorTermin> parseTutorZeitenFromReq(final Map<String, String[]> paramMap) {
+  public List<TutorTermin> parseTutorZeitenFromReq(
+      final Map<String, String[]> paramMap) {
+
     final String[] tutorTermin = paramMap.get("tutorTermine");
     List<TutorTermin> parsedList;
 

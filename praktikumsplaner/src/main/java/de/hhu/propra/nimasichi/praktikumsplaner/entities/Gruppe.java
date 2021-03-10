@@ -18,11 +18,13 @@ public class Gruppe {
   private String tutorenName;
   private Set<Student> mitglieder;
 
-  public Gruppe(String tutorenName) {
+  public Gruppe(final String tutorenName) {
     this.tutorenName = tutorenName;
   }
 
-  public Gruppe(String gruppenName, String tutorenName, Set<Student> mitglieder) {
+  public Gruppe(final String gruppenName,
+                final String tutorenName,
+                final Set<Student> mitglieder) {
     this.gruppenName = gruppenName;
     this.tutorenName = tutorenName;
     this.mitglieder = mitglieder;

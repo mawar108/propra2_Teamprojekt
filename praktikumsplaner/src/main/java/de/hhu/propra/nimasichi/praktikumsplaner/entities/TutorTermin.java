@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("PMD.ShortVariable")
 public class TutorTermin {
 
   @Id

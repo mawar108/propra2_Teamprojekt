@@ -10,7 +10,6 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @AggregateRoot
+@SuppressWarnings({"PMD.LawOfDemeter", "PMD.LawOfDemeter"})
 public class PraktischeUbungswocheConfig {
   @Id
   private Long id;

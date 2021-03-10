@@ -5,10 +5,13 @@ import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheCo
 
 import java.util.Optional;
 
-public class StudentenControllerHelper {
+public final class StudentenControllerHelper {
+  private StudentenControllerHelper() { }
 
-  public static String selectHtmlFromConfig(Optional<PraktischeUbungswocheConfig> maybeUbungswocheConfig) {
-    final String html;
+  public static String selectHtmlFromConfig(
+      final Optional<PraktischeUbungswocheConfig> maybeUbungswocheConfig) {
+
+    String html;
 
     if (maybeUbungswocheConfig.isEmpty()) {
       html = "redirect:/ansicht/error/keine_ubung";
@@ -17,6 +20,7 @@ public class StudentenControllerHelper {
     } else {
       html = "redirect:/ansicht/gruppe/studenten_ansicht";
     }
+
     return html;
   }
 }

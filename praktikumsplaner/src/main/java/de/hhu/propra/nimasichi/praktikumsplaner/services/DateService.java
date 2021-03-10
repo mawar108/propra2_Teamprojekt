@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 public final class DateService {
-  private DateService() {
-  }
+  private DateService() { }
 
   @SuppressWarnings("PMD.LawOfDemeter")
   public static LocalDate stringToLocalDate(final String date) {
