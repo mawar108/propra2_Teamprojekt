@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -20,6 +21,7 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
@@ -27,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,7 +44,7 @@ public class ConfigContollerTests {
   @Autowired
   private MockMvc mvc;
 
-  @MockBean
+  @SpyBean
   TutorTerminService ttService;
 
   @MockBean
@@ -100,18 +103,68 @@ public class ConfigContollerTests {
             .param("minPersonen", "3")
             .param("maxPersonen", "5")
             .param("slotDatum", "2000-02-02")
-            .param("tutorName","Hans")
+            .param("tutorenName","Hans")
             .param("slotZeit","14:00")
-            .param("tutorenTermine","2021-03-17;05:05;Peter", "2021-03-25;03:03;Max"))
+            .param("tutorenTermine","2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
             .andExpect(status().isOk())
             .andDo(print())
-            .andExpect(status().isOk())
             .andExpect(content().string(
-                    containsString("hallo welt")))
+                containsString("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2000-02-02;14:00;Hans\">")))
             .andExpect(content().string(
-                    containsString("Zeitslot")))
+                containsString("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-03-25;03:03;Max\">")))
             .andExpect(content().string(
-                    containsString("<input type=\"hidden\" name=\"anStartdatum\" value=\"2000-02-01\">")));
+                containsString("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-05-25;03:03;Peter\">")));
+  }
+
+  @Test
+  void tutorLoschenPostTest() throws Exception {
+    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/tutorenZeitLoschen/1")
+        .with(csrf())
+        .session(OAuthFaker.makeSession())
+        .param("name", "hallo welt!")
+        .param("modus", "1")
+        .param("anStartdatum", "2000-02-01")
+        .param("anStartzeit", "20:00")
+        .param("anSchlussdatum", "2000-02-08")
+        .param("anSchlusszeit", "10:00")
+        .param("minPersonen", "3")
+        .param("maxPersonen", "5")
+        .param("tutorenTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    String contentAsString = mvcResult.getResponse().getContentAsString();
+
+    assertThat(contentAsString).contains("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-03-25;03:03;Max\">");
+    assertThat(contentAsString).doesNotContain("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-05-25;03:03;Peter\">");
+  }
+
+
+  @Test
+  void konfigurationAbschliessenPostTest() throws Exception {
+    mvc.perform(MockMvcRequestBuilders.post("/konfiguration_abschliessen")
+        .with(csrf())
+        .session(OAuthFaker.makeSession())
+        .param("name", "hallo welt!")
+        .param("modus", "1")
+        .param("anStartdatum", "2000-02-01")
+        .param("anStartzeit", "20:00")
+        .param("anSchlussdatum", "2000-02-08")
+        .param("anSchlusszeit", "10:00")
+        .param("minPersonen", "3")
+        .param("maxPersonen", "5")
+        .param("tutorenTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+        .andExpect(status().isOk())
+        .andDo(print())
+        .andExpect(content().string(
+            containsString("<h4>Anmeldestartzeit:</h4>")))
+        .andExpect(content().string(
+            containsString("<span>20:00</span>")))
+        .andExpect(content().string(
+            containsString("<td>Do 03:03</td>")))
+        .andExpect(content().string(
+            containsString("<td>Max</td>")));
+
   }
 
 

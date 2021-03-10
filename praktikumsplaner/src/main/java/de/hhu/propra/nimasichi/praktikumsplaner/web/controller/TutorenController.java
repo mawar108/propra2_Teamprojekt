@@ -53,18 +53,6 @@ public class TutorenController {
 
     return "ansicht/orga_tuto_ansicht";
   }
-  @PostMapping("/konfiguration_abschliessen")
-  public String handleKonfigurationAbschliessen(final Model model,
-                                                final ConfigParamsForm params,
-                                                final HttpServletRequest req) {
 
-    final var parsedZeitslots
-            = tzService.parseTutorZeitenFromReq(req.getParameterMap());
-
-    model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
-
-    return "konfiguration/konfiguration_abschliessen";
-  }
 
 }
