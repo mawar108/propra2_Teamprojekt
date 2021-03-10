@@ -3,16 +3,13 @@ package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
-@Deprecated
 @SuppressWarnings({"PMD.DefaultPackage", "PMD.CommentDefaultAccessModifier"})
 public class Zeitslot {
-  LocalDateTime ubungsAnfang;
-  List<String> tutoren;
-
-  public String tutorenAuflistung() {
-    return String.join(", ", tutoren);
-  }
+  private LocalDateTime ubungsAnfang;
+  private Set<Gruppe> gruppen;
+  private int minPersonen;
+  private int maxPersonen;
 }

@@ -1,7 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
@@ -9,10 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.HashSet;
 
 @Controller
@@ -24,7 +21,7 @@ public class TutorenController {
   private static final transient String
           PARAMS_MODEL_NAME = "params";
   private static final transient String
-          TUTOREN_TERMINE_MODEL_NAME = "tutorenTermine";
+          TUTOREN_TERMINE_MODEL_NAME = "tutorTermine";
 
   public TutorenController(final TutorTerminService service,
                                  final UbungswocheConfigRepo ubungswocheConfigRepo) {
@@ -34,7 +31,7 @@ public class TutorenController {
 
   @GetMapping("/tutorenansicht")
   public String handleTutorenAnsicht() {
-    return "ansicht/orga_tuto_ansicht";
+    return "ansicht/orga/orga_tuto_ansicht";
   }
 
   @PostMapping("/tutorenansicht")
@@ -42,17 +39,17 @@ public class TutorenController {
                                     final ConfigParamsForm params,
                                     final HttpServletRequest req) {
 
-    final var parsedZeitslots
+    final var parsedTutorTermine
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
 
     ubungswocheConfigRepo.save(PraktischeUbungswocheConfig
-            .makeConfigAndFillZeiten(params, new HashSet<>(parsedZeitslots)));
-    model.addAttribute("params", params);
-    model.addAttribute("zeitslots", parsedZeitslots);
+            .makeConfigAndFillZeiten(params, new HashSet<>(parsedTutorTermine)));
+
+    model.addAttribute(PARAMS_MODEL_NAME, params);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
     System.out.println(ubungswocheConfigRepo.findAll());
 
-    return "ansicht/orga_tuto_ansicht";
+    return "ansicht/orga/orga_tuto_ansicht";
   }
-
 
 }

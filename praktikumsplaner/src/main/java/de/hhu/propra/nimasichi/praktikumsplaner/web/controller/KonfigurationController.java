@@ -1,5 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.*;
 
 @Controller
 @SuppressWarnings("PMD.LawOfDemeter")
@@ -20,7 +22,7 @@ public class KonfigurationController {
   private static final transient String
       PARAMS_MODEL_NAME = "params";
   private static final transient String
-      TUTOREN_TERMINE_MODEL_NAME = "tutorenTermine";
+      TUTOREN_TERMINE_MODEL_NAME = "tutorTermine";
   private final transient UbungswocheConfigRepo ubungswocheConfigRepo;
 
   public KonfigurationController(final TutorTerminService service,
@@ -31,20 +33,29 @@ public class KonfigurationController {
 
   @GetMapping("/konfiguration")
   public String handleConfig() {
-    return "konfiguration";
+    return "konfiguration/index";
   }
 
-  @PostMapping("/konfiguration_zeitslots")
+  @PostMapping("/konfiguration/tutor_termine")
   public String handleTutorenansichtPost(final Model model,
                                          final ConfigParamsForm params) {
 
-    model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, new ArrayList<>());
+    Optional<PraktischeUbungswocheConfig> maybeUbungswocheConfig = ubungswocheConfigRepo.findByHighestId();
+    Set<TutorTermin> tutorenTermine;
 
-    return "konfiguration/konfiguration_zeitslots";
+    if (maybeUbungswocheConfig.isEmpty()) {
+      tutorenTermine = new HashSet<>();
+    } else {
+      tutorenTermine = maybeUbungswocheConfig.get().getTutorTermine();
+    }
+
+    model.addAttribute(PARAMS_MODEL_NAME, params);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, tutorenTermine);
+
+    return "konfiguration/tutor_termine";
   }
 
-  @PostMapping("/tutorenZeitHinzufugen")
+  @PostMapping("/tutor_termin_hinzufugen")
   public String handleAddTutor(final Model model,
                                final ConfigParamsForm params,
                                final HttpServletRequest req,
@@ -52,31 +63,31 @@ public class KonfigurationController {
                                final String slotZeit,
                                final String slotDatum) {
 
-    final var parsedZeitslots
+    final var parsedTutorTermine
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
     final var parsedSlot = tzService.parseIntoTutorenZeit(tutorenName, slotZeit, slotDatum);
-    parsedZeitslots.add(parsedSlot);
+    parsedTutorTermine.add(parsedSlot);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
 
-    return "konfiguration/konfiguration_zeitslots";
+    return "konfiguration/tutor_termine";
   }
 
-  @PostMapping("/tutorenZeitLoschen/{idx}")
+  @PostMapping("/tutor_zeit_loschen/{idx}")
   public String handleDeleteTutor(final Model model,
                                   @PathVariable("idx") final int index,
                                   final ConfigParamsForm params,
                                   final HttpServletRequest req) {
 
-    final var parsedZeitslots
+    final var parsedTutorTermine
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
-    parsedZeitslots.remove(index);
+    parsedTutorTermine.remove(index);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
 
-    return "konfiguration/konfiguration_zeitslots";
+    return "konfiguration/tutor_termine";
   }
 
   @PostMapping("/konfiguration_abschliessen")
@@ -84,11 +95,11 @@ public class KonfigurationController {
                                                 final ConfigParamsForm params,
                                                 final HttpServletRequest req) {
 
-    final var parsedZeitslots
+    final var parsedTutorTermine
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedZeitslots);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
 
     return "konfiguration/konfiguration_abschliessen";
   }
