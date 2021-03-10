@@ -7,8 +7,9 @@
 </head>
 <body>
 <div class="container">
+    <h1>Tutorenübersicht</h1>
     <ul>
-        <li th:each="eintrag : ${tutorenWoche}"><span th:text="${eintrag.key} + ${eintrag.value}"></span></li>
+        <li th:each="eintrag : ${tutorTermine}"><span th:text="${eintrag.name} + ${eintrag.zeit}"></span></li>
     </ul>
 </div>
 </body>

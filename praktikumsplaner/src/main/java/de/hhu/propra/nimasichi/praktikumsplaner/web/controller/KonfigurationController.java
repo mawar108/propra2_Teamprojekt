@@ -81,7 +81,7 @@ public class KonfigurationController {
     return "konfiguration/tutor_termine";
   }
 
-  @PostMapping("/tutor_zeit_loschen/{idx}")
+  @PostMapping("/tutor_termin_loschen/{idx}")
   public String handleDeleteTutor(final Model model,
                                   @PathVariable("idx") final int index,
                                   final ConfigParamsForm params,
