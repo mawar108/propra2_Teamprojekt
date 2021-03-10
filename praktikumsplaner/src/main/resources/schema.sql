@@ -29,7 +29,6 @@ CREATE TABLE roles
     role varchar NOT NULL
 );
 
-
 CREATE TABLE wochenbelegung
 (
     id integer NOT NULL PRIMARY KEY AUTO_INCREMENT
