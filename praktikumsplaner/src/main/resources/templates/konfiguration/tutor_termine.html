@@ -19,7 +19,7 @@
             <th>Löschen</th>
         </tr>
 
-        <tr th:each="termin, iter : ${tutorenTermine}">
+        <tr th:each="termin, iter : ${tutorTermine}">
             <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(termin.zeit)}"></td>
             <td th:text="${termin.name}"></td>
             <td>
@@ -35,8 +35,8 @@
                     <input type="hidden" name="anSchlusszeit" th:value="${params.anSchlusszeit}">
                     <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
                     <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
-                    <th:block th:each="termin : ${tutorenTermine}">
-                        <input type="hidden" name="tutorenTermine" th:value="${termin.toParseable()}">
+                    <th:block th:each="termin : ${tutorTermine}">
+                        <input type="hidden" name="tutorTermine" th:value="${termin.toParseable()}">
                     </th:block>
 
                     <input type="submit" class="btn btn-danger" value="X">
@@ -69,8 +69,8 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label class="h4" for="tutorenName">Tutor:</label>
-                <input required class="form-control" type="text" id="tutorenName" name="tutorenName">
+                <label class="h4" for="tutorName">Tutor:</label>
+                <input required class="form-control" type="text" id="tutorName" name="tutorName">
             </div>
         </div>
 
@@ -84,13 +84,17 @@
         <input type="hidden" name="anSchlusszeit" th:value="${params.anSchlusszeit}">
         <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
         <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
-        <th:block th:each="termin : ${tutorenTermine}">
-            <input type="hidden" name="tutorenTermine" th:value="${termin.toParseable()}">
+        <th:block th:each="termin : ${tutorTermine}">
+            <input type="hidden" name="tutorTermine" th:value="${termin.toParseable()}">
         </th:block>
 
-        <input type="submit" class="btn-primary" value="Tutor hinzufügen">
+        <input type="submit" class="btn btn-primary" value="Tutor hinzufügen">
 
     </form>
+
+    <br>
+    <hr>
+    <br>
 
     <form method="post" action="/konfiguration_abschliessen">
 
@@ -104,8 +108,8 @@
         <input type="hidden" name="anSchlusszeit" th:value="${params.anSchlusszeit}">
         <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
         <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
-        <th:block th:each="termin : ${tutorenTermine}">
-            <input type="hidden" name="tutorenTermine" th:value="${termin.toParseable()}">
+        <th:block th:each="termin : ${tutorTermine}">
+            <input type="hidden" name="tutorTermine" th:value="${termin.toParseable()}">
         </th:block>
 
         <input type="submit" class="btn btn-success" value="Konfiguration abschließen">

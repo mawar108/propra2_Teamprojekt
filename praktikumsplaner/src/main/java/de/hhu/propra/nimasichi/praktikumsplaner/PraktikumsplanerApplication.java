@@ -1,13 +1,19 @@
 package de.hhu.propra.nimasichi.praktikumsplaner;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.Gruppe;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.Wochenbelegung;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 
 @SpringBootApplication

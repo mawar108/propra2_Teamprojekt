@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import lombok.AllArgsConstructor;
@@ -9,13 +10,16 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@AggregateRoot
 public class PraktischeUbungswocheConfig {
   @Id
   private Long id;
@@ -68,5 +72,14 @@ public class PraktischeUbungswocheConfig {
 
   public void removeZeitslot(final TutorTermin tutorTermin) {
     tutorTermine.remove(tutorTermin);
+  }
+
+  public Set<Zeitslot> parseTutorTerminToZeitslots() {
+    return tutorTermine.stream()
+            .collect(Collectors.groupingBy(TutorTermin::getZeit))
+            .values()
+            .stream()
+            .map(tts -> Zeitslot.fromTutorTermin(tts, minPersonen, maxPersonen))
+            .collect(Collectors.toSet());
   }
 }

@@ -1,10 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorWochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.TutorTerminRepo;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +19,7 @@ public class TutorTerminService {
   }
 
   public List<TutorTermin> parseTutorZeitenFromReq(final Map<String, String[]> paramMap) {
-    final String[] tutorTermin = paramMap.get("tutorenTermine");
+    final String[] tutorTermin = paramMap.get("tutorTermine");
     List<TutorTermin> parsedList;
 
     if (tutorTermin == null) {

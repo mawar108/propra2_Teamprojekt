@@ -34,22 +34,4 @@ public class TutorenController {
     return "ansicht/orga/orga_tuto_ansicht";
   }
 
-  @PostMapping("/tutorenansicht")
-  public String handlePraUebungPost(final Model model,
-                                    final ConfigParamsForm params,
-                                    final HttpServletRequest req) {
-
-    final var parsedTutorTermine
-        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
-
-    ubungswocheConfigRepo.save(PraktischeUbungswocheConfig
-            .makeConfigAndFillZeiten(params, new HashSet<>(parsedTutorTermine)));
-
-    model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
-    System.out.println(ubungswocheConfigRepo.findAll());
-
-    return "ansicht/orga/orga_tuto_ansicht";
-  }
-
 }

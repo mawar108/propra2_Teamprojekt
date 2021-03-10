@@ -67,7 +67,7 @@ public class ConfigContollerTests {
 
   @Test
   void configIndexPostTest() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.post("/konfiguration_zeitslots")
+    mvc.perform(MockMvcRequestBuilders.post("/konfiguration/tutor_termine")
             .with(csrf())
             .session(OAuthFaker.makeSession())
             .param("name", "hallo welt!")
@@ -91,7 +91,7 @@ public class ConfigContollerTests {
 
   @Test
   void tutorHinzufugenPostTest() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.post("/tutorenZeitHinzufugen")
+    mvc.perform(MockMvcRequestBuilders.post("/tutor_termin_hinzufugen")
             .with(csrf())
             .session(OAuthFaker.makeSession())
             .param("name", "hallo welt!")
@@ -103,22 +103,22 @@ public class ConfigContollerTests {
             .param("minPersonen", "3")
             .param("maxPersonen", "5")
             .param("slotDatum", "2000-02-02")
-            .param("tutorenName","Hans")
+            .param("tutorName","Hans")
             .param("slotZeit","14:00")
-            .param("tutorenTermine","2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+            .param("tutorTermine","2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
             .andExpect(status().isOk())
             .andDo(print())
             .andExpect(content().string(
-                containsString("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2000-02-02;14:00;Hans\">")))
+                containsString("<input type=\"hidden\" name=\"tutorTermine\" value=\"2000-02-02;14:00;Hans\">")))
             .andExpect(content().string(
-                containsString("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-03-25;03:03;Max\">")))
+                containsString("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-03-25;03:03;Max\">")))
             .andExpect(content().string(
-                containsString("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-05-25;03:03;Peter\">")));
+                containsString("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-05-25;03:03;Peter\">")));
   }
 
   @Test
   void tutorLoschenPostTest() throws Exception {
-    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/tutorenZeitLoschen/1")
+    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/tutor_zeit_loschen/1")
         .with(csrf())
         .session(OAuthFaker.makeSession())
         .param("name", "hallo welt!")
@@ -129,14 +129,14 @@ public class ConfigContollerTests {
         .param("anSchlusszeit", "10:00")
         .param("minPersonen", "3")
         .param("maxPersonen", "5")
-        .param("tutorenTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+        .param("tutorTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
         .andExpect(status().isOk())
         .andReturn();
 
     String contentAsString = mvcResult.getResponse().getContentAsString();
 
-    assertThat(contentAsString).contains("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-03-25;03:03;Max\">");
-    assertThat(contentAsString).doesNotContain("<input type=\"hidden\" name=\"tutorenTermine\" value=\"2021-05-25;03:03;Peter\">");
+    assertThat(contentAsString).contains("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-03-25;03:03;Max\">");
+    assertThat(contentAsString).doesNotContain("<input type=\"hidden\" name=\"tutorTermine\" value=\"2021-05-25;03:03;Peter\">");
   }
 
 
@@ -153,7 +153,7 @@ public class ConfigContollerTests {
         .param("anSchlusszeit", "10:00")
         .param("minPersonen", "3")
         .param("maxPersonen", "5")
-        .param("tutorenTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
+        .param("tutorTermine", "2021-03-25;03:03;Max", "2021-05-25;03:03;Peter"))
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(content().string(
