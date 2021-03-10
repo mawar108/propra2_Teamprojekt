@@ -22,16 +22,16 @@ public class TutorTerminService {
     return TutorTermin.from(tutorenName, slotZeit, slotDatum);
   }
 
-  public Set<TutorTermin> parseTutorZeitenFromReq(final Map<String, String[]> paramMap) {
+  public List<TutorTermin> parseTutorZeitenFromReq(final Map<String, String[]> paramMap) {
     final String[] tutorTermin = paramMap.get("tutorenTermine");
-    Set<TutorTermin> parsedList;
+    List<TutorTermin> parsedList;
 
     if (tutorTermin == null) {
-      parsedList = new HashSet<>();
+      parsedList = new ArrayList<>();
     } else {
       parsedList = Arrays.stream(tutorTermin)
               .map(TutorTermin::fromParseable)
-              .collect(Collectors.toSet());
+              .collect(Collectors.toList());
     }
 
     return parsedList;

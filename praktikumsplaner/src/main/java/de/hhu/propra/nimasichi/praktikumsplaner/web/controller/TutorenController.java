@@ -1,6 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.HashSet;
 
 @Controller
 @SuppressWarnings("PMD.AtLeastOneConstructor")
@@ -42,7 +45,8 @@ public class TutorenController {
     final var parsedZeitslots
         = tzService.parseTutorZeitenFromReq(req.getParameterMap());
 
-    ubungswocheConfigRepo.save(PraktischeUbungswocheConfig.makeConfigAndFillZeiten(params,parsedZeitslots));
+    ubungswocheConfigRepo.save(PraktischeUbungswocheConfig
+            .makeConfigAndFillZeiten(params, new HashSet<>(parsedZeitslots)));
     model.addAttribute("params", params);
     model.addAttribute("zeitslots", parsedZeitslots);
     System.out.println(ubungswocheConfigRepo.findAll());

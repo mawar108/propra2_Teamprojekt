@@ -2,6 +2,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.controller.KonfigurationController;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -48,8 +50,9 @@ public class ConfigContollerTests {
   @MockBean
   UbungswocheConfigRepo repo;
 
+
   @Test
-  void defaultParamsTest() throws Exception {
+  void configIndexTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders.get("/konfiguration")
         .session(OAuthFaker.makeSession()))
         .andExpect(status().isOk())
@@ -58,4 +61,58 @@ public class ConfigContollerTests {
         .andExpect(content().string(
                     containsString("Praktische Übung konfigurieren")));
   }
+
+  @Test
+  void configIndexPostTest() throws Exception {
+    mvc.perform(MockMvcRequestBuilders.post("/konfiguration_zeitslots")
+            .with(csrf())
+            .session(OAuthFaker.makeSession())
+            .param("name", "hallo welt!")
+            .param("modus", "1")
+            .param("anStartdatum", "2000-02-01")
+            .param("anStartzeit", "20:00")
+            .param("anSchlussdatum", "2000-02-08")
+            .param("anSchlusszeit", "10:00")
+            .param("minPersonen", "3")
+            .param("maxPersonen", "5"))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(
+                    containsString("hallo welt")))
+            .andExpect(content().string(
+                    containsString("Zeitslot")))
+            .andExpect(content().string(
+                    containsString("<input type=\"hidden\" name=\"anStartdatum\" value=\"2000-02-01\">")));
+  }
+
+  @Test
+  void tutorHinzufugenPostTest() throws Exception {
+    mvc.perform(MockMvcRequestBuilders.post("/tutorenZeitHinzufugen")
+            .with(csrf())
+            .session(OAuthFaker.makeSession())
+            .param("name", "hallo welt!")
+            .param("modus", "1")
+            .param("anStartdatum", "2000-02-01")
+            .param("anStartzeit", "20:00")
+            .param("anSchlussdatum", "2000-02-08")
+            .param("anSchlusszeit", "10:00")
+            .param("minPersonen", "3")
+            .param("maxPersonen", "5")
+            .param("slotDatum", "2000-02-02")
+            .param("tutorName","Hans")
+            .param("slotZeit","14:00")
+            .param("tutorenTermine","2021-03-17;05:05;Peter", "2021-03-25;03:03;Max"))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(
+                    containsString("hallo welt")))
+            .andExpect(content().string(
+                    containsString("Zeitslot")))
+            .andExpect(content().string(
+                    containsString("<input type=\"hidden\" name=\"anStartdatum\" value=\"2000-02-01\">")));
+  }
+
+
 }

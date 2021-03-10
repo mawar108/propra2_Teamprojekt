@@ -39,7 +39,7 @@ public class KonfigurationController {
                                          final ConfigParamsForm params) {
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, new ArrayList());
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, new ArrayList<>());
 
     return "konfiguration/konfiguration_zeitslots";
   }
