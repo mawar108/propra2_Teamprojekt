@@ -176,7 +176,7 @@ public class ConfigContollerTests {
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(content().string(
-            containsString("<h4>Anmeldestartzeit:</h4>")))
+            containsString("<h5>Anmeldestartzeit:</h5>")))
         .andExpect(content().string(
             containsString("<span>20:00</span>")))
         .andExpect(content().string(
