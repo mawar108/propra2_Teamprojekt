@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @SuppressWarnings({"PMD.UseUtilityClass", "PMD.AtLeastOneConstructor"})
 public class PraktikumsplanerApplication {
@@ -26,6 +28,17 @@ public class PraktikumsplanerApplication {
       System.out.println("findAll() = " + all);
       final var wochenbelegung = wbrepo.findAll();
       System.out.println(wochenbelegung);
+
+      final var users = new String[] {
+          "mawar108",
+          "Nina181",
+          "Christopher-Schmitz",
+          "Couraxe"
+      };
+      final var exists = ghService.doUsersExist(users);
+
+      System.out.println("doUsersExist("
+          + Arrays.toString(users) + ") = " + exists);
     };
   }
 

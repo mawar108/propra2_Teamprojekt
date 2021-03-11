@@ -11,7 +11,7 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Component
+@Service
 @SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis"})
 public class GitHubService {
   @Value("${key_location}")
@@ -41,16 +41,20 @@ public class GitHubService {
 
   private transient GHOrganization organization;
 
+  private transient GitHub gitHub;
+
   public void connect() {
     String jwtToken;
     try {
       jwtToken = createJwt(keyLoc, appId, 300_000);
+
       final var preAuth = new GitHubBuilder()
               .withJwtToken(jwtToken).build();
       final var appInstallation = preAuth.getApp()
               .getInstallationById(installation);
       final var token = appInstallation.createToken().create();
-      final var gitHub = new GitHubBuilder()
+
+      gitHub = new GitHubBuilder()
               .withAppInstallationToken(token.getToken()).build();
 
       organization = gitHub.getOrganization(organizationName);
@@ -58,6 +62,23 @@ public class GitHubService {
       LoggerFactory.getLogger(PraktikumsplanerApplication.class)
               .error(e.getMessage());
     }
+  }
+
+  public boolean doesUserExist(final String ghHandle) throws IOException {
+    return gitHub.getUser(ghHandle) != null;
+  }
+
+  public boolean doUsersExist(final String[] ghHandles) throws IOException {
+    boolean exist = true;
+
+    for (final var ghHandle : ghHandles) {
+      if (!doesUserExist(ghHandle)) {
+        exist = false;
+        break;
+      }
+    }
+
+    return exist;
   }
 
   public void createRepository(final String repoName,
