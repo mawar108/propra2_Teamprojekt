@@ -41,3 +41,6 @@ out/
 praktikumsplaner.2021-03-05.private-key.pem
 key.der
 key.pem
+
+### Exclude db ###
+*.db

@@ -8,7 +8,7 @@ import java.util.Optional;
 public final class StudentenControllerHelper {
   private StudentenControllerHelper() { }
 
-  public static String selectHtmlFromConfig(
+  public static String selectHtmlFromConfigForModus(
       final Optional<PraktischeUbungswocheConfig> maybeUbungswocheConfig) {
 
     String html;
@@ -19,6 +19,19 @@ public final class StudentenControllerHelper {
       html = "redirect:/ansicht/individual/studenten_ansicht";
     } else {
       html = "redirect:/ansicht/gruppe/studenten_ansicht";
+    }
+
+    return html;
+  }
+
+  public static String selectHtmlFromConfig(
+      final PraktischeUbungswocheConfig maybeUbungswocheConfig) {
+
+    String html;
+    if (maybeUbungswocheConfig == null) {
+      html = "redirect:/ansicht/error/keine_ubung";
+    } else {
+      html = "/ansicht/gruppe/studenten_ansicht";
     }
 
     return html;
