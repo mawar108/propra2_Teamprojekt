@@ -1,6 +1,5 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.*;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.GRUPPENNAME_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ERROR_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
 
 @Controller
 public class GruppenanmeldungController {
@@ -49,12 +51,12 @@ public class GruppenanmeldungController {
   public String handleAnmeldungMitgliedHinzufugen(final Model model,
                                                   final HttpServletRequest req,
                                                   final String mitgliedName,
-                                                  final int zeitslot_id) {
+                                                  final int zeitslotId) {
 
     final var parsedMitglieder
         = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
-    final var zeitslot = wobeRepo.findZeitslotById(zeitslot_id);
+    final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
     if (zeitslot.isEmpty()) {
       model.addAttribute(ERROR_MODEL_NAME,
@@ -74,12 +76,12 @@ public class GruppenanmeldungController {
   public String handleAnmeldungMitgliedLoschen(final Model model,
                                                final HttpServletRequest req,
                                                @PathVariable("idx") final int index,
-                                               final int zeitslot_id) {
+                                               final int zeitslotId) {
 
     final var parsedMitglieder
         = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
-    final var zeitslot = wobeRepo.findZeitslotById(zeitslot_id);
+    final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
     if (zeitslot.isEmpty()) {
       model.addAttribute(ERROR_MODEL_NAME,
@@ -99,12 +101,12 @@ public class GruppenanmeldungController {
   public String handleAnmeldungAbschliessen(final Model model,
                                             final HttpServletRequest req,
                                             final String gruppenname,
-                                            final int zeitslot_id) {
+                                            final int zeitslotId) {
 
     final var parsedMitglieder
         = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
-    final var zeitslot = wobeRepo.findZeitslotById(zeitslot_id);
+    final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
     if (zeitslot.isEmpty()) {
       model.addAttribute(ERROR_MODEL_NAME,

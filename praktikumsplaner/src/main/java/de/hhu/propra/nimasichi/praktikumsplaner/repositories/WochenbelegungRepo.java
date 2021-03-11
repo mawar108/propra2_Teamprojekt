@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface WochenbelegungRepo extends CrudRepository<Wochenbelegung, Long> {
 
-	@Query("SELECT * FROM wochenbelegung ORDER BY id DESC LIMIT 1")
-	Optional<Wochenbelegung> findByHighestId();
+  @Query("SELECT * FROM wochenbelegung ORDER BY id DESC LIMIT 1")
+  Optional<Wochenbelegung> findByHighestId();
 
-	@Query("SELECT * FROM zeitslot WHERE zeitslot.id = :id")
-	Optional<Zeitslot> findZeitslotById(@Param("id") Integer id);
+  @Query("SELECT * FROM zeitslot WHERE zeitslot.id = :id")
+  Optional<Zeitslot> findZeitslotById(@Param("id") Integer id);
 
 }

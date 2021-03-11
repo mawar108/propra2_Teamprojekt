@@ -37,7 +37,7 @@
 
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-                        <input type="hidden" name="zeitslot_id" th:value="${zeitslot.id}">
+                        <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
 
                         <th:block th:each="mitglied : ${mitglieder}">
                             <input type="hidden" name="mitglieder" th:value="${mitglied}">
@@ -65,7 +65,7 @@
 
             <br>
 
-            <input type="hidden" name="zeitslot_id" th:value="${zeitslot.id}">
+            <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
 
             <th:block th:each="mitglied : ${mitglieder}">
                 <input type="hidden" name="mitglieder" th:value="${mitglied}">
@@ -79,7 +79,7 @@
         <form action="/ansicht/gruppe/anmeldung_abschliessen" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-            <input type="hidden" name="zeitslot_id" th:value="${zeitslot.id}">
+            <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
 
             <th:block th:each="mitglied : ${mitglieder}">
                 <input type="hidden" name="mitglieder" th:value="${mitglied}">
