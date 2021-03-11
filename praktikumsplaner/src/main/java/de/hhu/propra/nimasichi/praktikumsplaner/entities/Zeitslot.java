@@ -31,6 +31,7 @@ public class Zeitslot {
   public static Zeitslot fromTutorTermin(final List<TutorTermin> tutorTermine,
                                          final int minPersonen,
                                          final int maxPersonen) {
+
     final var zeitslot = new Zeitslot();
     final var gruppen
         = tutorTermine.stream()
@@ -47,7 +48,7 @@ public class Zeitslot {
 
   public boolean minEineFreieGruppe() {
     boolean belegt = false;
-    for (var gruppe : gruppen) {
+    for (final var gruppe : gruppen) {
       if (gruppe.getMitglieder().isEmpty()) {
         belegt = true;
         break;

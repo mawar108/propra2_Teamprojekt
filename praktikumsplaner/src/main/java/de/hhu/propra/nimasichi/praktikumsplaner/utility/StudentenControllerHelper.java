@@ -11,7 +11,7 @@ public final class StudentenControllerHelper {
   public static String selectHtmlFromConfigForModus(
       final Optional<PraktischeUbungswocheConfig> maybeUbungswocheConfig) {
 
-    String html;
+    final String html;
 
     if (maybeUbungswocheConfig.isEmpty()) {
       html = "redirect:/ansicht/error/keine_ubung";
@@ -27,7 +27,8 @@ public final class StudentenControllerHelper {
   public static String selectHtmlFromConfig(
       final PraktischeUbungswocheConfig maybeUbungswocheConfig) {
 
-    String html;
+    final String html;
+
     if (maybeUbungswocheConfig == null) {
       html = "redirect:/ansicht/error/keine_ubung";
     } else {

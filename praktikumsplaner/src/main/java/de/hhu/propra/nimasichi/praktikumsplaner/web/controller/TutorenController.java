@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @SuppressWarnings("PMD.AtLeastOneConstructor")
 public class TutorenController {
 
-  private final transient UbungswocheConfigRepo ubungswocheConfigRepo;
+  private final transient UbungswocheConfigRepo ubWoConfigRepo;
 
-  public TutorenController(final UbungswocheConfigRepo ubungswocheConfigRepo) {
-    this.ubungswocheConfigRepo = ubungswocheConfigRepo;
+  public TutorenController(final UbungswocheConfigRepo ubConfigRepo) {
+    this.ubWoConfigRepo = ubConfigRepo;
   }
 
   @GetMapping("/tutorenansicht")

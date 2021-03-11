@@ -11,13 +11,13 @@ public class UbungswocheConfigService {
 
   private final transient UbungswocheConfigRepo ubWoConfRepo;
 
-  public UbungswocheConfigService(UbungswocheConfigRepo ubWoConfRepo) {
+  public UbungswocheConfigService(
+      final UbungswocheConfigRepo ubWoConfRepo) {
     this.ubWoConfRepo = ubWoConfRepo;
   }
 
   public PraktischeUbungswocheConfig getLatestUbungswocheConfig() {
-    Optional<PraktischeUbungswocheConfig> maybeUbConf = ubWoConfRepo.findByHighestId();
-
+    final var maybeUbConf = ubWoConfRepo.findByHighestId();
     return maybeUbConf.orElse(null);
   }
 

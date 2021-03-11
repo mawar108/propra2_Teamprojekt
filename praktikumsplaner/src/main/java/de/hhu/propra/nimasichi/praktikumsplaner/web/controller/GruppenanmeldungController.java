@@ -20,7 +20,7 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.Z
 
 @Controller
 public class GruppenanmeldungController {
-  private final WochenbelegungRepo wobeRepo;
+  private final transient WochenbelegungRepo wobeRepo;
 
   public GruppenanmeldungController(
       final WochenbelegungRepo wobeRepo) {
@@ -30,7 +30,7 @@ public class GruppenanmeldungController {
   @GetMapping("/ansicht/gruppe/zeitslot_belegen/{id}")
   public String handleZeitslotBelegen(final Model model,
                                       @PathVariable("id") final int zeitslotId,
-                                      @AuthenticationPrincipal OAuth2User principal) {
+                                      @AuthenticationPrincipal final OAuth2User principal) {
 
     final var login = principal.getAttribute("login");
     final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);

@@ -49,11 +49,9 @@ public class StudentenController {
 
   @GetMapping("/ansicht/gruppe/studenten_ansicht")
   public String handleStudentGruppenansicht(final Model model) {
-    List<Zeitslot> freieZeitslots = zsService.getFreieZeitslotsSorted();
-
-    PraktischeUbungswocheConfig ubConf = ucService.getLatestUbungswocheConfig();
-
-    String html = StudentenControllerHelper.selectHtmlFromConfig(ubConf);
+    final var freieZeitslots = zsService.getFreieZeitslotsSorted();
+    final var ubConf = ucService.getLatestUbungswocheConfig();
+    final var html = StudentenControllerHelper.selectHtmlFromConfig(ubConf);
 
     model.addAttribute("freieZeitslots", freieZeitslots);
     model.addAttribute("config", ubConf);

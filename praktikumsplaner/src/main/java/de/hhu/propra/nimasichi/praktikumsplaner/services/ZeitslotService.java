@@ -1,13 +1,11 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
@@ -16,12 +14,12 @@ public class ZeitslotService {
 
   private final transient WochenbelegungRepo wbRepo; // zu langer Name
 
-  public ZeitslotService(WochenbelegungRepo wbRepo) {
+  public ZeitslotService(final WochenbelegungRepo wbRepo) {
     this.wbRepo = wbRepo;
   }
 
   public List<Zeitslot> getFreieZeitslotsSorted() {
-    var zeitslots = getZeitslotsFromRepo();
+    final var zeitslots = getZeitslotsFromRepo();
     return sortZeitslots(zeitslots);
   }
 
@@ -32,9 +30,9 @@ public class ZeitslotService {
   }
 
   private List<Zeitslot> getZeitslotsFromRepo() {
-    Optional<Wochenbelegung> maybeWobe = wbRepo.findByHighestId();
-
+    final var maybeWobe = wbRepo.findByHighestId();
     List<Zeitslot> zeitslots;
+
     if (maybeWobe.isEmpty()) {
       zeitslots = new ArrayList<>();
     } else {

@@ -2,7 +2,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

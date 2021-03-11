@@ -4,7 +4,6 @@ import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.util.Set;
