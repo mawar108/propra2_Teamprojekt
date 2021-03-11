@@ -8,49 +8,58 @@
 <body>
 
 <div class="container">
-    <h4>Name der Übung:</h4>
+    <h1 class="text-center">
+        Praktische Übung konfigurieren
+    </h1>
+
+    <h5>Name der Übung: </h5>
     <span th:text="${params.name}"></span>
 
-    <h4>Gruppenmodus:</h4>
+    <h5>Gruppenmodus:</h5>
     <span th:text="${params.modus}"></span>
 
-    <h4>Anmeldestartdatum:</h4>
+    <h5>Anmeldestartdatum:</h5>
     <span th:text="${params.anStartdatum}"></span>
 
-    <h4>Anmeldestartzeit:</h4>
+    <h5>Anmeldestartzeit:</h5>
     <span th:text="${params.anStartzeit}"></span>
 
-    <h4>Anmeldeschlussdatum:</h4>
+    <h5>Anmeldeschlussdatum:</h5>
     <span th:text="${params.anSchlussdatum}"></span>
 
-    <h4>Anmeldeschlusszeit:</h4>
+    <h5>Anmeldeschlusszeit:</h5>
     <span th:text="${params.anSchlusszeit}"></span>
 
-    <h4>Minimale Personenanzahl:</h4>
+    <h5>Minimale Personenanzahl:</h5>
     <span th:text="${params.minPersonen}"></span>
 
-    <h4>Maximale Personenanzahl:</h4>
+    <h5>Maximale Personenanzahl:</h5>
     <span th:text="${params.maxPersonen}"></span>
 </div>
 
 <div class="container">
     <br>
 
-    <label class="h4">Zeitslots:</label>
-
     <hr>
 
-    <table class="table">
-        <tr>
-            <th>Zeit</th>
-            <th>Tutoren</th>
-        </tr>
+    <label class="h4">Zeitslots:</label>
 
-        <tr th:each="termin : ${tutorTermine}">
-            <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(termin.zeit)}"></td>
-            <td th:text="${termin.name}"></td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="form-group col-md-6">
+
+            <table class="table">
+                <tr>
+                    <th>Zeit</th>
+                    <th>Tutoren</th>
+                </tr>
+
+                <tr th:each="termin : ${tutorTermine}">
+                    <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(termin.zeit)}"></td>
+                    <td th:text="${termin.name}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 </div>
 
@@ -73,6 +82,8 @@
 
         <input type="submit" class="btn btn-success" value="Bestätigen">
     </form>
+
+    <br>
 
     <form method="get" action="/konfiguration">
         <input type="submit" class="btn btn-danger" value="Abbrechen">

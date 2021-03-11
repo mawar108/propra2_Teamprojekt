@@ -12,7 +12,7 @@
 
     <br>
 
-    <h5>Anmeldeschluss: <span th:text="${config.anmeldeschluss}"></span></h5>
+    <h5>Anmeldeschluss: <span th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(config.anmeldeschluss)}"></span></h5>
 
     <h5>Gruppengröße: <span th:text="${config.minPersonen} + '-' + ${config.maxPersonen}">3-5</span></h5>
 </div>

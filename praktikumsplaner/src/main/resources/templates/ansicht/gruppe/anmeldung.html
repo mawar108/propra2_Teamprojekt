@@ -24,30 +24,34 @@
     </div>
 
     <div class="container">
-        <table class="table">
-            <tr>
-                <th>Mitglied</th>
-                <th>Löschen</th>
-            </tr>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <table class="table">
+                    <tr>
+                        <th>Mitglied</th>
+                        <th>Löschen</th>
+                    </tr>
 
-            <tr th:each="mitglied, iter : ${mitglieder}">
-                <td th:text="${mitglied}"></td>
-                <td>
-                    <form th:action="@{/ansicht/gruppe/mitglied_loschen/} + ${iter.index}" method="post">
+                    <tr th:each="mitglied, iter : ${mitglieder}">
+                        <td th:text="${mitglied}"></td>
+                        <td>
+                            <form th:action="@{/ansicht/gruppe/mitglied_loschen/} + ${iter.index}" method="post">
 
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-                        <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
+                                <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
 
-                        <th:block th:each="mitglied : ${mitglieder}">
-                            <input type="hidden" name="mitglieder" th:value="${mitglied}">
-                        </th:block>
+                                <th:block th:each="mitglied : ${mitglieder}">
+                                    <input type="hidden" name="mitglieder" th:value="${mitglied}">
+                                </th:block>
 
-                        <input type="submit" class="btn btn-danger" value="X">
-                    </form>
-                </td>
-            </tr>
-        </table>
+                                <input type="submit" class="btn btn-danger" value="X">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -56,7 +60,7 @@
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
             <div class="row">
-                <label class="h4">GitHub-Name:</label>
+                <label class="h5">GitHub-Name:</label>
 
                 <div class="form-group col-md-3">
                     <input required class="form-control" type="text" id="mitgliedName" name="mitgliedName">
@@ -74,6 +78,8 @@
             <input type="submit" class="btn btn-primary" value="Mitglied hinzufügen">
         </form>
     </div>
+
+    <br>
 
     <div class="container">
         <form action="/ansicht/gruppe/anmeldung_abschliessen" method="post">
