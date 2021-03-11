@@ -44,4 +44,16 @@ public class Zeitslot {
 
     return zeitslot;
   }
+
+  public boolean alleGruppenAngemeldet() {
+    boolean belegt = false;
+    for (var gruppe : gruppen) {
+      if (!gruppe.getMitglieder().isEmpty()) {
+        belegt = true;
+        break;
+      }
+    }
+    return belegt;
+  }
+
 }

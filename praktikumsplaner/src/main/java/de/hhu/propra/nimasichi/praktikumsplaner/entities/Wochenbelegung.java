@@ -2,13 +2,14 @@ package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.util.Set;
 
-@ToString
+@Data
 @AggregateRoot
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,4 +28,6 @@ public final class Wochenbelegung {
     return new Wochenbelegung(
         config.parseTutorTerminToZeitslots());
   }
+
+
 }
