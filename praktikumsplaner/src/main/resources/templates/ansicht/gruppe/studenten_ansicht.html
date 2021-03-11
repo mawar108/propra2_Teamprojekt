@@ -20,9 +20,7 @@
 <hr>
 
 <div class="container">
-
     <div class="row">
-
         <div class="form-group col-md-6">
 
             <table class="table">
@@ -31,21 +29,20 @@
                     <th>Belegen</th>
                 </tr>
 
-                <tr th:each="zeitslot, iter : ${freieZeitslots}">
-                    <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(termin.zeit)}"></td>
+                <tr th:each="zeitslot : ${freieZeitslots}">
+                    <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}"></td>
                     <td>
-                        <form th:action="@{/zeitslot_belegen/} + ${iter.index}" method="post">
+                        <form th:action="@{/ansicht/gruppe/zeitslot_belegen/} + ${zeitslot.id}" method="get">
 
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-                            <input type="submit" class="btn btn-warning" value="Belegen">
+                            <input type="submit" class="btn btn-warning" value="Anmelden">
                         </form>
                     </td>
                 </tr>
             </table>
 
         </div>
-
     </div>
 
 

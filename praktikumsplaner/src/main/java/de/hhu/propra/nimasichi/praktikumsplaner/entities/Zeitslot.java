@@ -45,10 +45,10 @@ public class Zeitslot {
     return zeitslot;
   }
 
-  public boolean alleGruppenAngemeldet() {
+  public boolean minEineFreieGruppe() {
     boolean belegt = false;
     for (var gruppe : gruppen) {
-      if (!gruppe.getMitglieder().isEmpty()) {
+      if (gruppe.getMitglieder().isEmpty()) {
         belegt = true;
         break;
       }

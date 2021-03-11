@@ -5,7 +5,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +24,11 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.T
 @SuppressWarnings("PMD.LawOfDemeter")
 public class KonfigurationController {
 
-  private final transient TutorTerminService tzService;
-
   private final transient UbungswocheConfigRepo ubungswocheConfigRepo;
   private final transient WochenbelegungRepo wochenbelegungRepo;
 
-  public KonfigurationController(final TutorTerminService service,
-                                 final UbungswocheConfigRepo ubungswocheConfigRepo,
+  public KonfigurationController(final UbungswocheConfigRepo ubungswocheConfigRepo,
                                  final WochenbelegungRepo wochenbelegungRepo) {
-    this.tzService = service;
     this.ubungswocheConfigRepo = ubungswocheConfigRepo;
     this.wochenbelegungRepo = wochenbelegungRepo;
   }
@@ -71,9 +67,9 @@ public class KonfigurationController {
                                final String slotDatum) {
 
     final var parsedTutorTermine
-        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
+        = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
     final var parsedSlot
-        = tzService.parseIntoTutorenZeit(tutorName, slotZeit, slotDatum);
+        = TutorTermin.from(tutorName, slotZeit, slotDatum);
     parsedTutorTermine.add(parsedSlot);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
@@ -89,7 +85,7 @@ public class KonfigurationController {
                                   final HttpServletRequest req) {
 
     final var parsedTutorTermine
-        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
+        = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
     parsedTutorTermine.remove(index);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
@@ -104,7 +100,7 @@ public class KonfigurationController {
                                                 final HttpServletRequest req) {
 
     final var parsedTutorTermine
-        = tzService.parseTutorZeitenFromReq(req.getParameterMap());
+        = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
     model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
@@ -118,7 +114,7 @@ public class KonfigurationController {
                                     final HttpServletRequest req) {
 
     final var parsedTutorTermine
-            = tzService.parseTutorZeitenFromReq(req.getParameterMap());
+            = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
 
     final var config = PraktischeUbungswocheConfig
         .makeConfigAndFillZeiten(params,

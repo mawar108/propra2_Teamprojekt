@@ -3,7 +3,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner;
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.UbungswocheConfigService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
 import org.junit.jupiter.api.Test;
@@ -30,9 +29,6 @@ public class ConfigContollerTests {
 
   @Autowired
   private MockMvc mvc;
-
-  @SpyBean
-  private TutorTerminService ttService;
 
   @MockBean
   private GitHubService gitHubService;

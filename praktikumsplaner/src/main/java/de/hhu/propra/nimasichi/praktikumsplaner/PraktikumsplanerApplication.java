@@ -2,6 +2,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,11 +17,15 @@ public class PraktikumsplanerApplication {
   }
 
   @Bean
-  public CommandLineRunner init(final GitHubService ghService, final UbungswocheConfigRepo repo) {
+  public CommandLineRunner init(final GitHubService ghService,
+                                final UbungswocheConfigRepo repo,
+                                final WochenbelegungRepo wbrepo) {
     return args -> {
       ghService.connect();
       final var all = repo.findAll();
       System.out.println("findAll() = " + all);
+      final var wochenbelegung = wbrepo.findAll();
+      System.out.println(wochenbelegung);
     };
   }
 

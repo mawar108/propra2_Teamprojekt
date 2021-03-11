@@ -3,7 +3,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.services;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -37,7 +36,7 @@ public class ZeitslotService {
 			zeitslots = new ArrayList<>();
 		} else {
 			zeitslots = maybeWobe.get().getZeitslots().stream()
-					.filter(Zeitslot::alleGruppenAngemeldet)
+					.filter(Zeitslot::minEineFreieGruppe)
 					.collect(Collectors.toList());
 		}
 
