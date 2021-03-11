@@ -11,11 +11,11 @@ insert into zeitslot (ubungs_anfang, min_personen, max_personen, wochenbelegung)
 values ('2020-05-01 10:05', '10', '20', 1);
 
 insert into gruppe (gruppen_name, tutoren_name, zeitslot)
-values ('Gruppe 1','peter', 1);
+values ('Gruppe 1', 'peter', 1);
 insert into student (github_handle, gruppe)
 values ('abc', 1);
 
 insert into gruppe (gruppen_name, tutoren_name, zeitslot)
-values ('Gruppe 2','hans', 1);
+values ('Gruppe 2', 'hans', 1);
 insert into gruppe (gruppen_name, tutoren_name, zeitslot)
-values ('Gruppe 3','dieter', 2);
+values ('Gruppe 3', 'dieter', 2);
