@@ -1,7 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.DateParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,14 +42,14 @@ public class PraktischeUbungswocheConfig {
     praUbungswocheCfg.setName(params.getName());
 
     praUbungswocheCfg.setAnmeldestart(
-        DateService
+        DateParseHelper
             .mergeDateTimeStrings(
                 params.getAnStartdatum(),
                 params.getAnStartzeit())
     );
 
     praUbungswocheCfg.setAnmeldeschluss(
-        DateService
+        DateParseHelper
             .mergeDateTimeStrings(
                 params.getAnSchlussdatum(),
                 params.getAnSchlusszeit())

@@ -4,6 +4,8 @@ import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.TutorTerminService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.UbungswocheConfigService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,12 @@ public class ConfigContollerTests {
 
   @MockBean
   private WochenbelegungRepo wbRepo;
+
+  @SpyBean
+  private ZeitslotService zsService;
+
+  @MockBean
+  private UbungswocheConfigService uwConfig;
 
   private ConfigContollerTests() { }
 
@@ -176,7 +184,7 @@ public class ConfigContollerTests {
         .andExpect(content().string(
             containsString("<span>20:00</span>")))
         .andExpect(content().string(
-            containsString("<td>Do 03:03</td>")))
+            containsString("<td>2021-03-25 Do 03:03</td>")))
         .andExpect(content().string(
             containsString("<td>Max</td>")));
   }

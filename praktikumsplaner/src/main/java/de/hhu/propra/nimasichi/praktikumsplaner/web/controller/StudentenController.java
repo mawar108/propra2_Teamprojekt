@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -50,7 +51,7 @@ public class StudentenController {
 
   @GetMapping("/ansicht/gruppe/studenten_ansicht")
   public String handleStudentGruppenansicht(final Model model) {
-    Set<Zeitslot> freieZeitslots = zsService.getFreieZeitslots();
+    List<Zeitslot> freieZeitslots = zsService.getFreieZeitslotsSorted();
 
     PraktischeUbungswocheConfig ubConf = ucService.getLatestUbungswocheConfig();
 

@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.services;
+package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -9,32 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public final class DateService {
-  private DateService() { }
-
-  @SuppressWarnings("PMD.LawOfDemeter")
-  public static LocalDate stringToLocalDate(final String date) {
-    final var formatter =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            .withLocale(Locale.GERMANY);
-    return LocalDate.parse(date, formatter);
-  }
-
-  @SuppressWarnings("PMD.LawOfDemeter")
-  public static LocalTime stringToLocalTime(final String time) {
-    final var formatter =
-        DateTimeFormatter.ofPattern("HH:mm")
-            .withLocale(Locale.GERMANY);
-    return LocalTime.parse(time, formatter);
-  }
-
-  public static LocalDateTime mergeDateTimeStrings(final String date,
-                                                   final String time) {
-    return LocalDateTime.of(
-        stringToLocalDate(date),
-        stringToLocalTime(time)
-    );
-  }
+public final class DateFormatHelper {
+  private DateFormatHelper() { }
 
   public static List<DayOfWeek> getDaysOfWeekUntil(final int weekDay) {
     final List<DayOfWeek> daysOfWeek = new ArrayList<>();
@@ -48,8 +24,8 @@ public final class DateService {
 
   @SuppressWarnings("PMD.LawOfDemeter")
   public static String formatTime(final LocalDateTime ldtime) {
-    return abbreviateDayOfWeek(
-        ldtime.getDayOfWeek())
+    return ldtime.toLocalDate().toString()
+        + " " + abbreviateDayOfWeek(ldtime.getDayOfWeek())
         + " " + ldtime.toLocalTime().toString();
   }
 

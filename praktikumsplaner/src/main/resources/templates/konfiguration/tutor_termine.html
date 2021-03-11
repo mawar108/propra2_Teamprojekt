@@ -20,7 +20,7 @@
         </tr>
 
         <tr th:each="termin, iter : ${tutorTermine}">
-            <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.services.DateService).formatTime(termin.zeit)}"></td>
+            <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(termin.zeit)}"></td>
             <td th:text="${termin.name}"></td>
             <td>
                 <form th:action="@{/tutor_termin_loschen/} + ${iter.index}" method="post">

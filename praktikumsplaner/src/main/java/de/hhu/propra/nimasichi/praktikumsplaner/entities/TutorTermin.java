@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.entities;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.services.DateService;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.DateParseHelper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,8 @@ public class TutorTermin {
     final var parts = fmt.split(";");
 
     final var time =
-        LocalDateTime.of(DateService.stringToLocalDate(parts[0]),
-            DateService.stringToLocalTime(parts[1]));
+        LocalDateTime.of(DateParseHelper.stringToLocalDate(parts[0]),
+            DateParseHelper.stringToLocalTime(parts[1]));
 
     return new TutorTermin(parts[2], time);
   }

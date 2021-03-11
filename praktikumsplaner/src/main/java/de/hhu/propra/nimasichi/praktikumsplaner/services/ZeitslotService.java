@@ -3,6 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.services;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,16 +18,29 @@ public class ZeitslotService {
 		this.wbRepo = wbRepo;
 	}
 
-	public Set<Zeitslot> getFreieZeitslots() {
+	public List<Zeitslot> getFreieZeitslotsSorted() {
+		var zeitslots = getZeitslotsFromRepo();
+		return sortZeitslots(zeitslots);
+	}
+
+	private List<Zeitslot> sortZeitslots(final List<Zeitslot> zeitslots) {
+		return zeitslots.stream()
+				.sorted(Comparator.comparing(Zeitslot::getUbungsAnfang))
+				.collect(Collectors.toList());
+	}
+
+	private List<Zeitslot> getZeitslotsFromRepo() {
 		Optional<Wochenbelegung> maybeWobe = wbRepo.findByHighestId();
-		Set<Zeitslot> zeitslots;
+
+		List<Zeitslot> zeitslots;
 		if (maybeWobe.isEmpty()) {
-			zeitslots = new HashSet<>();
+			zeitslots = new ArrayList<>();
 		} else {
 			zeitslots = maybeWobe.get().getZeitslots().stream()
 					.filter(Zeitslot::alleGruppenAngemeldet)
-					.collect(Collectors.toSet());
+					.collect(Collectors.toList());
 		}
+
 		return zeitslots;
 	}
 
