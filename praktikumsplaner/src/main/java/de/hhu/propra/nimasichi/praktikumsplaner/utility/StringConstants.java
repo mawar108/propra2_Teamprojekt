@@ -10,7 +10,7 @@ public final class StringConstants {
   public static final transient String
       ZEITSLOT_MODEL_NAME = "zeitslot";
   public static final transient String
-      ERROR_MODEL_NAME = "error";
+      ALERTS_MODEL_NAME = "alerts";
   public static final transient String
       GRUPPENNAME_MODEL_NAME = "gruppenname";
 

@@ -1,6 +1,9 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.GruppenanmeldungAlertHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,20 +14,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.GRUPPENNAME_MODEL_NAME;
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ERROR_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
 
 @Controller
 public class GruppenanmeldungController {
   private final transient WochenbelegungRepo wobeRepo;
+  private final transient GitHubService gitHubService;
 
   public GruppenanmeldungController(
-      final WochenbelegungRepo wobeRepo) {
+          final WochenbelegungRepo wobeRepo,
+          final GitHubService gitHubService) {
     this.wobeRepo = wobeRepo;
+    this.gitHubService = gitHubService;
   }
 
   @GetMapping("/ansicht/gruppe/zeitslot_belegen/{id}")
@@ -36,7 +43,7 @@ public class GruppenanmeldungController {
     final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
     if (zeitslot.isEmpty()) {
-      model.addAttribute(ERROR_MODEL_NAME,
+      model.addAttribute(ALERTS_MODEL_NAME,
           "Es ist ein Fehler aufgetreten (zeitslot.isEmpty() = true!)");
     } else {
       model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot.get());
@@ -56,17 +63,29 @@ public class GruppenanmeldungController {
     final var parsedMitglieder
         = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
-    final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
+    final var maybeZeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
-    if (zeitslot.isEmpty()) {
-      model.addAttribute(ERROR_MODEL_NAME,
-          "Es ist ein Fehler aufgetreten (zeitslot.isEmpty() = true!)");
-    } else {
-      model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot.get());
+    List<String> alerts = new ArrayList<>();
+
+    Zeitslot zeitslot = GruppenanmeldungAlertHelper
+        .getZeitslotOrAddAlert(maybeZeitslot, alerts);
+
+    if (!gitHubService.doesUserExist(mitgliedName)) {
+      alerts.add("Github-Name nicht vorhanden!");
     }
 
-    parsedMitglieder.add(mitgliedName);
+    if (zeitslot != null) {
+      if (parsedMitglieder.size() < zeitslot.getMaxPersonen()) {
+        parsedMitglieder.add(mitgliedName);
+      } else {
+        alerts.add("Die maximale Mitgliederanzahl von " + zeitslot.getMaxPersonen() + " darf nicht überschritten werden.");
+      }
+    }
 
+
+
+    model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
+    model.addAttribute(ALERTS_MODEL_NAME, alerts);
     model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
 
     return "ansicht/gruppe/anmeldung";
@@ -84,7 +103,7 @@ public class GruppenanmeldungController {
     final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
     if (zeitslot.isEmpty()) {
-      model.addAttribute(ERROR_MODEL_NAME,
+      model.addAttribute(ALERTS_MODEL_NAME,
           "Es ist ein Fehler aufgetreten (zeitslot.isEmpty() = true!)");
     } else {
       model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot.get());
@@ -109,7 +128,7 @@ public class GruppenanmeldungController {
     final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
 
     if (zeitslot.isEmpty()) {
-      model.addAttribute(ERROR_MODEL_NAME,
+      model.addAttribute(ALERTS_MODEL_NAME,
           "Es ist ein Fehler aufgetreten (zeitslot.isEmpty() = true!)");
     } else {
       model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot.get());

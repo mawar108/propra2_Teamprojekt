@@ -23,7 +23,6 @@ public class PraktikumsplanerApplication {
                                 final UbungswocheConfigRepo repo,
                                 final WochenbelegungRepo wbrepo) {
     return args -> {
-      ghService.connect();
       final var all = repo.findAll();
       System.out.println("findAll() = " + all);
       final var wochenbelegung = wbrepo.findAll();

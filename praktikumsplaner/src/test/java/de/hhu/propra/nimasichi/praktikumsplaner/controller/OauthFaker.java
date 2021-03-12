@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner;
+package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.core.context.SecurityContextImpl;

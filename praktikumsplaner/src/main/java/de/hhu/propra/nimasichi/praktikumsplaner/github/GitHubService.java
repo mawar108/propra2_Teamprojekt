@@ -43,7 +43,11 @@ public class GitHubService {
 
   private transient GitHub gitHub;
 
-  public void connect() {
+  public GitHubService() {
+    connect();
+  }
+
+  private void connect() {
     String jwtToken;
     try {
       jwtToken = createJwt(keyLoc, appId, 300_000);
@@ -64,8 +68,14 @@ public class GitHubService {
     }
   }
 
-  public boolean doesUserExist(final String ghHandle) throws IOException {
-    return gitHub.getUser(ghHandle) != null;
+  public boolean doesUserExist(final String ghHandle)  {
+    boolean exists;
+    try {
+      exists = gitHub.getUser(ghHandle) != null;
+    } catch (IOException e) {
+      exists = false;
+    }
+    return exists;
   }
 
   public boolean doUsersExist(final String[] ghHandles) throws IOException {

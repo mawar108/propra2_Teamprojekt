@@ -7,11 +7,11 @@
 </head>
 <body>
 
-<div th:if="${error}">
-    <span th:text="${error}">err</span>
+<div class="alert alert-danger" th:each="alert : ${alerts}">
+    <span th:text="${alert}">err</span>
 </div>
 
-<div th:unless="${error}">
+<div>
     <div class="container">
         <h4 th:text="'Anmeldung zur praktischen Übung am '
     + ${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}">

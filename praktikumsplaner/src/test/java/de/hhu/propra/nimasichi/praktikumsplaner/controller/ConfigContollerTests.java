@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner;
+package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
@@ -176,7 +176,7 @@ public class ConfigContollerTests {
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(content().string(
-            containsString("<h5>Anmeldestartzeit:</h5>")))
+            containsString("Anmeldestartzeit:")))
         .andExpect(content().string(
             containsString("<span>20:00</span>")))
         .andExpect(content().string(
