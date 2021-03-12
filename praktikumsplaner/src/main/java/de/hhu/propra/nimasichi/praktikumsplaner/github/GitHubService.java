@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Service
-@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter"})
 public class GitHubService {
   @Value("${key_location}")
   private transient String keyLoc;
@@ -43,12 +43,9 @@ public class GitHubService {
 
   private transient GitHub gitHub;
 
-  public GitHubService() {
-    connect();
-  }
-
-  private void connect() {
+  public void connect() {
     String jwtToken;
+
     try {
       jwtToken = createJwt(keyLoc, appId, 300_000);
 
@@ -70,15 +67,17 @@ public class GitHubService {
 
   public boolean doesUserExist(final String ghHandle)  {
     boolean exists;
+
     try {
       exists = gitHub.getUser(ghHandle) != null;
     } catch (IOException e) {
       exists = false;
     }
+
     return exists;
   }
 
-  public boolean doUsersExist(final String[] ghHandles) throws IOException {
+  public boolean doUsersExist(final String[] ghHandles) {
     boolean exist = true;
 
     for (final var ghHandle : ghHandles) {
@@ -109,6 +108,7 @@ public class GitHubService {
   private static PrivateKey get(final String filename) {
     byte[] keyBytes;
     PrivateKey privateKey = null;
+
     try {
       keyBytes = Files.toByteArray(new File(filename));
       final var spec = new PKCS8EncodedKeySpec(keyBytes);
@@ -118,6 +118,7 @@ public class GitHubService {
       LoggerFactory.getLogger(PraktikumsplanerApplication.class)
               .error(e.getMessage());
     }
+
     return privateKey;
   }
 
@@ -152,6 +153,7 @@ public class GitHubService {
       jwt = builder.compact();
 
     }
+
     return jwt;
   }
 }

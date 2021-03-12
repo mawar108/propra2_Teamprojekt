@@ -1,7 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.Gruppenmodus;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.Gruppenmodus;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
 
 import java.util.Optional;
 

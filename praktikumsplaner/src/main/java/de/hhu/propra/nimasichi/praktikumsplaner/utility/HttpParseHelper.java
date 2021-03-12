@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 
 import java.util.ArrayList;
 import java.util.Arrays;

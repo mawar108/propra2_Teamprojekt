@@ -1,7 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.repositories;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.Wochenbelegung;
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

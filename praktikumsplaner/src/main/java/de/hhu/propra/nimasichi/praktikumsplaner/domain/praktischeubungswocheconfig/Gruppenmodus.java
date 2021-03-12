@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.entities;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig;
 
 public final class Gruppenmodus {
 

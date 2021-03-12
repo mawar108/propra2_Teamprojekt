@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.utility;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

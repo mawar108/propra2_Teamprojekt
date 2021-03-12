@@ -1,8 +1,7 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.entities;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.DateParseHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @AggregateRoot
-@SuppressWarnings({"PMD.LawOfDemeter", "PMD.LawOfDemeter"})
+@SuppressWarnings("PMD.LawOfDemeter")
 public class PraktischeUbungswocheConfig {
   @Id
   private Long id;
@@ -31,40 +30,6 @@ public class PraktischeUbungswocheConfig {
   private int modus;
   private int minPersonen;
   private int maxPersonen;
-
-
-  public static PraktischeUbungswocheConfig makeConfigAndFillZeiten(
-      final ConfigParamsForm params,
-      final Set<TutorTermin> tutorenZeiten) {
-    final var praUbungswocheCfg =
-        new PraktischeUbungswocheConfig();
-
-    praUbungswocheCfg.setName(params.getName());
-
-    praUbungswocheCfg.setAnmeldestart(
-        DateParseHelper
-            .mergeDateTimeStrings(
-                params.getAnStartdatum(),
-                params.getAnStartzeit())
-    );
-
-    praUbungswocheCfg.setAnmeldeschluss(
-        DateParseHelper
-            .mergeDateTimeStrings(
-                params.getAnSchlussdatum(),
-                params.getAnSchlusszeit())
-    );
-
-    praUbungswocheCfg
-        .setModus(params.getModus());
-    praUbungswocheCfg
-        .setMinPersonen(params.getMinPersonen());
-    praUbungswocheCfg
-        .setMaxPersonen(params.getMaxPersonen());
-
-    praUbungswocheCfg.setTutorTermine(tutorenZeiten);
-    return praUbungswocheCfg;
-  }
 
   public void addZeitslot(final TutorTermin zeitslot) {
     tutorTermine.add(zeitslot);

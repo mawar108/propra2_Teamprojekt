@@ -1,6 +1,7 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.entities;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,5 @@ public final class Wochenbelegung {
     return new Wochenbelegung(
         config.parseTutorTerminToZeitslots());
   }
-
 
 }

@@ -1,6 +1,6 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.entities;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.DateParseHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.DateParseHelper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

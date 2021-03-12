@@ -21,19 +21,21 @@ public class PraktikumsplanerApplication {
   @Bean
   public CommandLineRunner init(final GitHubService ghService,
                                 final UbungswocheConfigRepo repo,
-                                final WochenbelegungRepo wbrepo) {
+                                final WochenbelegungRepo wbRepo) {
     return args -> {
       final var all = repo.findAll();
       System.out.println("findAll() = " + all);
-      final var wochenbelegung = wbrepo.findAll();
+      final var wochenbelegung = wbRepo.findAll();
       System.out.println(wochenbelegung);
+
+      ghService.connect();
 
       final var users = new String[] {
           "mawar108",
           "Nina181",
           "Christopher-Schmitz",
           "Couraxe"
-      };
+        };
       final var exists = ghService.doUsersExist(users);
 
       System.out.println("doUsersExist("

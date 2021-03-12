@@ -62,8 +62,8 @@ endif::[]
 === Kontextabgrenzung
 To Do: noch in ein Diagramm umwandeln
 
-* Kommunikation mit github
-* Keycloak
+* Kommunikation mit GitHub
+* OAuth2
 
 === Fachlicher Kontext
 
@@ -78,11 +78,21 @@ To Do
 
 * Datensicherheit
 
+=== Entwurfsentscheidungen
+
+[.underline]#Bezüglich der ausgeschalteten Regeln#
+
+* Checkstyle / PMD: Dokumentationsregeln ausgeschaltet, da wir eine eigene Dokumentation erstellen bzw. keine JavadocComments verwenden
+
+* PMD.ShortVariableName: Wir benutzen "id" als Primärschlüssel für Tabellen in der Datenbank, somit erreichen wir eine höhere Konsistenz mit dieser im Java-Code.
+
+* PMD.DataflowAnomalyAnalysis: Im GitHubService haben wir die GitHub-API aus dem vorgeschlagenen Video verwendet, der Code wird von PMD mit einer Anomalie geflaggt. Manchmal widersprechen sich PMD.OnlyOneReturn und PMD.DataflowAnomalyAnalysis (Beispiel: doesUserExist).
+
+* PMD.AtLeastOneConstructor: In manchen Klassen brauchen wir keinen Konstruktor.
+
+* PMD.LawOfDemeter: Bei API-Klassen mit dem Builder-Pattern wäre die Einhaltung von LOD nicht umsetzbar (Beispiel: WebSecurityConfiguration).
+
 == Glossar
 
 * TutorTermin = speichert einen Termin und einen Tutor. Wird in der Konfiguration genutzt
 * Zeitslot = speichert einen Termin und die zugehörigen Gruppen. Wird für die Terminverteilung verwendet
-
-
-
-

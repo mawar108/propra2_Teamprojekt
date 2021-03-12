@@ -2,21 +2,9 @@ package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class DateFormatHelper {
   private DateFormatHelper() { }
-
-  public static List<DayOfWeek> getDaysOfWeekUntil(final int weekDay) {
-    final List<DayOfWeek> daysOfWeek = new ArrayList<>();
-
-    for (int i = 1; i <= weekDay; ++i) {
-      daysOfWeek.add(DayOfWeek.of(i));
-    }
-
-    return daysOfWeek;
-  }
 
   @SuppressWarnings("PMD.LawOfDemeter")
   public static String formatTime(final LocalDateTime ldtime) {

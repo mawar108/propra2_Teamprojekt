@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.entities.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.GruppenanmeldungAlertHelper;
@@ -78,11 +78,11 @@ public class GruppenanmeldungController {
       if (parsedMitglieder.size() < zeitslot.getMaxPersonen()) {
         parsedMitglieder.add(mitgliedName);
       } else {
-        alerts.add("Die maximale Mitgliederanzahl von " + zeitslot.getMaxPersonen() + " darf nicht überschritten werden.");
+        alerts.add("Die maximale Mitgliederanzahl von "
+            + zeitslot.getMaxPersonen()
+            + " darf nicht überschritten werden.");
       }
     }
-
-
 
     model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
     model.addAttribute(ALERTS_MODEL_NAME, alerts);

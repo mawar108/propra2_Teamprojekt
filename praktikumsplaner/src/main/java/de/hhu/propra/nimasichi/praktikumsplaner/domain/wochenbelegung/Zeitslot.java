@@ -1,5 +1,6 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.entities;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings({
-    "PMD.DefaultPackage",
-    "PMD.CommentDefaultAccessModifier",
     "PMD.ShortVariable",
+    "PMD.DataflowAnomalyAnalysis",
     "PMD.LawOfDemeter"
 })
 public class Zeitslot {
@@ -48,12 +48,14 @@ public class Zeitslot {
 
   public boolean minEineFreieGruppe() {
     boolean belegt = false;
+
     for (final var gruppe : gruppen) {
       if (gruppe.getMitglieder().isEmpty()) {
         belegt = true;
         break;
       }
     }
+
     return belegt;
   }
 

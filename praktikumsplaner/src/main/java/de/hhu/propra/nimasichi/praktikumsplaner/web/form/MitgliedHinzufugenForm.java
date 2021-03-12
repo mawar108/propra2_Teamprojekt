@@ -1,11 +1,13 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.form;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 
 import java.util.List;
 
+@Data
 public class MitgliedHinzufugenForm {
-
 
   @NotBlank
   private final String mitgliedName;
@@ -19,7 +21,4 @@ public class MitgliedHinzufugenForm {
     this.zeitslotId = zeitslotId;
   }
 
-  public void setGruppenMitglieder(final List<String> gruppenMitglieder) {
-    this.gruppenMitglieder = gruppenMitglieder;
-  }
 }
