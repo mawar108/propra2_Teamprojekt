@@ -26,7 +26,7 @@ public class TutorTermin {
     this.zeit = zeit;
   }
 
-  public static TutorTermin fromParseable(final String fmt) {
+  static TutorTermin fromParseable(final String fmt) {
     final var parts = fmt.split(";");
 
     final var time =
@@ -36,13 +36,13 @@ public class TutorTermin {
     return new TutorTermin(parts[2], time);
   }
 
-  public static TutorTermin from(final String tutorenName,
+  static TutorTermin from(final String tutorenName,
                                  final String slotZeit,
                                  final String slotDatum) {
     return fromParseable(slotDatum + ";" + slotZeit + ";" + tutorenName);
   }
 
-  public String toParseable() {
+  String toParseable() {
     return zeit.toLocalDate() + ";" + zeit.toLocalTime() + ";" + name;
   }
 

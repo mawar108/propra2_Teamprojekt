@@ -1,6 +1,5 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.Gruppenmodus;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
 
 import java.util.Optional;
@@ -15,7 +14,7 @@ public final class StudentenControllerHelper {
 
     if (maybeUbungswocheConfig.isEmpty()) {
       html = "redirect:/ansicht/error/keine_ubung";
-    } else if (maybeUbungswocheConfig.get().getModus() == Gruppenmodus.INDIVIDUAL) {
+    } else if (maybeUbungswocheConfig.get().getModus() == NumericConstants.MODUS_INDIVIDUAL) {
       html = "redirect:/ansicht/individual/studenten_ansicht";
     } else {
       html = "redirect:/ansicht/gruppe/studenten_ansicht";

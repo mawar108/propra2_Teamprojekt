@@ -1,11 +1,14 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+@Utility
 public class DateParseHelper {
 
   @SuppressWarnings("PMD.LawOfDemeter")

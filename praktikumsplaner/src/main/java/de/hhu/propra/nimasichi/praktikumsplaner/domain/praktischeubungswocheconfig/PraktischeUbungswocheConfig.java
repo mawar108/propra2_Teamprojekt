@@ -1,6 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.annotations.AggregateRoot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.DateParseHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin.fromParseable;
 
 @Data
 @ToString
@@ -44,7 +48,19 @@ public class PraktischeUbungswocheConfig {
             .collect(Collectors.groupingBy(TutorTermin::getZeit))
             .values()
             .stream()
-            .map(tts -> Zeitslot.fromTutorTermin(tts, minPersonen, maxPersonen))
+            .map(tts -> Wochenbelegung.zeitslotFromTutorTermine(tts, minPersonen, maxPersonen))
             .collect(Collectors.toSet());
   }
+
+  public static TutorTermin tutorTerminFrom(final String tutorenName,
+                                            final String slotZeit,
+                                            final String slotDatum) {
+
+    return TutorTermin.from(slotDatum, slotZeit, tutorenName);
+  }
+
+  public static TutorTermin tutorTerminFromParseable(final String fmt) {
+    return TutorTermin.fromParseable(fmt);
+  }
+
 }

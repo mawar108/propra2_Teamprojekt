@@ -4,7 +4,7 @@ import lombok.Value;
 import org.springframework.data.annotation.Id;
 
 @Value
-public class Student {
+class Student {
   @Id
   private String githubHandle;
 }

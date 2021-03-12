@@ -28,9 +28,9 @@ public class Zeitslot {
   private int minPersonen;
   private int maxPersonen;
 
-  public static Zeitslot fromTutorTermin(final List<TutorTermin> tutorTermine,
-                                         final int minPersonen,
-                                         final int maxPersonen) {
+  static Zeitslot fromTutorTermine(final List<TutorTermin> tutorTermine,
+                                   final int minPersonen,
+                                   final int maxPersonen) {
 
     final var zeitslot = new Zeitslot();
     final var gruppen

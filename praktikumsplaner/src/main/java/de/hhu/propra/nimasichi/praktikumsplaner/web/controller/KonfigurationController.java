@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
@@ -68,7 +69,7 @@ public class KonfigurationController {
     final var parsedTutorTermine
         = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
     final var parsedSlot
-        = TutorTermin.from(tutorName, slotZeit, slotDatum);
+        = PraktischeUbungswocheConfig.tutorTerminFrom(tutorName, slotZeit, slotDatum);
     parsedTutorTermine.add(parsedSlot);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);

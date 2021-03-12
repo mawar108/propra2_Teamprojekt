@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public final class HttpParseHelper {
       parsedList = new ArrayList<>();
     } else {
       parsedList = Arrays.stream(tutorTermin)
-          .map(TutorTermin::fromParseable)
+          .map(PraktischeUbungswocheConfig::tutorTerminFromParseable)
           .collect(Collectors.toList());
     }
 

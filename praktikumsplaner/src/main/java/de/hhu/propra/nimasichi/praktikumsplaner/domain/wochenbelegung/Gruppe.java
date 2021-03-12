@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Gruppe {
+class Gruppe {
   @Id
   private Long id;
 
@@ -18,11 +18,11 @@ public class Gruppe {
   private String tutorenName;
   private Set<Student> mitglieder;
 
-  public Gruppe(final String tutorenName) {
+  Gruppe(final String tutorenName) {
     this.tutorenName = tutorenName;
   }
 
-  public Gruppe(final String gruppenName,
+  Gruppe(final String gruppenName,
                 final String tutorenName,
                 final Set<Student> mitglieder) {
     this.gruppenName = gruppenName;
