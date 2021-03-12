@@ -37,13 +37,9 @@ public class TutorTermin {
   }
 
   static TutorTermin from(final String tutorenName,
-                                 final String slotZeit,
-                                 final String slotDatum) {
+                          final String slotZeit,
+                          final String slotDatum) {
     return fromParseable(slotDatum + ";" + slotZeit + ";" + tutorenName);
-  }
-
-  String toParseable() {
-    return zeit.toLocalDate() + ";" + zeit.toLocalTime() + ";" + name;
   }
 
 }

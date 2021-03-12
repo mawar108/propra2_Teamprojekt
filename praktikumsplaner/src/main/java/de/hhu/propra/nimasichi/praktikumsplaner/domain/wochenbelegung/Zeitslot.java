@@ -59,4 +59,25 @@ public class Zeitslot {
     return belegt;
   }
 
+  boolean hatRestplatze() {
+    boolean hatRestplatze = false;
+
+    for (Gruppe gruppe : gruppen) {
+      if (gruppe.hatRestplatze(maxPersonen)) {
+        hatRestplatze = true;
+        break;
+      }
+    }
+
+    return hatRestplatze;
+  }
+
+  public void addToGruppe(String login) {
+    for (Gruppe gruppe : gruppen) {
+      if (gruppe.hatRestplatze(maxPersonen)) {
+        gruppe.addMitglied(login);
+        return;
+      }
+    }
+  }
 }

@@ -3,6 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.RestplatzeService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.UbungswocheConfigService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,9 @@ public class ConfigContollerTests {
 
   @MockBean
   private UbungswocheConfigService uwConfig;
+
+  @MockBean
+  private RestplatzeService rpService;
 
   private ConfigContollerTests() { }
 

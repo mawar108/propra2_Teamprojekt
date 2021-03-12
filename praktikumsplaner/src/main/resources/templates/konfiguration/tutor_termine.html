@@ -45,7 +45,8 @@
                             <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
                             <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
                             <th:block th:each="termin : ${tutorTermine}">
-                                <input type="hidden" name="tutorTermine" th:value="${termin.toParseable()}">
+                                <input type="hidden" name="tutorTermine"
+                                       th:value="${T(de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.TutorTerminParseHelper).tutorTerminToParseable(termin)}">
                             </th:block>
 
                             <input type="submit" class="btn btn-danger" value="X">
@@ -96,7 +97,8 @@
         <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
         <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
         <th:block th:each="termin : ${tutorTermine}">
-            <input type="hidden" name="tutorTermine" th:value="${termin.toParseable()}">
+            <input type="hidden" name="tutorTermine"
+                   th:value="${T(de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.TutorTerminParseHelper).tutorTerminToParseable(termin)}">
         </th:block>
 
         <input type="submit" class="btn btn-primary" value="Tutor hinzufügen">
@@ -120,7 +122,8 @@
         <input type="hidden" name="minPersonen" th:value="${params.minPersonen}">
         <input type="hidden" name="maxPersonen" th:value="${params.maxPersonen}">
         <th:block th:each="termin : ${tutorTermine}">
-            <input type="hidden" name="tutorTermine" th:value="${termin.toParseable()}">
+            <input type="hidden" name="tutorTermine"
+                   th:value="${T(de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.TutorTerminParseHelper).tutorTerminToParseable(termin)}">
         </th:block>
 
         <input type="submit" class="btn btn-success" value="Konfiguration abschließen">

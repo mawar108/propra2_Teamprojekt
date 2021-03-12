@@ -29,4 +29,13 @@ class Gruppe {
     this.tutorenName = tutorenName;
     this.mitglieder = mitglieder;
   }
+
+  boolean hatRestplatze(int maxPersonen) {
+    return !mitglieder.isEmpty() && mitglieder.size() < maxPersonen;
+
+  }
+
+  public void addMitglied(String login) {
+    mitglieder.add(new Student(login));
+  }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @AggregateRoot
@@ -35,6 +36,20 @@ public final class Wochenbelegung {
                                                   final int minPersonen,
                                                   final int maxPersonen) {
     return Zeitslot.fromTutorTermine(tutorTermine, minPersonen, maxPersonen);
+  }
+
+  public static void addToZeitslot(Zeitslot zeitslot, String login) {
+    zeitslot.addToGruppe(login);
+  }
+
+  public List<Zeitslot> getZeitslotsWithRestplatze() {
+    return zeitslots.stream().
+        filter(Zeitslot::hatRestplatze)
+        .collect(Collectors.toList());
+  }
+
+  public static boolean zeitslotHatRestplatze(Zeitslot zeitslot) {
+    return zeitslot.hatRestplatze();
   }
 
 }

@@ -55,8 +55,7 @@ public class PraktischeUbungswocheConfig {
   public static TutorTermin tutorTerminFrom(final String tutorenName,
                                             final String slotZeit,
                                             final String slotDatum) {
-
-    return TutorTermin.from(slotDatum, slotZeit, tutorenName);
+    return TutorTermin.from(tutorenName, slotZeit, slotDatum);
   }
 
   public static TutorTermin tutorTerminFromParseable(final String fmt) {

@@ -1,6 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

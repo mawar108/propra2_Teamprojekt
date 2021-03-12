@@ -13,6 +13,8 @@ public final class StringConstants {
       ALERTS_MODEL_NAME = "alerts";
   public static final transient String
       GRUPPENNAME_MODEL_NAME = "gruppenname";
+  public static final transient String
+      RESTPLATZE_MODEL_NAME = "restplatze";
 
   private StringConstants() { }
 }
