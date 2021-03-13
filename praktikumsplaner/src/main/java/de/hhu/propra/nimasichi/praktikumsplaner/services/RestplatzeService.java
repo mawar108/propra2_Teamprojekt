@@ -19,11 +19,11 @@ public class RestplatzeService {
 
   public List<Zeitslot> getRestplatze() {
     List<Zeitslot> restplatze;
-    final var maybeWochenbelegung
+    final var maybeWobe
         = wobeRepo.findByHighestId();
 
-    if (maybeWochenbelegung.isPresent()) {
-      restplatze = maybeWochenbelegung
+    if (maybeWobe.isPresent()) {
+      restplatze = maybeWobe
           .get()
           .getZeitslotsWithRestplatze();
     } else {

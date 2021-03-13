@@ -10,6 +10,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings({
+    "PMD.ShortVariable"
+})
 class Gruppe {
 
   @Id
@@ -31,11 +34,12 @@ class Gruppe {
     this.mitglieder = mitglieder;
   }
 
-  boolean hatRestplatze(int maxPersonen) {
-    return !mitglieder.isEmpty() && mitglieder.size() < maxPersonen;
+  boolean hatRestplatze(final int maxPersonen) {
+    return !mitglieder.isEmpty()
+        && mitglieder.size() < maxPersonen;
   }
 
-  public void addMitglied(String login) {
+  public void addMitglied(final String login) {
     mitglieder.add(new Student(login));
   }
 

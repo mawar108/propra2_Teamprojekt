@@ -25,7 +25,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Service
-@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter"})
+@SuppressWarnings({
+    "PMD.AtLeastOneConstructor",
+    "PMD.LawOfDemeter",
+    "PMD.DataflowAnomalyAnalysis"
+})
 public class GitHubService {
   @Value("${key_location}")
   private transient String keyLoc;
@@ -77,7 +81,7 @@ public class GitHubService {
     return exists;
   }
 
-  public boolean doUsersExist(final String[] ghHandles) {
+  public boolean doUsersExist(final String... ghHandles) {
     boolean exist = true;
 
     for (final var ghHandle : ghHandles) {

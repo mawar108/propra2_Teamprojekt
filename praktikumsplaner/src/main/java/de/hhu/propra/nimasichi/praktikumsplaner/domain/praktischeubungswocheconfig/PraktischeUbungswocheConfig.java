@@ -1,7 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.DateParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import lombok.AllArgsConstructor;
@@ -15,14 +14,15 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin.fromParseable;
-
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @AggregateRoot
-@SuppressWarnings("PMD.LawOfDemeter")
+@SuppressWarnings({
+    "PMD.LawOfDemeter",
+    "PMD.ShortVariable"
+})
 public class PraktischeUbungswocheConfig {
   @Id
   private Long id;

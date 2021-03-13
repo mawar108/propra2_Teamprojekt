@@ -1,5 +1,11 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
+
+@Utility
+@SuppressWarnings({
+    "PMD.LongVariable"
+})
 public final class StringConstants {
   public static final transient String
       PARAMS_MODEL_NAME = "params";

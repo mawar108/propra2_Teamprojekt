@@ -1,8 +1,11 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
+@Utility
 public final class DateFormatHelper {
   private DateFormatHelper() { }
 

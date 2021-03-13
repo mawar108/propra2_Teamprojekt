@@ -4,31 +4,24 @@ import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.GruppenanmeldungAlertHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.validation.annotation.ContainsMitglieder;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.validation.annotation.GitHubHandle;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.validation.annotation.MitgliederCount;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.validation.annotation.ZeitslotId;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.GRUPPENNAME_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
 
 @Controller
-@Validated
 public class GruppenanmeldungController {
 
   private final transient WochenbelegungRepo wobeRepo;
@@ -41,7 +34,6 @@ public class GruppenanmeldungController {
     this.gitHubService = ghService;
   }
 
-//  OLD
   @GetMapping("/ansicht/gruppe/zeitslot_belegen/{id}")
   public String handleZeitslotBelegen(final Model model,
                                       @PathVariable("id")

@@ -1,7 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 @Utility
-public class DateParseHelper {
+public final class DateParseHelper {
+
+  private DateParseHelper() { }
 
   @SuppressWarnings("PMD.LawOfDemeter")
   public static LocalDate stringToLocalDate(final String date) {

@@ -62,7 +62,7 @@ public class Zeitslot {
   boolean hatRestplatze() {
     boolean hatRestplatze = false;
 
-    for (Gruppe gruppe : gruppen) {
+    for (final var gruppe : gruppen) {
       if (gruppe.hatRestplatze(maxPersonen)) {
         hatRestplatze = true;
         break;
@@ -72,8 +72,8 @@ public class Zeitslot {
     return hatRestplatze;
   }
 
-  public void addToGruppe(String login) {
-    for (Gruppe gruppe : gruppen) {
+  public void addToGruppe(final String login) {
+    for (final var gruppe : gruppen) {
       if (gruppe.hatRestplatze(maxPersonen)) {
         gruppe.addMitglied(login);
         return;

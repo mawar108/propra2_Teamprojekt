@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 @Service
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class ZeitslotService {
 
   private final transient WochenbelegungRepo wbRepo; // zu langer Name

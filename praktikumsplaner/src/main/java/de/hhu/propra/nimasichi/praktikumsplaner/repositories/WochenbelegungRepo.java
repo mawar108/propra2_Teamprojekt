@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
+@SuppressWarnings({
+    "PMD.ShortVariable"
+})
 public interface WochenbelegungRepo extends CrudRepository<Wochenbelegung, Long> {
 
   @Query("SELECT * FROM wochenbelegung ORDER BY id DESC LIMIT 1")

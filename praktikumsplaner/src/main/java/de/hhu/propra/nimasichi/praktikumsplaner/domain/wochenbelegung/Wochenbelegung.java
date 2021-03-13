@@ -16,7 +16,10 @@ import java.util.stream.Collectors;
 @AggregateRoot
 @NoArgsConstructor
 @AllArgsConstructor
-@SuppressWarnings("PMD.ShortVariable")
+@SuppressWarnings({
+    "PMD.ShortVariable",
+    "PMD.LawOfDemeter"
+})
 public final class Wochenbelegung {
 
   @Id
@@ -44,11 +47,14 @@ public final class Wochenbelegung {
     return Zeitslot.fromTutorTermine(tutorTermine, minPersonen, maxPersonen);
   }
 
-  public static void addToZeitslot(Zeitslot zeitslot, String login) {
+  public static void addToZeitslot(
+      final Zeitslot zeitslot,
+      final String login) {
     zeitslot.addToGruppe(login);
   }
 
-  public static boolean zeitslotHatRestplatze(Zeitslot zeitslot) {
+  public static boolean zeitslotHatRestplatze(
+      final Zeitslot zeitslot) {
     return zeitslot.hatRestplatze();
   }
 
