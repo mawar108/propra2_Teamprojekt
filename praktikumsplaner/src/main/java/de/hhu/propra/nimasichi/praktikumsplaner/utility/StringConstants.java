@@ -17,9 +17,9 @@ public final class StringConstants {
       RESTPLATZE_MODEL_NAME = "restplatze";
 
   public static final transient String
-      ROLE_ORGA    = "ROLE_ORGA";
+      ROLE_ORGA    = "ORGA";
   public static final transient String
-      ROLE_STUDENT = "ROLE_STUDENT";
+      ROLE_STUDENT = "STUDENT";
 
   private StringConstants() { }
 }

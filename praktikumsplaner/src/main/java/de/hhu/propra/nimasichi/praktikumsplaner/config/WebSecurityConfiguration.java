@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_ORGA;
+
 @Configuration
 @SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LawOfDemeter"})
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
