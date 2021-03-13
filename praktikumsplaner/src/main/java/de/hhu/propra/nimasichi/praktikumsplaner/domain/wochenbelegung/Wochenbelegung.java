@@ -43,8 +43,8 @@ public final class Wochenbelegung {
   }
 
   public List<Zeitslot> getZeitslotsWithRestplatze() {
-    return zeitslots.stream().
-        filter(Zeitslot::hatRestplatze)
+    return zeitslots.stream()
+        .filter(Zeitslot::hatRestplatze)
         .collect(Collectors.toList());
   }
 

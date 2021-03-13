@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.*;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.RESTPLATZE_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
 
 @Controller
 public class RestplatzeanmeldungController {
@@ -34,14 +35,14 @@ public class RestplatzeanmeldungController {
 
   @PostMapping("/ansicht/gruppe/restplatze/belegen/{id}")
   public String handleRestplatzebelegen(final Model model,
-                                        @PathVariable ("id") int zeitslotId,
+                                        @PathVariable ("id") final int zeitslotId,
                                         @AuthenticationPrincipal final OAuth2User principal) {
 
     final String login = principal.getAttribute("login");
-    model.addAttribute("user", login);
-
     final var maybeZeitslot = wobeRepo.findZeitslotById(zeitslotId);
     Zeitslot zeitslot;
+
+    model.addAttribute("user", login);
 
     if (maybeZeitslot.isEmpty()) {
       model.addAttribute(ALERTS_MODEL_NAME,
