@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS gruppe;
 DROP TABLE IF EXISTS zeitslot;
 DROP TABLE IF EXISTS wochenbelegung;
-
+DROP TABLE IF EXISTS orga_member;
 
 CREATE TABLE praktische_ubungswoche_config
 (
@@ -21,17 +21,15 @@ CREATE TABLE praktische_ubungswoche_config
 
 CREATE TABLE tutor_termin
 (
-    id                          integer   NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name                        varchar   NOT NULL,
-    zeit                        TIMESTAMP NOT NULL,
+    id                            integer   NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name                          varchar   NOT NULL,
+    zeit                          TIMESTAMP NOT NULL,
     praktische_ubungswoche_config integer references praktische_ubungswoche_config (id)
 );
 
 CREATE TABLE roles
 (
-    id   integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name varchar NOT NULL,
-    role varchar NOT NULL
+    role varchar NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE wochenbelegung
@@ -59,5 +57,11 @@ CREATE TABLE gruppe
 CREATE TABLE student
 (
     github_handle varchar NOT NULL PRIMARY KEY,
-    gruppe       integer references gruppe (id)
+    gruppe        integer references gruppe (id)
+);
+
+CREATE TABLE orga_member
+(
+    github_handle varchar NOT NULL PRIMARY KEY,
+    role          varchar references roles (role)
 );

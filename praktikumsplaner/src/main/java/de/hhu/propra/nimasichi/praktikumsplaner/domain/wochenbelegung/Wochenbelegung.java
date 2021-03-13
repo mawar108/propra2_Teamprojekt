@@ -27,6 +27,12 @@ public final class Wochenbelegung {
     this.zeitslots = zeitslots;
   }
 
+  public List<Zeitslot> getZeitslotsWithRestplatze() {
+    return zeitslots.stream()
+        .filter(Zeitslot::hatRestplatze)
+        .collect(Collectors.toList());
+  }
+
   public static Wochenbelegung fromConfig(final PraktischeUbungswocheConfig config) {
     return new Wochenbelegung(
         config.parseTutorTerminToZeitslots());
@@ -40,12 +46,6 @@ public final class Wochenbelegung {
 
   public static void addToZeitslot(Zeitslot zeitslot, String login) {
     zeitslot.addToGruppe(login);
-  }
-
-  public List<Zeitslot> getZeitslotsWithRestplatze() {
-    return zeitslots.stream()
-        .filter(Zeitslot::hatRestplatze)
-        .collect(Collectors.toList());
   }
 
   public static boolean zeitslotHatRestplatze(Zeitslot zeitslot) {

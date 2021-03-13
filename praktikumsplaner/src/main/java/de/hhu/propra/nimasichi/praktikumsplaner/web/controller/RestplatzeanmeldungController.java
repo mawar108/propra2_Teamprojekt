@@ -39,7 +39,8 @@ public class RestplatzeanmeldungController {
                                         @AuthenticationPrincipal final OAuth2User principal) {
 
     final String login = principal.getAttribute("login");
-    final var maybeZeitslot = wobeRepo.findZeitslotById(zeitslotId);
+    final var maybeZeitslot
+        = wobeRepo.findZeitslotById(zeitslotId);
     Zeitslot zeitslot;
 
     model.addAttribute("user", login);

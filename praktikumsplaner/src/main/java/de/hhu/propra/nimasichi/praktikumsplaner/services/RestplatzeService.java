@@ -1,29 +1,35 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RestplatzeService {
 
-  private final transient WochenbelegungRepo wochenbelegungRepo;
+  private final transient WochenbelegungRepo wobeRepo;
 
-  public RestplatzeService(final WochenbelegungRepo wochenbelegungRepo) {
-    this.wochenbelegungRepo = wochenbelegungRepo;
+  public RestplatzeService(
+      final WochenbelegungRepo wobeRepo) {
+    this.wobeRepo = wobeRepo;
   }
 
   public List<Zeitslot> getRestplatze() {
-    List<Zeitslot> restplatze = new ArrayList<>();
-    Optional<Wochenbelegung> maybeWochenbelegung = wochenbelegungRepo.findByHighestId();
+    List<Zeitslot> restplatze;
+    final var maybeWochenbelegung
+        = wobeRepo.findByHighestId();
+
     if (maybeWochenbelegung.isPresent()) {
-      restplatze = maybeWochenbelegung.get().getZeitslotsWithRestplatze();
+      restplatze = maybeWochenbelegung
+          .get()
+          .getZeitslotsWithRestplatze();
+    } else {
+      restplatze = new ArrayList<>();
     }
+
     return restplatze;
   }
 }

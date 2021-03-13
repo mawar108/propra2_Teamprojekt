@@ -19,3 +19,8 @@ insert into gruppe (gruppen_name, tutoren_name, zeitslot)
 values ('Gruppe 2', 'hans', 1);
 insert into gruppe (gruppen_name, tutoren_name, zeitslot)
 values ('Gruppe 3', 'dieter', 2);
+
+insert into roles values ('ROLE_ORGA');
+insert into roles values ('ROLE_TUTOR');
+
+insert into orga_member values ('bendisposto', 'ROLE_ORGA');
