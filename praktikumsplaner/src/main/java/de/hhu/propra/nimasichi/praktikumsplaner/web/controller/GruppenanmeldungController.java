@@ -1,6 +1,5 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.validation.annotation.ContainsMitglieder;
@@ -20,7 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Min;
 import java.util.List;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.*;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.GRUPPENNAME_MODEL_NAME;
 
 @Controller
 @Validated
@@ -118,7 +120,8 @@ public class GruppenanmeldungController {
   @PostMapping("/ansicht/gruppe/mitglied_loschen/{idx}")
   public String handleAnmeldungMitgliedLoschen(final Model model,
                                                @ContainsMitglieder
-                                               @MitgliederCount(min = 2) final HttpServletRequest req,
+                                               @MitgliederCount(min = 2)
+                                               final HttpServletRequest req,
                                                @PathVariable("idx")
                                                @Min(0) final int index,
                                                @ZeitslotId final int zeitslotId) {
