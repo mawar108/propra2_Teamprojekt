@@ -30,7 +30,7 @@ public final class HttpParseHelper {
     if (tutorTermin == null) {
       parsedList = new ArrayList<>();
     } else {
-      // LawOfDemeter unvermeidbar
+      // PMD.LawOfDemeter unvermeidbar
       parsedList = Arrays.stream(tutorTermin)
           .map(UbungswocheConfig::tutorTerminFromParseable)
           .collect(Collectors.toList());

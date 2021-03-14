@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MODUS_GRUPPE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,7 +32,7 @@ public class UbungswocheRepoTests {
     assertEquals(latest.getAnmeldestart().getDayOfMonth(), 1);
     assertEquals(latest.getAnmeldeschluss().getDayOfMonth(), 9);
     assertEquals(latest.getName(), "Pue 8");
-    assertEquals(latest.getModus(), 1); // GRUPPE = 1
+    assertEquals(latest.getModus(), MODUS_GRUPPE);
     assertEquals(latest.getMinPersonen(), 3);
     assertEquals(latest.getMaxPersonen(), 5);
   }

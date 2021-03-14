@@ -63,7 +63,6 @@ public class GruppenanmeldungController {
     return "ansicht/gruppe/anmeldung";
   }
 
-
   @PostMapping("/ansicht/gruppe/mitglied_hinzufugen")
   public String handleAnmeldungMitgliedHinzufugen(final String mitgliedName,
                                                   final int zeitslotId,
@@ -75,8 +74,10 @@ public class GruppenanmeldungController {
 
     String html;
     if (zsService.zeitslotExists(zeitslotId)) {
-      model.addAttribute(ZEITSLOT_MODEL_NAME, wobeRepo.findZeitslotById(zeitslotId).get());
-      model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
+      model.addAttribute(ZEITSLOT_MODEL_NAME,
+          wobeRepo.findZeitslotById(zeitslotId).get());
+      model.addAttribute(MITGLIEDER_MODEL_NAME,
+          parsedMitglieder);
       html = "ansicht/gruppe/anmeldung";
     } else {
       html = "ansicht/error/kein_zeitslot";
@@ -100,8 +101,10 @@ public class GruppenanmeldungController {
     String html;
 
     if (zsService.zeitslotExists(zeitslotId)) {
-      model.addAttribute(ZEITSLOT_MODEL_NAME, wobeRepo.findZeitslotById(zeitslotId).get());
-      model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
+      model.addAttribute(ZEITSLOT_MODEL_NAME,
+          wobeRepo.findZeitslotById(zeitslotId).get());
+      model.addAttribute(MITGLIEDER_MODEL_NAME,
+          parsedMitglieder);
       html = "ansicht/gruppe/anmeldung";
     } else {
       html = "ansicht/error/kein_zeitslot";
@@ -123,7 +126,11 @@ public class GruppenanmeldungController {
           = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
       final var form
-          = new MitgliedHinzufugenForm(zeitslotId, parsedMitglieder, gruppenname);
+          = new MitgliedHinzufugenForm(
+              zeitslotId,
+              parsedMitglieder,
+              gruppenname
+      );
 
       form.validateForm(gitHubService, zeitslot.getMaxPersonen());
 

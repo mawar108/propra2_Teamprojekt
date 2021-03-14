@@ -30,7 +30,6 @@ public class TutorTermin {
 
   public static TutorTermin fromParseable(final String fmt) {
     final var parts = fmt.split(";");
-
     final var time =
         LocalDateTime.of(DateParseHelper.stringToLocalDate(parts[0]),
             DateParseHelper.stringToLocalTime(parts[1]));
