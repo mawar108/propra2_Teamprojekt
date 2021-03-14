@@ -5,6 +5,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconf
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,14 @@ public class KonfigurationController {
 
   private final transient UbungswocheConfigRepo ubungswocheConfigRepo;
   private final transient WochenbelegungRepo wochenbelegungRepo;
+  private final transient LetzteTutorTermineService ttService;
 
   public KonfigurationController(final UbungswocheConfigRepo ubungswocheConfigRepo,
-                                 final WochenbelegungRepo wochenbelegungRepo) {
+                                 final WochenbelegungRepo wochenbelegungRepo,
+                                 final LetzteTutorTermineService ttService) {
     this.ubungswocheConfigRepo = ubungswocheConfigRepo;
     this.wochenbelegungRepo = wochenbelegungRepo;
+    this.ttService = ttService;
   }
 
   @GetMapping("/konfiguration")
@@ -42,15 +46,7 @@ public class KonfigurationController {
   public String handleTutorenansichtPost(final Model model,
                                          final ConfigParamsForm params) {
 
-    final var maybeUbWoConfig
-        = ubungswocheConfigRepo.findByHighestId();
-    Set<TutorTermin> tutorenTermine;
-
-    if (maybeUbWoConfig.isEmpty()) {
-      tutorenTermine = new HashSet<>();
-    } else {
-      tutorenTermine = maybeUbWoConfig.get().getTutorTermine();
-    }
+    var tutorenTermine = ttService.getNeueTutorTermine(params);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
     model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, tutorenTermine);
