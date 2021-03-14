@@ -18,7 +18,7 @@ public class GitHubServiceTests {
 
   @BeforeEach
   void setup() {
-    assertDoesNotThrow(ghService::connect);
+    ghService.connect();
   }
 
   @Test
