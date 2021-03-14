@@ -91,6 +91,8 @@ dependencies {
 
 	testImplementation 'com.tngtech.archunit:archunit-junit5:0.14.1'
 
+	testImplementation 'org.mockito:mockito-inline:2.13.0'
+
 }
 
 test {
