@@ -67,9 +67,10 @@ To Do: noch in ein Diagramm umwandeln
 
 === Fachlicher Kontext
 
-* Admin -> Login Seite -> Admin Ansicht (z.B. neue Übung erstellen oder Gruppenaufteilung ändern)
-* Tutoren -> Login Seite -> Tutoren Ansicht (Liste der Gruppen mit Tutoren)
-* Studenten -> Login Seite -> Studenten Ansicht (belegen eines Zeitslots)
+* Admin     -> Loginseite -> Adminansicht (z.B. neue Übung erstellen oder Gruppenaufteilung ändern)
+* Tutoren   -> Loginseite -> Tutorenansicht (Liste der Gruppen mit Tutoren)
+* Studenten -> Loginseite -> Studentenansicht (belegen eines Zeitslots)
+* Studenten -> Loginseite -> Restplatzanmeldung
 
 === Ebene 1 der Bausteinsicht
 To Do
@@ -80,19 +81,19 @@ To Do
 
 === Entwurfsentscheidungen
 
-[.underline]#Bezüglich der ausgeschalteten Regeln#
+[.underline]#Warum wir einige Regeln durch ```@SuppressWarnings``` und checkstyle.xml ausgeschaltet haben#
 
 * Checkstyle / PMD: Dokumentationsregeln ausgeschaltet, da wir eine eigene Dokumentation erstellen bzw. keine JavadocComments verwenden
 
-* PMD.ShortVariableName: Wir benutzen "id" als Primärschlüssel für Tabellen in der Datenbank, somit erreichen wir eine höhere Konsistenz mit dieser im Java-Code.
+* ```PMD.ShortVariableName```: Wir benutzen ```id``` als Primärschlüssel für Tabellen in der Datenbank, somit erreichen wir eine höhere Konsistenz mit dieser im Java-Code.
 
-* PMD.DataflowAnomalyAnalysis: Im GitHubService haben wir die GitHub-API aus dem vorgeschlagenen Video verwendet, der Code wird von PMD mit einer Anomalie geflaggt. Manchmal widersprechen sich PMD.OnlyOneReturn und PMD.DataflowAnomalyAnalysis (Beispiel: doesUserExist).
+* ```PMD.DataflowAnomalyAnalysis```: Im ```GitHubService``` haben wir die GitHub-API aus dem vorgeschlagenen Video verwendet, der Code wird von PMD mit einer Anomalie geflaggt. Manchmal widersprechen sich ```PMD.OnlyOneReturn``` und ```PMD.DataflowAnomalyAnalysis``` (Beispiel: ```doesUserExist```).
 
-* PMD.AtLeastOneConstructor: In manchen Klassen brauchen wir keinen Konstruktor.
+* ```PMD.AtLeastOneConstructor```: In manchen Klassen brauchen wir keinen Konstruktor.
 
-* PMD.LawOfDemeter: Bei API-Klassen mit dem Builder-Pattern wäre die Einhaltung von LOD nicht umsetzbar (Beispiel: WebSecurityConfiguration).
+* ```PMD.LawOfDemeter```: Bei API-Klassen mit dem Builder-Pattern wäre die Einhaltung von LOD nicht umsetzbar (Beispiel: ```WebSecurityConfiguration```).
 
 == Glossar
 
-* TutorTermin = speichert einen Termin und einen Tutor. Wird in der Konfiguration genutzt
-* Zeitslot = speichert einen Termin und die zugehörigen Gruppen. Wird für die Terminverteilung verwendet
+* ```TutorTermin```: Speichert einen Termin (```LocalDateTime```) und einen Tutor. Wird in der Konfiguration genutzt
+* ```Zeitslot```: Speichert einen Termin und die zugehörigen Gruppen. Wird für die Terminverteilung verwendet
