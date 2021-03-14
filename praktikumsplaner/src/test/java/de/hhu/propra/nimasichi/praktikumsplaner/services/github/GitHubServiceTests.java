@@ -2,6 +2,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.services.github;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,7 @@ public class GitHubServiceTests {
   }
 
   @Test
+  @Disabled
   void testSingleUserExists() {
     final var user   = "mawar108";
     final var exists = ghService.doesUserExist(user);
@@ -30,6 +32,7 @@ public class GitHubServiceTests {
   }
 
   @Test
+  @Disabled
   void testMultipleUsersExist() {
     final var users = new String[] {
         "mawar108",
@@ -43,6 +46,7 @@ public class GitHubServiceTests {
   }
 
   @Test
+  @Disabled
   void testSingleInvalidUserDoesNotExist() {
     final var user   = ";";
     final var exists = ghService.doesUserExist(user);
@@ -51,6 +55,7 @@ public class GitHubServiceTests {
   }
 
   @Test
+  @Disabled
   void testMultipleInvalidUsersDoNotExist() {
     final var users = new String[] {
         ";",
