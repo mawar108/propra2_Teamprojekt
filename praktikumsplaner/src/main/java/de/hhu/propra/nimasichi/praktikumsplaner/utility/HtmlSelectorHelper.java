@@ -1,19 +1,20 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
 
 import java.util.Optional;
 
 @Utility
 @SuppressWarnings({
-    "PMD.LongVariable"
+    "PMD.LongVariable",
+    "PMD.LawOfDemeter"
 })
 public final class HtmlSelectorHelper {
   private HtmlSelectorHelper() { }
 
   public static String selectHtmlFromConfigForModus(
-      final Optional<PraktischeUbungswocheConfig>
+      final Optional<UbungswocheConfig>
           maybeUbungswocheConfig) {
 
     String html;
@@ -31,7 +32,7 @@ public final class HtmlSelectorHelper {
   }
 
   public static String selectHtmlFromConfig(
-      final PraktischeUbungswocheConfig
+      final UbungswocheConfig
           maybeUbungswocheConfig) {
 
     String html;
@@ -45,7 +46,7 @@ public final class HtmlSelectorHelper {
     return html;
   }
 
-  public static String selectHtmlForFormValidation(boolean isValid) {
+  public static String selectHtmlForFormValidation(final boolean isValid) {
     String html;
     if (isValid) {
       html = "ansicht/gruppe/anmeldung_abschliessen";

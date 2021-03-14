@@ -1,8 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public final class HttpParseHelper {
     } else {
       // LawOfDemeter unvermeidbar
       parsedList = Arrays.stream(tutorTermin)
-          .map(PraktischeUbungswocheConfig::tutorTerminFromParseable)
+          .map(UbungswocheConfig::tutorTerminFromParseable)
           .collect(Collectors.toList());
     }
 

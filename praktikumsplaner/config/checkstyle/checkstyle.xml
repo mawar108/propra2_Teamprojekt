@@ -345,5 +345,8 @@
                 default="checkstyle-xpath-suppressions.xml" />
       <property name="optional" value="true"/>
     </module>
+    <module name="EmptyCatchBlock">
+      <property name="exceptionVariableName" value="expected"/>
+    </module>
   </module>
 </module>

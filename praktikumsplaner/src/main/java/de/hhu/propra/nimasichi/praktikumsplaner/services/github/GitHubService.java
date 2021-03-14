@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.unit.github;
+package de.hhu.propra.nimasichi.praktikumsplaner.services.github;
 
 import com.google.common.io.Files;
 import de.hhu.propra.nimasichi.praktikumsplaner.PraktikumsplanerApplication;

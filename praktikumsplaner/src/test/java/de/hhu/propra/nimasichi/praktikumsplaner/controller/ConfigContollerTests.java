@@ -1,12 +1,12 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.unit.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.LetzteTutorTermineService;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.RestplatzeService;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.UbungswocheConfigService;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.RestplatzeService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

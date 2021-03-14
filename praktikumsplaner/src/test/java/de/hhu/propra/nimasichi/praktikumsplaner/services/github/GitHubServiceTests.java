@@ -1,13 +1,12 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.unit.github;
+package de.hhu.propra.nimasichi.praktikumsplaner.services.github;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class GitHubServiceTests {
@@ -27,7 +26,7 @@ public class GitHubServiceTests {
     final var user   = "mawar108";
     final var exists = ghService.doesUserExist(user);
 
-    assertTrue(exists);
+    Assertions.assertTrue(exists);
   }
 
   @Test
@@ -37,10 +36,10 @@ public class GitHubServiceTests {
         "Nina181",
         "Christopher-Schmitz",
         "Couraxe"
-    };
+      };
     final var exist = ghService.doUsersExist(users);
 
-    assertTrue(exist);
+    Assertions.assertTrue(exist);
   }
 
   @Test
@@ -48,7 +47,7 @@ public class GitHubServiceTests {
     final var user   = ";";
     final var exists = ghService.doesUserExist(user);
 
-    assertFalse(exists);
+    Assertions.assertFalse(exists);
   }
 
   @Test
@@ -57,10 +56,10 @@ public class GitHubServiceTests {
         ";",
         "`",
         "'"
-    };
+      };
     final var exists = ghService.doUsersExist(users);
 
-    assertFalse(exists);
+    Assertions.assertFalse(exists);
   }
 
 }

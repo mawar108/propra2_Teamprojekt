@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.unit.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.boot.CommandLineRunner;
@@ -21,13 +21,7 @@ public class PraktikumsplanerApplication {
                                 final UbungswocheConfigRepo ubWoRepo,
                                 final WochenbelegungRepo wbRepo) {
     return args -> {
-      final var all = ubWoRepo.findAll();
-      final var wochenbelegung = wbRepo.findAll();
-
       ghService.connect();
-
-      System.out.println("findAll() = "      + all);
-      System.out.println("wochenbelegung = " + wochenbelegung);
     };
   }
 

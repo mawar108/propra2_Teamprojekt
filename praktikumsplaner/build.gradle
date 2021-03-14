@@ -48,6 +48,8 @@ pmd {
 			"category/java/performance.xml",
 			"category/java/security.xml"
 	]
+
+	sourceSets = [sourceSets.main]
 }
 
 repositories {

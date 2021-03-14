@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings({
-    "PMD.ShortVariable"
+    "PMD.ShortVariable",
+    "PMD.DefaultPackage"
 })
 class Gruppe {
 
@@ -22,19 +24,13 @@ class Gruppe {
   private String tutorenName;
   private Set<Student> mitglieder;
 
-  Gruppe(final String tutorenName) {
+  /* default */ Gruppe(final String tutorenName) {
     this.tutorenName = tutorenName;
+    this.gruppenName = "";
+    this.mitglieder  = new HashSet<>();
   }
 
-  Gruppe(final String gruppenName,
-         final String tutorenName,
-         final Set<Student> mitglieder) {
-    this.gruppenName = gruppenName;
-    this.tutorenName = tutorenName;
-    this.mitglieder = mitglieder;
-  }
-
-  boolean hatRestplatze(final int maxPersonen) {
+  /* default */ boolean hatRestplatze(final int maxPersonen) {
     return !mitglieder.isEmpty()
         && mitglieder.size() < maxPersonen;
   }

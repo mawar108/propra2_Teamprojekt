@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.services;
+package de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class RestplatzeService {
 
   private final transient WochenbelegungRepo wobeRepo;

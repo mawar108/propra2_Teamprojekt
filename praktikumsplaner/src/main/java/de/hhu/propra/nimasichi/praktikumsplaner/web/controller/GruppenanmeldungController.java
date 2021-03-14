@@ -1,7 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
-import de.hhu.propra.nimasichi.praktikumsplaner.unit.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HtmlSelectorHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
@@ -23,6 +23,9 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.M
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
 
 @Controller
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class GruppenanmeldungController {
 
   private final transient WochenbelegungRepo wobeRepo;
@@ -31,7 +34,8 @@ public class GruppenanmeldungController {
 
   public GruppenanmeldungController(
       final WochenbelegungRepo wobeRepo,
-      final GitHubService ghService, ZeitslotService zsService) {
+      final GitHubService ghService,
+      final ZeitslotService zsService) {
     this.wobeRepo = wobeRepo;
     this.gitHubService = ghService;
     this.zsService = zsService;
@@ -94,6 +98,7 @@ public class GruppenanmeldungController {
     parsedMitglieder.remove(index);
 
     String html;
+
     if (zsService.zeitslotExists(zeitslotId)) {
       model.addAttribute(ZEITSLOT_MODEL_NAME, wobeRepo.findZeitslotById(zeitslotId).get());
       model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
@@ -117,11 +122,12 @@ public class GruppenanmeldungController {
       final var parsedMitglieder
           = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
-      MitgliedHinzufugenForm form = new MitgliedHinzufugenForm(zeitslotId, parsedMitglieder, gruppenname);
+      final var form
+          = new MitgliedHinzufugenForm(zeitslotId, parsedMitglieder, gruppenname);
 
       form.validateForm(gitHubService, zeitslot.getMaxPersonen());
 
-      List<String> alerts = form.getAlerts();
+      final var alerts = form.getAlerts();
 
       model.addAttribute(ALERTS_MODEL_NAME, alerts);
       model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);

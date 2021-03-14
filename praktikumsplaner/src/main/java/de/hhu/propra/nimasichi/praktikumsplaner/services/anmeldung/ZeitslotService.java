@@ -1,14 +1,13 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.services;
+package de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
 
 @Service
 @SuppressWarnings({
@@ -28,7 +27,7 @@ public class ZeitslotService {
   }
 
   public boolean zeitslotExists(final int zeitslotd) {
-    Optional<Zeitslot> maybeZeitslot = wbRepo.findZeitslotById(zeitslotd);
+    final var maybeZeitslot = wbRepo.findZeitslotById(zeitslotd);
     return maybeZeitslot.isPresent();
   }
 

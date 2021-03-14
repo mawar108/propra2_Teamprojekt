@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS tutor_termin;
-DROP TABLE IF EXISTS praktische_ubungswoche_config;
+DROP TABLE IF EXISTS ubungswoche_config;
 
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS gruppe;
@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS orga_member;
 
 DROP TABLE IF EXISTS roles;
 
-CREATE TABLE praktische_ubungswoche_config
+CREATE TABLE ubungswoche_config
 (
     id             integer   NOT NULL PRIMARY KEY AUTO_INCREMENT,
     anmeldestart   TIMESTAMP NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE tutor_termin
     id                            integer   NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name                          varchar   NOT NULL,
     zeit                          TIMESTAMP NOT NULL,
-    praktische_ubungswoche_config integer references praktische_ubungswoche_config (id)
+    ubungswoche_config integer references ubungswoche_config (id)
 );
 
 CREATE TABLE roles

@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
     "PMD.LawOfDemeter",
     "PMD.ShortVariable"
 })
-public class PraktischeUbungswocheConfig {
+public class UbungswocheConfig {
   @Id
   private Long id;
 

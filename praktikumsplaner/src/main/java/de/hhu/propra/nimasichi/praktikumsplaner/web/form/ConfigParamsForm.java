@@ -1,7 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.form;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.DateParseHelper;
 import lombok.Value;
 
@@ -22,11 +22,11 @@ public class ConfigParamsForm {
   int minPersonen;
   int maxPersonen;
 
-  public PraktischeUbungswocheConfig makeConfigAndFillZeiten(
+  public UbungswocheConfig makeConfigAndFillZeiten(
           final Set<TutorTermin> tutorenZeiten) {
 
     final var praUbungswocheCfg =
-            new PraktischeUbungswocheConfig();
+            new UbungswocheConfig();
 
     praUbungswocheCfg.setName(name);
 

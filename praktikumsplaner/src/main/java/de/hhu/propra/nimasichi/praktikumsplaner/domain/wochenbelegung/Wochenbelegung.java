@@ -1,8 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,7 @@ public final class Wochenbelegung {
         .collect(Collectors.toList());
   }
 
-  public static Wochenbelegung fromConfig(final PraktischeUbungswocheConfig config) {
+  public static Wochenbelegung fromConfig(final UbungswocheConfig config) {
     return new Wochenbelegung(
         config.parseTutorTerminToZeitslots());
   }

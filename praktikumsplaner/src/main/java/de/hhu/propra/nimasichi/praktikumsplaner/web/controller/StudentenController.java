@@ -1,8 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.UbungswocheConfigService;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HtmlSelectorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

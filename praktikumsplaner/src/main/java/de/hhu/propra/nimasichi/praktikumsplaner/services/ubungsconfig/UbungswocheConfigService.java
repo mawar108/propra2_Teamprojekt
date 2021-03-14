@@ -1,10 +1,14 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.services;
+package de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import org.springframework.stereotype.Service;
 
+// TODO
 @Service
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class UbungswocheConfigService {
 
   private final transient UbungswocheConfigRepo ubWoConfRepo;
@@ -14,7 +18,7 @@ public class UbungswocheConfigService {
     this.ubWoConfRepo = ubWoConfRepo;
   }
 
-  public PraktischeUbungswocheConfig getLatestUbungswocheConfig() {
+  public UbungswocheConfig getLatestUbungswocheConfig() {
     final var maybeUbConf = ubWoConfRepo.findByHighestId();
     return maybeUbConf.orElse(null);
   }

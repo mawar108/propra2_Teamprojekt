@@ -1,8 +1,8 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.services;
+package de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig;
 
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.DateParseHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@SuppressWarnings("PMD.LawOfDemeter")
+@SuppressWarnings({
+    "PMD.LawOfDemeter",
+    "PMD.LongVariable"
+})
 public class LetzteTutorTermineService {
 
   private static final TemporalAmount ONE_WEEK = Duration.ofDays(7);
@@ -24,19 +27,23 @@ public class LetzteTutorTermineService {
     this.ubWoConfRepo = ubWoConfRepo;
   }
 
-  public Set<TutorTermin> getNeueTutorTermine(String anSchlussdatum, String anSchlusszeit) {
-    final var maybeUbWoConf = ubWoConfRepo.findByHighestId();
+  public Set<TutorTermin> getNeueTutorTermine(final String anSchlussdatum,
+                                              final String anSchlusszeit) {
+    final var maybeUbWoConf
+        = ubWoConfRepo.findByHighestId();
 
     Set<TutorTermin> neueTermine;
     if (maybeUbWoConf.isPresent()) {
       final Set<TutorTermin> tutorTermine =
           maybeUbWoConf.get().getTutorTermine();
-      neueTermine = new HashSet<>(tutorTermine);
-
-      final var anmeldeSchluss = DateParseHelper.mergeDateTimeStrings(
+      final var anmeldeSchluss
+          = DateParseHelper.mergeDateTimeStrings(
           anSchlussdatum,
           anSchlusszeit
       );
+
+      neueTermine = new HashSet<>(tutorTermine);
+
       updateDates(neueTermine, anmeldeSchluss);
     } else {
       neueTermine = new HashSet<>();
@@ -47,7 +54,8 @@ public class LetzteTutorTermineService {
 
   private void updateDates(final Set<TutorTermin> tutorTermine,
                            final LocalDateTime anmeldeSchluss) {
-    while (notAllTermineAreAfterAnmeldeschluss(tutorTermine, anmeldeSchluss)) {
+    while (notAllTermineAreAfterAnmeldeschluss(
+        tutorTermine, anmeldeSchluss)) {
       addOneWeekToDate(tutorTermine);
     }
   }
@@ -56,16 +64,16 @@ public class LetzteTutorTermineService {
   private boolean notAllTermineAreAfterAnmeldeschluss(
       final Set<TutorTermin> tutorTermine,
       final LocalDateTime anmeldeSchluss) {
-    boolean allAreAfterAs = true;
+    boolean allAreAfterAnSchluss = true;
 
-    for (final TutorTermin tutorTermin : tutorTermine) {
+    for (final var tutorTermin : tutorTermine) {
       if (tutorTermin.getZeit().isBefore(anmeldeSchluss)) {
-        allAreAfterAs = false;
+        allAreAfterAnSchluss = false;
         break;
       }
     }
 
-    return !allAreAfterAs;
+    return !allAreAfterAnSchluss;
   }
 
   private void addOneWeekToDate(final Set<TutorTermin> tutorTermine) {

@@ -3,7 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.RestplatzeService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.RestplatzeService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,9 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.R
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
 
 @Controller
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class RestplatzeanmeldungController {
 
   private final transient RestplatzeService restplatzeService;

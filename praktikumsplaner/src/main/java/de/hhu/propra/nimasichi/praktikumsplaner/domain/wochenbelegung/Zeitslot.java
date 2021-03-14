@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 @SuppressWarnings({
     "PMD.ShortVariable",
     "PMD.DataflowAnomalyAnalysis",
-    "PMD.LawOfDemeter"
+    "PMD.LawOfDemeter",
+    "PMD.DefaultPackage"
 })
 public class Zeitslot {
   @Id
@@ -28,7 +29,7 @@ public class Zeitslot {
   private int minPersonen;
   private int maxPersonen;
 
-  static Zeitslot fromTutorTermine(final List<TutorTermin> tutorTermine,
+  public static Zeitslot fromTutorTermine(final List<TutorTermin> tutorTermine,
                                    final int minPersonen,
                                    final int maxPersonen) {
 
@@ -59,7 +60,7 @@ public class Zeitslot {
     return belegt;
   }
 
-  boolean hatRestplatze() {
+  /* default */ boolean hatRestplatze() {
     boolean hatRestplatze = false;
 
     for (final var gruppe : gruppen) {

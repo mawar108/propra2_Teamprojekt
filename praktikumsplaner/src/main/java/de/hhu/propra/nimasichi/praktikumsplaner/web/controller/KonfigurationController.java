@@ -1,11 +1,10 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.LetzteTutorTermineService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import org.springframework.stereotype.Controller;
@@ -16,24 +15,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
-import java.util.Set;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.PARAMS_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.TUTOREN_TERMINE_MODEL_NAME;
 
 @Controller
-@SuppressWarnings("PMD.LawOfDemeter")
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class KonfigurationController {
 
-  private final transient UbungswocheConfigRepo ubungswocheConfigRepo;
-  private final transient WochenbelegungRepo wochenbelegungRepo;
+  private final transient UbungswocheConfigRepo ubConfRepo;
+  private final transient WochenbelegungRepo wobeRepo;
   private final transient LetzteTutorTermineService ttService;
 
-  public KonfigurationController(final UbungswocheConfigRepo ubungswocheConfigRepo,
-                                 final WochenbelegungRepo wochenbelegungRepo,
+  public KonfigurationController(final UbungswocheConfigRepo ubConfRepo,
+                                 final WochenbelegungRepo wobeRepo,
                                  final LetzteTutorTermineService ttService) {
-    this.ubungswocheConfigRepo = ubungswocheConfigRepo;
-    this.wochenbelegungRepo = wochenbelegungRepo;
+    this.ubConfRepo = ubConfRepo;
+    this.wobeRepo = wobeRepo;
     this.ttService = ttService;
   }
 
@@ -46,7 +46,7 @@ public class KonfigurationController {
   public String handleTutorenansichtPost(final Model model,
                                          final ConfigParamsForm params) {
 
-    var tutorenTermine = ttService.getNeueTutorTermine(
+    final var tutorenTermine = ttService.getNeueTutorTermine(
         params.getAnSchlussdatum(),
         params.getAnSchlusszeit()
     );
@@ -65,14 +65,14 @@ public class KonfigurationController {
                                final String slotZeit,
                                final String slotDatum) {
 
-    final var parsedTutorTermine
+    final var parsedTermine
         = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
     final var parsedSlot
-        = PraktischeUbungswocheConfig.tutorTerminFrom(tutorName, slotZeit, slotDatum);
-    parsedTutorTermine.add(parsedSlot);
+        = UbungswocheConfig.tutorTerminFrom(tutorName, slotZeit, slotDatum);
+    parsedTermine.add(parsedSlot);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTermine);
 
     return "konfiguration/tutor_termine";
   }
@@ -83,12 +83,12 @@ public class KonfigurationController {
                                   final ConfigParamsForm params,
                                   final HttpServletRequest req) {
 
-    final var parsedTutorTermine
+    final var parsedTermine
         = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
-    parsedTutorTermine.remove(index);
+    parsedTermine.remove(index);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTermine);
 
     return "konfiguration/tutor_termine";
   }
@@ -98,11 +98,11 @@ public class KonfigurationController {
                                                 final ConfigParamsForm params,
                                                 final HttpServletRequest req) {
 
-    final var parsedTutorTermine
+    final var parsedTermine
         = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
-    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTutorTermine);
+    model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, parsedTermine);
 
     return "konfiguration/konfiguration_abschliessen";
   }
@@ -112,24 +112,21 @@ public class KonfigurationController {
                                     final ConfigParamsForm params,
                                     final HttpServletRequest req) {
 
-    final var parsedTutorTermine
+    final var parsedTermine
             = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
 
     final var config = params
-        .makeConfigAndFillZeiten(new HashSet<>(parsedTutorTermine));
+        .makeConfigAndFillZeiten(new HashSet<>(parsedTermine));
 
-    ubungswocheConfigRepo.save(config);
+    ubConfRepo.save(config);
 
     final var wochenbelegung
         = Wochenbelegung.fromConfig(config);
-    wochenbelegungRepo.save(wochenbelegung);
+    wobeRepo.save(wochenbelegung);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
     model.addAttribute(TUTOREN_TERMINE_MODEL_NAME,
-        parsedTutorTermine);
-
-    System.out.println(ubungswocheConfigRepo.findAll());
-    System.out.println(wochenbelegungRepo.findAll());
+        parsedTermine);
 
     return "ansicht/orga/orga_tuto_ansicht";
   }
