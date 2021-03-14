@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner;
+package de.hhu.propra.nimasichi.praktikumsplaner.unit;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.PraktischeUbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
@@ -27,7 +27,7 @@ public class LetzteTutorTerminServiceTests {
     LetzteTutorTermineService ttService = new LetzteTutorTermineService(repo);
 
     Set<TutorTermin> neueTutorTermine
-        = ttService.getNeueTutorTermine(mock(ConfigParamsForm.class));
+        = ttService.getNeueTutorTermine("2020-01-01", "00:00");
 
     assertThat(neueTutorTermine).isEmpty();
   }
@@ -45,11 +45,12 @@ public class LetzteTutorTerminServiceTests {
     when(config.getTutorTermine()).thenReturn(alteTermine);
     when(repo.findByHighestId()).thenReturn(Optional.of(config));
 
-    ConfigParamsForm params = mockParamsForm("2020-01-03", "00:00");
+    String anmeldeSchlussdatum = "2020-01-03";
+    String anmeldeSchlusszeit =  "00:00";
 
     LetzteTutorTermineService ttService = new LetzteTutorTermineService(repo);
 
-    Set<TutorTermin> neueTermine = ttService.getNeueTutorTermine(params);
+    Set<TutorTermin> neueTermine = ttService.getNeueTutorTermine(anmeldeSchlussdatum, anmeldeSchlusszeit);
 
     var expectedTermin = new TutorTermin("Max", LocalDateTime.of(2020, 1, 8, 10, 30));
     assertThat(neueTermine).contains(expectedTermin);
@@ -71,10 +72,12 @@ public class LetzteTutorTerminServiceTests {
 
     when(repo.findByHighestId()).thenReturn(Optional.of(config));
 
-    ConfigParamsForm params = mockParamsForm("2020-01-02", "00:00");
+    String anmeldeSchlussdatum = "2020-01-02";
+    String anmeldeSchlusszeit =  "00:00";
+
     LetzteTutorTermineService ttService = new LetzteTutorTermineService(repo);
 
-    Set<TutorTermin> neueTermine = ttService.getNeueTutorTermine(params);
+    Set<TutorTermin> neueTermine = ttService.getNeueTutorTermine(anmeldeSchlussdatum, anmeldeSchlusszeit);
 
     var expectedTermine = Set.of(
         new TutorTermin("Max", LocalDateTime.of(2020, 1, 8, 10, 30)),
@@ -99,10 +102,11 @@ public class LetzteTutorTerminServiceTests {
 
     when(repo.findByHighestId()).thenReturn(Optional.of(config));
 
-    ConfigParamsForm params = mockParamsForm("2020-01-09", "00:00");
+    String anmeldeSchlussdatum = "2020-01-09";
+    String anmeldeSchlusszeit =  "00:00";
     LetzteTutorTermineService ttService = new LetzteTutorTermineService(repo);
 
-    Set<TutorTermin> neueTermine = ttService.getNeueTutorTermine(params);
+    Set<TutorTermin> neueTermine = ttService.getNeueTutorTermine(anmeldeSchlussdatum, anmeldeSchlusszeit);
 
     var expectedTermine = Set.of(
         new TutorTermin("Max", LocalDateTime.of(2020, 1, 15, 10, 30)),
@@ -111,11 +115,5 @@ public class LetzteTutorTerminServiceTests {
     assertThat(neueTermine).containsAll(expectedTermine);
   }
 
-  private ConfigParamsForm mockParamsForm(String anmeldeSchlussDatum, String anmeldeSchlusszeit) {
-    ConfigParamsForm params = mock(ConfigParamsForm.class);
-    when(params.getAnSchlussdatum()).thenReturn(anmeldeSchlussDatum);
-    when(params.getAnSchlusszeit()).thenReturn(anmeldeSchlusszeit);
-    return params;
-  }
 
 }

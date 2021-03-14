@@ -46,7 +46,10 @@ public class KonfigurationController {
   public String handleTutorenansichtPost(final Model model,
                                          final ConfigParamsForm params) {
 
-    var tutorenTermine = ttService.getNeueTutorTermine(params);
+    var tutorenTermine = ttService.getNeueTutorTermine(
+        params.getAnSchlussdatum(),
+        params.getAnSchlusszeit()
+    );
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
     model.addAttribute(TUTOREN_TERMINE_MODEL_NAME, tutorenTermine);

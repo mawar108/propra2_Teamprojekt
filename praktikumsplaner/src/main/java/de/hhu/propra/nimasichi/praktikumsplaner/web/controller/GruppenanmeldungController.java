@@ -1,9 +1,11 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
+import de.hhu.propra.nimasichi.praktikumsplaner.unit.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.GruppenanmeldungAlertHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.HtmlSelectorHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.web.form.MitgliedHinzufugenForm;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
@@ -26,12 +27,14 @@ public class GruppenanmeldungController {
 
   private final transient WochenbelegungRepo wobeRepo;
   private final transient GitHubService gitHubService;
+  private final transient ZeitslotService zsService;
 
   public GruppenanmeldungController(
       final WochenbelegungRepo wobeRepo,
-      final GitHubService ghService) {
+      final GitHubService ghService, ZeitslotService zsService) {
     this.wobeRepo = wobeRepo;
     this.gitHubService = ghService;
+    this.zsService = zsService;
   }
 
   @GetMapping("/ansicht/gruppe/zeitslot_belegen/{id}")
@@ -56,37 +59,26 @@ public class GruppenanmeldungController {
     return "ansicht/gruppe/anmeldung";
   }
 
-  @PostMapping("/ansicht/gruppe/mitglied_hinzufugen")
-  public String handleAnmeldungMitgliedHinzufugen(final Model model,
-                                                  final HttpServletRequest req,
-                                                  final String mitgliedName,
-                                                  final int zeitslotId) {
 
+  @PostMapping("/ansicht/gruppe/mitglied_hinzufugen")
+  public String handleAnmeldungMitgliedHinzufugen(final String mitgliedName,
+                                                  final int zeitslotId,
+                                                  final Model model,
+                                                  final HttpServletRequest req) {
     final var parsedMitglieder
         = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
-    final var maybeZeitslot = wobeRepo.findZeitslotById(zeitslotId);
-    final var alerts = new ArrayList<String>();
-    final var zeitslot = GruppenanmeldungAlertHelper
-        .getZeitslotOrAddAlert(maybeZeitslot, alerts);
+    parsedMitglieder.add(mitgliedName);
 
-    if (!gitHubService.doesUserExist(mitgliedName)) {
-      alerts.add("Github-Name nicht vorhanden!");
+    String html;
+    if (zsService.zeitslotExists(zeitslotId)) {
+      model.addAttribute(ZEITSLOT_MODEL_NAME, wobeRepo.findZeitslotById(zeitslotId).get());
+      model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
+      html = "ansicht/gruppe/anmeldung";
+    } else {
+      html = "ansicht/error/kein_zeitslot";
     }
 
-    if (zeitslot != null) {
-      if (parsedMitglieder.size() < zeitslot.getMaxPersonen()) {
-        parsedMitglieder.add(mitgliedName);
-      } else {
-        alerts.add("Die maximale Mitgliederanzahl von "
-            + zeitslot.getMaxPersonen()
-            + " darf nicht überschritten werden.");
-      }
-    }
-
-    model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
-    model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
-
-    return "ansicht/gruppe/anmeldung";
+    return html;
   }
 
   @PostMapping("/ansicht/gruppe/mitglied_loschen/{idx}")
@@ -98,14 +90,19 @@ public class GruppenanmeldungController {
 
     final var parsedMitglieder
         = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
-    final var zeitslot = wobeRepo.findZeitslotById(zeitslotId).get();
 
     parsedMitglieder.remove(index);
 
-    model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
-    model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
+    String html;
+    if (zsService.zeitslotExists(zeitslotId)) {
+      model.addAttribute(ZEITSLOT_MODEL_NAME, wobeRepo.findZeitslotById(zeitslotId).get());
+      model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
+      html = "ansicht/gruppe/anmeldung";
+    } else {
+      html = "ansicht/error/kein_zeitslot";
+    }
 
-    return "ansicht/gruppe/anmeldung";
+    return html;
   }
 
   @PostMapping("/ansicht/gruppe/anmeldung_abschliessen")
@@ -113,21 +110,29 @@ public class GruppenanmeldungController {
                                             final HttpServletRequest req,
                                             final String gruppenname,
                                             final int zeitslotId) {
+    String html;
+    if (zsService.zeitslotExists(zeitslotId)) {
+      final var zeitslot = wobeRepo.findZeitslotById(zeitslotId).get();
 
-    final var parsedMitglieder
-        = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
-    final var zeitslot = wobeRepo.findZeitslotById(zeitslotId);
+      final var parsedMitglieder
+          = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
-    if (zeitslot.isEmpty()) {
-      model.addAttribute(ALERTS_MODEL_NAME,
-          "Es ist ein Fehler aufgetreten (zeitslot.isEmpty() = true!)");
+      MitgliedHinzufugenForm form = new MitgliedHinzufugenForm(zeitslotId, parsedMitglieder, gruppenname);
+
+      form.validateForm(gitHubService, zeitslot.getMaxPersonen());
+
+      List<String> alerts = form.getAlerts();
+
+      model.addAttribute(ALERTS_MODEL_NAME, alerts);
+      model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
+      model.addAttribute(GRUPPENNAME_MODEL_NAME, gruppenname);
+      model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
+
+      html = HtmlSelectorHelper.selectHtmlForFormValidation(form.isValid());
     } else {
-      model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot.get());
+      html = "ansicht/error/kein_zeitslot";
     }
 
-    model.addAttribute(GRUPPENNAME_MODEL_NAME, gruppenname);
-    model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
-
-    return "ansicht/gruppe/anmeldung_abschliessen";
+    return html;
   }
 }

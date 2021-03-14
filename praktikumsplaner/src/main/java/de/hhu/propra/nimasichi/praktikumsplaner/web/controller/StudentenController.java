@@ -3,7 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.UbungswocheConfigService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ZeitslotService;
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.StudentenControllerHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.HtmlSelectorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public class StudentenController {
     model.addAttribute("aktuelleUbung",
         maybeUbWocheConf);
 
-    return StudentenControllerHelper
+    return HtmlSelectorHelper
         .selectHtmlFromConfigForModus(maybeUbWocheConf);
   }
 
@@ -46,7 +46,7 @@ public class StudentenController {
   public String handleStudentGruppenansicht(final Model model) {
     final var freieZeitslots = zsService.getFreieZeitslotsSorted();
     final var ubConf = ucService.getLatestUbungswocheConfig();
-    final var html = StudentenControllerHelper.selectHtmlFromConfig(ubConf);
+    final var html = HtmlSelectorHelper.selectHtmlFromConfig(ubConf);
 
     model.addAttribute("freieZeitslots", freieZeitslots);
     model.addAttribute("config", ubConf);

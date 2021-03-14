@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.github;
+package de.hhu.propra.nimasichi.praktikumsplaner.unit.github;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

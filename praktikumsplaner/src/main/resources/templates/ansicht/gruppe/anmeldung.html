@@ -8,96 +8,96 @@
 <body>
 
 <div class="alert alert-danger" th:each="alert : ${alerts}">
-    <span th:text="${alert}">err</span>
+   <span th:text="${alert}">err</span>
 </div>
 
-<div>
-    <div class="container">
-        <h4 th:text="'Anmeldung zur praktischen Übung am '
+
+<div class="container">
+    <h4 th:text="'Anmeldung zur praktischen Übung am '
     + ${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}">
-            Anmeldung zur praktischen Übung
-        </h4>
-
-        <br>
-
-        <h5>Gruppengröße: <span th:text="${zeitslot.minPersonen} + '-' + ${zeitslot.maxPersonen}">3-5</span></h5>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="form-group col-md-6">
-                <table class="table">
-                    <tr>
-                        <th>Mitglied</th>
-                        <th>Löschen</th>
-                    </tr>
-
-                    <tr th:each="mitglied, iter : ${mitglieder}">
-                        <td th:text="${mitglied}"></td>
-                        <td>
-                            <form th:action="@{/ansicht/gruppe/mitglied_loschen/} + ${iter.index}" method="post">
-
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-                                <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
-
-                                <th:block th:each="mitglied : ${mitglieder}">
-                                    <input type="hidden" name="mitglieder" th:value="${mitglied}">
-                                </th:block>
-
-                                <input type="submit" class="btn btn-danger" value="X">
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <form method="post" action="/ansicht/gruppe/mitglied_hinzufugen">
-
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-            <div class="row">
-                <label class="h5">GitHub-Name:</label>
-
-                <div class="form-group col-md-3">
-                    <input required class="form-control" type="text" id="mitgliedName" name="mitgliedName">
-                </div>
-            </div>
-
-            <br>
-
-            <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
-
-            <th:block th:each="mitglied : ${mitglieder}">
-                <input type="hidden" name="mitglieder" th:value="${mitglied}">
-            </th:block>
-
-            <input type="submit" class="btn btn-primary" value="Mitglied hinzufügen">
-        </form>
-    </div>
+        Anmeldung zur praktischen Übung
+    </h4>
 
     <br>
 
-    <div class="container">
-        <form action="/ansicht/gruppe/anmeldung_abschliessen" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <h5>Gruppengröße: <span th:text="${zeitslot.minPersonen} + '-' + ${zeitslot.maxPersonen}">3-5</span></h5>
+</div>
 
-            <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
+<div class="container">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <table class="table">
+                <tr>
+                    <th>Mitglied</th>
+                    <th>Löschen</th>
+                </tr>
 
-            <th:block th:each="mitglied : ${mitglieder}">
-                <input type="hidden" name="mitglieder" th:value="${mitglied}">
-            </th:block>
+                <tr th:each="mitglied, iter : ${mitglieder}">
+                    <td th:text="${mitglied}"></td>
+                    <td>
+                        <form th:action="@{/ansicht/gruppe/mitglied_loschen/} + ${iter.index}" method="post">
 
-            <label for="gruppenname">Gruppenname:</label>
-            <input type="text" id="gruppenname" name="gruppenname" required>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-            <input class="btn btn-success" type="submit" value="Gruppenanmeldung abschließen">
-        </form>
+                            <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
+
+                            <th:block th:each="mitglied : ${mitglieder}">
+                                <input type="hidden" name="mitglieder" th:value="${mitglied}">
+                            </th:block>
+
+                            <input type="submit" class="btn btn-danger" value="X">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
+
+<div class="container">
+    <form method="post" action="/ansicht/gruppe/mitglied_hinzufugen">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+        <div class="row">
+            <label class="h5">GitHub-Name:</label>
+
+            <div class="form-group col-md-3">
+                <input required class="form-control" type="text" id="mitgliedName" name="mitgliedName">
+            </div>
+        </div>
+
+        <br>
+
+        <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
+
+        <th:block th:each="mitglied : ${mitglieder}">
+            <input type="hidden" name="mitglieder" th:value="${mitglied}">
+        </th:block>
+
+        <input type="submit" class="btn btn-primary" value="Mitglied hinzufügen">
+    </form>
+</div>
+
+<br>
+
+<div class="container">
+    <form action="/ansicht/gruppe/anmeldung_abschliessen" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+        <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
+
+        <th:block th:each="mitglied : ${mitglieder}">
+            <input type="hidden" name="mitglieder" th:value="${mitglied}">
+        </th:block>
+
+        <label for="gruppenname">Gruppenname:</label>
+        <input type="text" id="gruppenname" name="gruppenname" required>
+
+        <input class="btn btn-success" type="submit" value="Gruppenanmeldung abschließen">
+    </form>
+</div>
+
 
 </body>
 </html>

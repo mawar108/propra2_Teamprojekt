@@ -4,7 +4,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.services;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.DateParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.praktischeubungswocheconfig.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -25,7 +24,7 @@ public class LetzteTutorTermineService {
     this.ubWoConfRepo = ubWoConfRepo;
   }
 
-  public Set<TutorTermin> getNeueTutorTermine(final ConfigParamsForm params) {
+  public Set<TutorTermin> getNeueTutorTermine(String anSchlussdatum, String anSchlusszeit) {
     final var maybeUbWoConf = ubWoConfRepo.findByHighestId();
 
     Set<TutorTermin> neueTermine;
@@ -35,8 +34,8 @@ public class LetzteTutorTermineService {
       neueTermine = new HashSet<>(tutorTermine);
 
       final var anmeldeSchluss = DateParseHelper.mergeDateTimeStrings(
-          params.getAnSchlussdatum(),
-          params.getAnSchlusszeit()
+          anSchlussdatum,
+          anSchlusszeit
       );
       updateDates(neueTermine, anmeldeSchluss);
     } else {

@@ -9,8 +9,8 @@ import java.util.Optional;
 @SuppressWarnings({
     "PMD.LongVariable"
 })
-public final class StudentenControllerHelper {
-  private StudentenControllerHelper() { }
+public final class HtmlSelectorHelper {
+  private HtmlSelectorHelper() { }
 
   public static String selectHtmlFromConfigForModus(
       final Optional<PraktischeUbungswocheConfig>
@@ -42,6 +42,16 @@ public final class StudentenControllerHelper {
       html = "/ansicht/gruppe/studenten_ansicht";
     }
 
+    return html;
+  }
+
+  public static String selectHtmlForFormValidation(boolean isValid) {
+    String html;
+    if (isValid) {
+      html = "ansicht/gruppe/anmeldung_abschliessen";
+    } else {
+      html = "ansicht/gruppe/anmeldung";
+    }
     return html;
   }
 }

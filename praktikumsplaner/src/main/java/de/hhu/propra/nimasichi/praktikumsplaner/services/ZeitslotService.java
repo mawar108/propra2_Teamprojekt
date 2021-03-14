@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
@@ -24,6 +25,11 @@ public class ZeitslotService {
   public List<Zeitslot> getFreieZeitslotsSorted() {
     final var zeitslots = getZeitslotsFromRepo();
     return sortZeitslots(zeitslots);
+  }
+
+  public boolean zeitslotExists(final int zeitslotd) {
+    Optional<Zeitslot> maybeZeitslot = wbRepo.findZeitslotById(zeitslotd);
+    return maybeZeitslot.isPresent();
   }
 
   private List<Zeitslot> sortZeitslots(final List<Zeitslot> zeitslots) {

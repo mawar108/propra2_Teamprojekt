@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.validation.validator;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.unit.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.validation.annotation.GitHubHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 

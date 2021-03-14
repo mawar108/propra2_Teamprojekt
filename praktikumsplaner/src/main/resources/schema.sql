@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS tutor_termin;
-DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS praktische_ubungswoche_config;
 
 DROP TABLE IF EXISTS student;
@@ -7,6 +6,8 @@ DROP TABLE IF EXISTS gruppe;
 DROP TABLE IF EXISTS zeitslot;
 DROP TABLE IF EXISTS wochenbelegung;
 DROP TABLE IF EXISTS orga_member;
+
+DROP TABLE IF EXISTS roles;
 
 CREATE TABLE praktische_ubungswoche_config
 (

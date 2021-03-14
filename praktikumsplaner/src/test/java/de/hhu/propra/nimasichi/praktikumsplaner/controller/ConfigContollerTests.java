@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.unit.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.LetzteTutorTermineService;
