@@ -3,6 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 import de.hhu.propra.nimasichi.praktikumsplaner.config.HandleAuth;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenanmeldungService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.RestplatzeService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
@@ -40,7 +41,7 @@ public class ConfigContollerTests {
   private UbungswocheConfigRepo repo;
 
   @MockBean
-  LetzteTutorTermineService ttService;
+  private LetzteTutorTermineService ttService;
 
   @MockBean
   private WochenbelegungRepo wbRepo;
@@ -56,6 +57,9 @@ public class ConfigContollerTests {
 
   @MockBean
   private HandleAuth handleAuth;
+
+  @MockBean
+  private GruppenanmeldungService gaService;
 
   private ConfigContollerTests() { }
 

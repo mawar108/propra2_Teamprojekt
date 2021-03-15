@@ -39,4 +39,8 @@ class Gruppe {
     mitglieder.add(new Student(login));
   }
 
+  public boolean isLeer() {
+    return mitglieder.isEmpty();
+  }
+
 }

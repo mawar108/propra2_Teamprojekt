@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.form;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import lombok.Data;
 
@@ -7,12 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@SuppressWarnings({
+    "PMD.LawOfDemeter"
+})
 public class MitgliedHinzufugenForm {
 
   private final int zeitslotId;
   private final List<String> mitglieder; // GitHub-Handles
   private final List<String> alerts = new ArrayList<>();
   private final String gruppenName;
+
+  private final transient WochenbelegungRepo wobeRepo;
 
   private boolean isValid = true;
 
@@ -23,6 +29,7 @@ public class MitgliedHinzufugenForm {
     checkHandles(gitHubService);
     checkSize(maxSize);
     checkName();
+    checkRaceCondition();
   }
 
   private void checkName() {
@@ -49,6 +56,22 @@ public class MitgliedHinzufugenForm {
         isValid = false;
       }
     }
+  }
+
+  private void checkRaceCondition() {
+    final var maybeZeitslot
+        = wobeRepo.findZeitslotById(zeitslotId);
+
+    // Wenn isEmpty(), dann redirectet der Controller
+    if (maybeZeitslot.isPresent()) {
+      final var zeitslot = maybeZeitslot.get();
+      if (!zeitslot.hatFreienGruppenplatz()) {
+        alerts.add("Du warst zu langsam, "
+            + "eine andere Gruppe hat den Platz schon.");
+        isValid = false;
+      }
+    }
+
   }
 
 }

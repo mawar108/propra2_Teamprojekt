@@ -1,9 +1,9 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenanmeldungService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.HtmlSelectorHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.MitgliedHinzufugenForm;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
@@ -24,20 +25,24 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.Z
 
 @Controller
 @SuppressWarnings({
-    "PMD.LawOfDemeter"
+    "PMD.LawOfDemeter",
+    "PMD.AvoidDuplicateLiterals"
 })
 public class GruppenanmeldungController {
 
   private final transient WochenbelegungRepo wobeRepo;
   private final transient GitHubService gitHubService;
+  private final transient GruppenanmeldungService gaService;
   private final transient ZeitslotService zsService;
 
   public GruppenanmeldungController(
       final WochenbelegungRepo wobeRepo,
       final GitHubService ghService,
+      final GruppenanmeldungService gaService,
       final ZeitslotService zsService) {
     this.wobeRepo = wobeRepo;
     this.gitHubService = ghService;
+    this.gaService = gaService;
     this.zsService = zsService;
   }
 
@@ -129,7 +134,8 @@ public class GruppenanmeldungController {
           = new MitgliedHinzufugenForm(
               zeitslotId,
               parsedMitglieder,
-              gruppenname
+              gruppenname,
+              wobeRepo
       );
 
       form.validateForm(gitHubService, zeitslot.getMaxPersonen());
@@ -141,7 +147,14 @@ public class GruppenanmeldungController {
       model.addAttribute(GRUPPENNAME_MODEL_NAME, gruppenname);
       model.addAttribute(MITGLIEDER_MODEL_NAME, parsedMitglieder);
 
-      html = HtmlSelectorHelper.selectHtmlForFormValidation(form.isValid());
+      if (form.isValid()) {
+        html = "ansicht/gruppe/anmeldung_abschliessen";
+        gaService.saveGruppeToZeitslot(
+            (long) zeitslotId,
+            new HashSet<>(parsedMitglieder));
+      } else {
+        html = "ansicht/gruppe/anmeldung";
+      }
     } else {
       html = "ansicht/error/kein_zeitslot";
     }

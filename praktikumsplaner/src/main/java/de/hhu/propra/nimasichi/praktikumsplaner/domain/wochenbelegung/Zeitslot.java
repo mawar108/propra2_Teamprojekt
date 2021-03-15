@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,11 +48,24 @@ public class Zeitslot {
     return zeitslot;
   }
 
+  public void addMitgliederToRandomGroup(
+      final Set<String> mitglieder) {
+    final var rand = new Random();
+    final var emptyGruppen
+        = gruppen.stream()
+            .filter(Gruppe::isLeer)
+            .collect(Collectors.toList());
+    final var idx = rand.nextInt(emptyGruppen.size());
+    final var selection = emptyGruppen.get(idx);
+
+    mitglieder.forEach(selection::addMitglied);
+  }
+
   public boolean minEineFreieGruppe() {
     boolean belegt = false;
 
     for (final var gruppe : gruppen) {
-      if (gruppe.getMitglieder().isEmpty()) {
+      if (gruppe.isLeer()) {
         belegt = true;
         break;
       }
@@ -81,4 +95,18 @@ public class Zeitslot {
       }
     }
   }
+
+  public boolean hatFreienGruppenplatz() {
+    boolean frei = false;
+
+    for (final var gruppe : gruppen) {
+      if (gruppe.isLeer()) {
+        frei = true;
+        break;
+      }
+    }
+
+    return frei;
+  }
+
 }

@@ -117,14 +117,12 @@ public class KonfigurationController {
 
     final var parsedTermine
             = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
-
     final var config = params
         .makeConfigAndFillZeiten(new HashSet<>(parsedTermine));
-
-    ubConfRepo.save(config);
-
     final var wochenbelegung
         = Wochenbelegung.fromConfig(config);
+
+    ubConfRepo.save(config);
     wobeRepo.save(wochenbelegung);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
