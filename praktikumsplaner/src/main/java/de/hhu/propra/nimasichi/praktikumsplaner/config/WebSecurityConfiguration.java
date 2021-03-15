@@ -21,11 +21,11 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.R
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_USER;
 
 @Configuration
+@EnableWebSecurity
 @SuppressWarnings({
     "PMD.AtLeastOneConstructor",
     "PMD.LawOfDemeter"
 })
-@EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private final transient HandleAuth tutorenAuth;

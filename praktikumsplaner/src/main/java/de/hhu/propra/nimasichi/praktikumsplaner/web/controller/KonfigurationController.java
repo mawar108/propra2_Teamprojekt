@@ -22,10 +22,10 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.T
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_ORGA;
 
 @Controller
+@Secured(ROLE_ORGA)
 @SuppressWarnings({
     "PMD.LawOfDemeter"
 })
-@Secured(ROLE_ORGA)
 public class KonfigurationController {
 
   private final transient UbungswocheConfigRepo ubConfRepo;

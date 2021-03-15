@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.OauthFaker;
 import de.hhu.propra.nimasichi.praktikumsplaner.config.HandleAuth;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
@@ -15,14 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,10 +68,11 @@ public class ConfigContollerTests {
   private ConfigContollerTests() { }
 
   @Test
+  //@WithMockUser("hallo")
   void configIndexTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .get("/konfiguration")
-        .session(OauthFaker.makeSession()))
+        .session(OauthFaker.makeUserSession()))
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(status().isOk())
@@ -80,7 +85,7 @@ public class ConfigContollerTests {
     mvc.perform(MockMvcRequestBuilders
         .post("/konfiguration/tutor_termine")
             .with(csrf())
-            .session(OauthFaker.makeSession())
+            .session(OauthFaker.makeOrgaSession())
             .param("name", "hallo welt!")
             .param("modus", "1")
             .param("anStartdatum", "2000-02-01")
@@ -107,7 +112,7 @@ public class ConfigContollerTests {
     mvc.perform(MockMvcRequestBuilders
         .post("/tutor_termin_hinzufugen")
             .with(csrf())
-            .session(OauthFaker.makeSession())
+            .session(OauthFaker.makeOrgaSession())
             .param("name", "hallo welt!")
             .param("modus", "1")
             .param("anStartdatum", "2000-02-01")
@@ -142,7 +147,7 @@ public class ConfigContollerTests {
         = mvc.perform(MockMvcRequestBuilders
         .post("/tutor_termin_loschen/1")
         .with(csrf())
-        .session(OauthFaker.makeSession())
+        .session(OauthFaker.makeOrgaSession())
         .param("name", "hallo welt!")
         .param("modus", "1")
         .param("anStartdatum", "2000-02-01")
@@ -177,7 +182,7 @@ public class ConfigContollerTests {
     mvc.perform(MockMvcRequestBuilders
         .post("/konfiguration_abschliessen")
         .with(csrf())
-        .session(OauthFaker.makeSession())
+        .session(OauthFaker.makeOrgaSession())
         .param("name", "hallo welt!")
         .param("modus", "1")
         .param("anStartdatum", "2000-02-01")

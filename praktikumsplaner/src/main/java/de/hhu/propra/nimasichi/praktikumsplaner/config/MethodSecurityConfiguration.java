@@ -10,5 +10,4 @@ import org.springframework.security.config.annotation.method.configuration.Globa
     securedEnabled = true,
     jsr250Enabled = true)
 @SuppressWarnings("PMD.AtLeastOneConstructor")
-public class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
-}
+public class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration { }
