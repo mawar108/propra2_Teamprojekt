@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.config.HandleAuth;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
@@ -52,6 +53,9 @@ public class ConfigContollerTests {
 
   @MockBean
   private RestplatzeService rpService;
+
+  @MockBean
+  private HandleAuth handleAuth;
 
   private ConfigContollerTests() { }
 
@@ -188,7 +192,7 @@ public class ConfigContollerTests {
         .andExpect(content().string(
             containsString("<span>20:00</span>")))
         .andExpect(content().string(
-            containsString("<td>2021-03-25 Do 03:03</td>")))
+            containsString("<td>Do 25.03. 03:03</td>")))
         .andExpect(content().string(
             containsString("<td>Max</td>")));
   }

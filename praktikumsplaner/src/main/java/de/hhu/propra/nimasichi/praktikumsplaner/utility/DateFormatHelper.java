@@ -1,18 +1,17 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
-
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-@Utility
 public final class DateFormatHelper {
   private DateFormatHelper() { }
 
   @SuppressWarnings("PMD.LawOfDemeter")
   public static String formatTime(final LocalDateTime ldtime) {
-    return ldtime.toLocalDate().toString()
-        + " " + abbreviateDayOfWeek(ldtime.getDayOfWeek())
+    return abbreviateDayOfWeek(ldtime.getDayOfWeek())
+        + " " + germanDateWithoutYear(ldtime.toLocalDate())
         + " " + ldtime.toLocalTime().toString();
   }
 
@@ -42,5 +41,9 @@ public final class DateFormatHelper {
         break;
     }
     return abbreviation;
+  }
+
+  private static String germanDateWithoutYear(final LocalDate ldtime) {
+    return ldtime.format(DateTimeFormatter.ofPattern("dd.MM."));
   }
 }

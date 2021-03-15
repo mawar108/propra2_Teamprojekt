@@ -7,6 +7,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,13 @@ import java.util.HashSet;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.PARAMS_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.TUTOREN_TERMINE_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_ORGA;
 
 @Controller
 @SuppressWarnings({
     "PMD.LawOfDemeter"
 })
+@Secured(ROLE_ORGA)
 public class KonfigurationController {
 
   private final transient UbungswocheConfigRepo ubConfRepo;

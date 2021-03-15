@@ -1,14 +1,14 @@
 package de.hhu.propra.nimasichi.praktikumsplaner;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@EnableConfigurationProperties
 @SuppressWarnings({"PMD.UseUtilityClass", "PMD.AtLeastOneConstructor"})
 public class PraktikumsplanerApplication {
 
@@ -17,9 +17,7 @@ public class PraktikumsplanerApplication {
   }
 
   @Bean
-  public CommandLineRunner init(final GitHubService ghService,
-                                final UbungswocheConfigRepo ubWoRepo,
-                                final WochenbelegungRepo wbRepo) {
+  public CommandLineRunner init(final GitHubService ghService) {
     return args -> {
       ghService.connect();
     };

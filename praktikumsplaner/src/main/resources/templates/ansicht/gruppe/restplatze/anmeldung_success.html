@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Restplatzanmeldung abgeschlossen</title>
+</head>
+<body>
+
+<div class="container">
+<h2>Übersicht</h2>
+
+<div class="alert alert-success" role="alert">
+    <a href="https://github.com/">Repo</a> wurde erstellt!
+</div>
+
+<h6>Zeitslot:</h6>
+<span th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}"></span>
+
+<!--<h6>Gruppenname:</h6>-->
+<!--<span th:text="${gruppenname}">NiMaSiChi</span>-->
+
+<!--<h6>Mitglieder der Gruppe:</h6>-->
+<!--<ul>-->
+<!--    <li th:each="mitglied : ${mitglieder}" th:text="${mitglied}"></li>-->
+<!--</ul>-->
+</div>
+
+</body>
+</html>
