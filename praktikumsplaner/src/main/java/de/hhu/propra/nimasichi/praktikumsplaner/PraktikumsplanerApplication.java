@@ -38,14 +38,12 @@ public class PraktikumsplanerApplication {
 
     Collections.shuffle(studenten);
 
-    for (int i = 0; min + i <= max; ++i) {
+    int i = 0;
+    do {
       partition = Lists.partition(studenten, min + i);
       System.out.println(partition);
-
-      if (istOk(partition)) {
-        break;
-      }
-    }
+      i++;
+    } while (min + i <= max && !istOk(partition));
   }
 
   private static boolean istOk(
