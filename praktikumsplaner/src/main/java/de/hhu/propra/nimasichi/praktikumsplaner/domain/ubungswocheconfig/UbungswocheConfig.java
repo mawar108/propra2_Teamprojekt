@@ -1,8 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,21 +34,18 @@ public class UbungswocheConfig {
   private int minPersonen;
   private int maxPersonen;
 
-  public void addZeitslot(final TutorTermin zeitslot) {
-    tutorTermine.add(zeitslot);
-  }
-
-  public void removeZeitslot(final TutorTermin tutorTermin) {
-    tutorTermine.remove(tutorTermin);
-  }
-
   public Set<Zeitslot> parseTutorTerminToZeitslots() {
     return tutorTermine.stream()
-            .collect(Collectors.groupingBy(TutorTermin::getZeit))
-            .values()
-            .stream()
-            .map(tts -> Wochenbelegung.zeitslotFromTutorTermine(tts, minPersonen, maxPersonen))
-            .collect(Collectors.toSet());
+        .collect(Collectors.groupingBy(TutorTermin::getZeit))
+        .values()
+        .stream()
+        .map(tts -> Zeitslot.fromTutorTermine(tts, minPersonen, maxPersonen, id))
+        .collect(Collectors.toSet());
+  }
+
+  public boolean isAktuell() {
+    return anmeldestart.isBefore(LocalDateTime.now())
+        && anmeldeschluss.isAfter(LocalDateTime.now());
   }
 
   public static TutorTermin tutorTerminFrom(final String tutorenName,

@@ -1,5 +1,6 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@AggregateRoot
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,9 +32,12 @@ public class Zeitslot {
   private int minPersonen;
   private int maxPersonen;
 
+  private long ubungswocheConfig;
+
   public static Zeitslot fromTutorTermine(final List<TutorTermin> tutorTermine,
-                                   final int minPersonen,
-                                   final int maxPersonen) {
+                                          final int minPersonen,
+                                          final int maxPersonen,
+                                          final long configId) {
 
     final var zeitslot = new Zeitslot();
     final var gruppen
@@ -44,17 +49,18 @@ public class Zeitslot {
     zeitslot.setGruppen(gruppen);
     zeitslot.setMinPersonen(minPersonen);
     zeitslot.setMaxPersonen(maxPersonen);
+    zeitslot.setUbungswocheConfig(configId);
 
     return zeitslot;
   }
 
   public void addMitgliederToRandomGroup(
-      final Set<String> mitglieder) {
+      final List<String> mitglieder) {
     final var rand = new Random();
     final var emptyGruppen
         = gruppen.stream()
-            .filter(Gruppe::isLeer)
-            .collect(Collectors.toList());
+        .filter(Gruppe::isLeer)
+        .collect(Collectors.toList());
     final var idx = rand.nextInt(emptyGruppen.size());
     final var selection = emptyGruppen.get(idx);
 
@@ -74,7 +80,7 @@ public class Zeitslot {
     return belegt;
   }
 
-  /* default */ boolean hatRestplatze() {
+  public boolean hatRestplatze() {
     boolean hatRestplatze = false;
 
     for (final var gruppe : gruppen) {

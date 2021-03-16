@@ -1,8 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.form;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import lombok.Data;
 
@@ -13,9 +12,10 @@ import java.util.List;
 @SuppressWarnings("PMD.LawOfDemeter")
 public class RestplatzBelegenForm {
 
-  private final int zeitslotId;
+
+  private final long zeitslotId;
   private final List<String> alerts = new ArrayList<>();
-  private final WochenbelegungRepo wobeRepo;
+  private final ZeitslotRepo zsRepo;
   private final String login;
   private Zeitslot zeitslot = new Zeitslot();
 
@@ -28,14 +28,13 @@ public class RestplatzBelegenForm {
   }
 
   private void checkRestplatze() {
-    final var maybeZeitslot
-        = wobeRepo.findZeitslotById(zeitslotId);
+    final var maybeZeitslot = zsRepo.findZeitslotById(zeitslotId);
     if (maybeZeitslot.isEmpty()) {
       alerts.add("Es ist ein Fehler aufgetreten (maybeZeitslot.isEmpty() = true!)");
       isValid = false;
     } else {
       zeitslot = maybeZeitslot.get();
-      if (!Wochenbelegung.zeitslotHatRestplatze(zeitslot)) {
+      if (!zeitslot.hatRestplatze()) {
         alerts.add("Restplatz schon vergeben");
         isValid = false;
       }

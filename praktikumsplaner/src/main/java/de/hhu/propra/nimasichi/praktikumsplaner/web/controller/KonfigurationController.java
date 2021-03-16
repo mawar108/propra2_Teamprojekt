@@ -1,9 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.ConfigParamsForm;
@@ -28,15 +27,16 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.R
 })
 public class KonfigurationController {
 
+
   private final transient UbungswocheConfigRepo ubConfRepo;
-  private final transient WochenbelegungRepo wobeRepo;
+  private final transient ZeitslotRepo zsRepo;
   private final transient LetzteTutorTermineService ttService;
 
   public KonfigurationController(final UbungswocheConfigRepo ubConfRepo,
-                                 final WochenbelegungRepo wobeRepo,
+                                 final ZeitslotRepo zsRepo,
                                  final LetzteTutorTermineService ttService) {
     this.ubConfRepo = ubConfRepo;
-    this.wobeRepo = wobeRepo;
+    this.zsRepo = zsRepo;
     this.ttService = ttService;
   }
 
@@ -116,14 +116,14 @@ public class KonfigurationController {
                                     final HttpServletRequest req) {
 
     final var parsedTermine
-            = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
+        = HttpParseHelper.parseTutorZeitenFromReq(req.getParameterMap());
     final var config = params
         .makeConfigAndFillZeiten(new HashSet<>(parsedTermine));
-    final var wochenbelegung
-        = Wochenbelegung.fromConfig(config);
-
     ubConfRepo.save(config);
-    wobeRepo.save(wochenbelegung);
+
+    final var zeitslots
+        = config.parseTutorTerminToZeitslots();
+    zsRepo.saveAll(zeitslots);
 
     model.addAttribute(PARAMS_MODEL_NAME, params);
     model.addAttribute(TUTOREN_TERMINE_MODEL_NAME,
@@ -131,5 +131,6 @@ public class KonfigurationController {
 
     return "ansicht/orga/orga_tuto_ansicht";
   }
+
 
 }

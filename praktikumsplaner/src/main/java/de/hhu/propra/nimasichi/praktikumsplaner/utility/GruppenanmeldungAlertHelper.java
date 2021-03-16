@@ -1,7 +1,7 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
 
 import java.util.List;
 import java.util.Optional;

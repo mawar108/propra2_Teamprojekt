@@ -1,7 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,19 +16,38 @@ import java.util.stream.Collectors;
 })
 public class ZeitslotService {
 
-  private final transient WochenbelegungRepo wbRepo; // zu langer Name
+  private final transient ZeitslotRepo zsRepo;
+  private final transient UbungswocheConfigService configService;
 
-  public ZeitslotService(final WochenbelegungRepo wbRepo) {
-    this.wbRepo = wbRepo;
+  public ZeitslotService(final ZeitslotRepo zsRepo,
+                         final UbungswocheConfigService configService) {
+    this.zsRepo = zsRepo;
+    this.configService = configService;
   }
 
-  public List<Zeitslot> getFreieZeitslotsSorted() {
-    final var zeitslots = getZeitslotsFromRepo();
+  public List<Zeitslot> getAktuelleZeitslots() {
+    List<Zeitslot> zeitslots;
+
+    final var maybeAktConfig
+        = configService.getAktuelleUbungswocheConfig();
+
+    if (maybeAktConfig.isEmpty()) {
+      zeitslots = new ArrayList<>();
+    } else {
+      zeitslots = zsRepo.findZeitslotsByUbungswocheConfigId(
+          maybeAktConfig.get().getId());
+    }
+    return zeitslots;
+  }
+
+  public List<Zeitslot> getAktuelleFreieZeitslotsSorted() {
+    var zeitslots = getAktuelleZeitslots();
+    zeitslots = getFreieZeitslots(zeitslots);
     return sortZeitslots(zeitslots);
   }
 
-  public boolean zeitslotExists(final int zeitslotd) {
-    final var maybeZeitslot = wbRepo.findZeitslotById(zeitslotd);
+  public boolean zeitslotExists(final Long zeitslotd) {
+    final var maybeZeitslot = zsRepo.findZeitslotById(zeitslotd);
     return maybeZeitslot.isPresent();
   }
 
@@ -37,19 +57,10 @@ public class ZeitslotService {
         .collect(Collectors.toList());
   }
 
-  private List<Zeitslot> getZeitslotsFromRepo() {
-    final var maybeWobe = wbRepo.findByHighestId();
-    List<Zeitslot> zeitslots;
-
-    if (maybeWobe.isEmpty()) {
-      zeitslots = new ArrayList<>();
-    } else {
-      zeitslots = maybeWobe.get().getZeitslots().stream()
-          .filter(Zeitslot::minEineFreieGruppe)
-          .collect(Collectors.toList());
-    }
-
-    return zeitslots;
+  private List<Zeitslot> getFreieZeitslots(final List<Zeitslot> zeitslots) {
+    return zeitslots.stream()
+        .filter(Zeitslot::minEineFreieGruppe)
+        .collect(Collectors.toList());
   }
 
 }

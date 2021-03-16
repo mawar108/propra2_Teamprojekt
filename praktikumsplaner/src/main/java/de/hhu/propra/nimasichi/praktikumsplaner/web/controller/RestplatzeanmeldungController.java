@@ -1,7 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Wochenbelegung;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.RestplatzeService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.web.form.RestplatzBelegenForm;
@@ -24,21 +23,21 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.A
 })
 public class RestplatzeanmeldungController {
 
+  private final transient ZeitslotRepo zsRepo;
   private final transient RestplatzeService restplatzeService;
-  private final transient WochenbelegungRepo wobeRepo;
   private final transient GitHubService gitHubService;
 
-  public RestplatzeanmeldungController(final RestplatzeService restplatzeService,
-                                       final WochenbelegungRepo wobeRepo,
+  public RestplatzeanmeldungController(final ZeitslotRepo zsRepo,
+                                       final RestplatzeService restplatzeService,
                                        final GitHubService gitHubService) {
+    this.zsRepo = zsRepo;
     this.restplatzeService = restplatzeService;
-    this.wobeRepo = wobeRepo;
     this.gitHubService = gitHubService;
   }
 
   @GetMapping("/ansicht/gruppe/restplatze/anmeldung")
   public String handleRestplatzeanmeldung(final Model model) {
-    model.addAttribute(RESTPLATZE_MODEL_NAME, restplatzeService.getRestplatze());
+    model.addAttribute(RESTPLATZE_MODEL_NAME, restplatzeService.getAktuelleRestplatze());
     return "ansicht/gruppe/restplatze/anmeldung";
   }
 
@@ -51,17 +50,20 @@ public class RestplatzeanmeldungController {
 
     final String login = principal.getAttribute("login");
 
-    final var rbForm = new RestplatzBelegenForm(zeitslotId, wobeRepo, login);
+    final var rbForm = new RestplatzBelegenForm(zeitslotId, zsRepo, login);
     rbForm.validateForm(gitHubService);
 
     model.addAttribute("user", login);
 
     if (rbForm.isValid()) {
       final var zeitslot = rbForm.getZeitslot();
-      model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
-      Wochenbelegung.addToZeitslot(zeitslot, login);
-      html = "ansicht/gruppe/restplatze/anmeldung_success";
 
+      zeitslot.addToGruppe(login);
+      zsRepo.save(zeitslot);
+
+      model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);
+
+      html = "ansicht/gruppe/restplatze/anmeldung_success";
     } else {
       model.addAttribute(ALERTS_MODEL_NAME, rbForm.getAlerts());
       html = "ansicht/gruppe/restplatze/anmeldung";

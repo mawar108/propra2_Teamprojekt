@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung;
+package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

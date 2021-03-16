@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.archunit;
+package de.hhu.propra.nimasichi.praktikumsplaner;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

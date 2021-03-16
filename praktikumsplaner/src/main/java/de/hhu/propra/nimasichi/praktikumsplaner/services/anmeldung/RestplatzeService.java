@@ -1,11 +1,10 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.wochenbelegung.Zeitslot;
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @SuppressWarnings({
@@ -13,26 +12,16 @@ import java.util.List;
 })
 public class RestplatzeService {
 
-  private final transient WochenbelegungRepo wobeRepo;
 
-  public RestplatzeService(
-      final WochenbelegungRepo wobeRepo) {
-    this.wobeRepo = wobeRepo;
+  private final transient ZeitslotService zsService;
+
+  public RestplatzeService(final ZeitslotService zsService) {
+    this.zsService = zsService;
   }
 
-  public List<Zeitslot> getRestplatze() {
-    List<Zeitslot> restplatze;
-    final var maybeWobe
-        = wobeRepo.findByHighestId();
+  public List<Zeitslot> getAktuelleRestplatze() {
+    final var aktuelleZeitslots = zsService.getAktuelleZeitslots();
 
-    if (maybeWobe.isPresent()) {
-      restplatze = maybeWobe
-          .get()
-          .getZeitslotsWithRestplatze();
-    } else {
-      restplatze = new ArrayList<>();
-    }
-
-    return restplatze;
+    return aktuelleZeitslots.stream().filter(Zeitslot::hatRestplatze).collect(Collectors.toList());
   }
 }

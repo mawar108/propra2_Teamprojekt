@@ -1,6 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.form;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.repositories.WochenbelegungRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import lombok.Data;
 
@@ -13,12 +13,12 @@ import java.util.List;
 })
 public class MitgliedHinzufugenForm {
 
-  private final int zeitslotId;
+  private final long zeitslotId;
   private final List<String> mitglieder; // GitHub-Handles
   private final List<String> alerts = new ArrayList<>();
   private final String gruppenName;
 
-  private final transient WochenbelegungRepo wobeRepo;
+  private final transient ZeitslotRepo zsRepo;
 
   private boolean isValid = true;
 
@@ -60,7 +60,7 @@ public class MitgliedHinzufugenForm {
 
   private void checkRaceCondition() {
     final var maybeZeitslot
-        = wobeRepo.findZeitslotById(zeitslotId);
+        = zsRepo.findZeitslotById(zeitslotId);
 
     // Wenn isEmpty(), dann redirectet der Controller
     if (maybeZeitslot.isPresent()) {
