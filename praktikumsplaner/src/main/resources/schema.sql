@@ -1,9 +1,11 @@
+DROP TABLE IF EXISTS angemeldete_studenten;
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS gruppe;
 DROP TABLE IF EXISTS zeitslot;
 
 DROP TABLE IF EXISTS tutor_termin;
 DROP TABLE IF EXISTS ubungswoche_config;
+
 
 CREATE TABLE ubungswoche_config
 (
@@ -47,4 +49,12 @@ CREATE TABLE student
     id            integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
     github_handle varchar NOT NULL,
     gruppe        integer references gruppe (id)
+);
+
+CREATE TABLE angemeldete_studenten
+(
+    student_id        integer references student (id),
+    zeitslot_id       integer references zeitslot (id),
+
+    PRIMARY KEY (student_id, zeitslot_id)
 );

@@ -63,7 +63,7 @@ public class IndividualanmeldungController {
     if (ibForm.isValid()) {
       final var zeitslot = ibForm.getZeitslot();
 
-      zeitslot.addToGruppe(login);
+      zeitslot.addToAngemeldeteStudenten(login);
       zsRepo.save(zeitslot);
 
       model.addAttribute(ZEITSLOT_MODEL_NAME, zeitslot);

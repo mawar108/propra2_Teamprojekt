@@ -1,5 +1,6 @@
 package de.hhu.propra.nimasichi.praktikumsplaner;
 
+import de.hhu.propra.nimasichi.praktikumsplaner.config.MethodSecurityConfiguration;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -16,6 +19,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.OK;
 
+@Import({MethodSecurityConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class EndToEndTests {
@@ -32,6 +36,7 @@ public class EndToEndTests {
 
   @Test
   @Disabled
+  @WithMockUser(roles = {"ORGA"})
   void testIndexThroughKonfigurationAbschliessen() {
     ResponseEntity<String> response;
 

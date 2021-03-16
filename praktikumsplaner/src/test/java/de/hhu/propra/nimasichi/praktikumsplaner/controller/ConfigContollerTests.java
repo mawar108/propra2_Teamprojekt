@@ -2,6 +2,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.controller;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.OauthFaker;
 import de.hhu.propra.nimasichi.praktikumsplaner.config.HandleAuth;
+import de.hhu.propra.nimasichi.praktikumsplaner.config.MethodSecurityConfiguration;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenService;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Import({MethodSecurityConfiguration.class})
 @WebMvcTest
 @ExtendWith(SpringExtension.class)
 public class ConfigContollerTests {
@@ -68,8 +72,7 @@ public class ConfigContollerTests {
   private ConfigContollerTests() { }
 
   @Test
-  //@WithMockUser("hallo")
-  @Disabled
+  @WithMockUser(roles = {"USER"})
   void configIndexTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .get("/konfiguration")
@@ -79,6 +82,7 @@ public class ConfigContollerTests {
   }
 
   @Test
+  @WithMockUser(roles = {"ORGA"})
   void configIndexPostTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .post("/konfiguration/tutor_termine")
@@ -106,6 +110,7 @@ public class ConfigContollerTests {
   }
 
   @Test
+  @WithMockUser(roles = {"ORGA"})
   void tutorHinzufugenPostTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .post("/tutor_termin_hinzufugen")
@@ -140,6 +145,7 @@ public class ConfigContollerTests {
   }
 
   @Test
+  @WithMockUser(roles = {"ORGA"})
   void tutorLoschenPostTest() throws Exception {
     final MvcResult mvcResult
         = mvc.perform(MockMvcRequestBuilders
@@ -176,6 +182,7 @@ public class ConfigContollerTests {
   }
 
   @Test
+  @WithMockUser(roles = {"ORGA"})
   void konfigurationAbschliessenPostTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .post("/konfiguration_abschliessen")

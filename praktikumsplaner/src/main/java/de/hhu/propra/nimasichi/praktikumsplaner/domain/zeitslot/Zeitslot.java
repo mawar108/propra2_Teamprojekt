@@ -31,6 +31,8 @@ public class Zeitslot {
   private Set<Gruppe> gruppen;
   private int minPersonen;
   private int maxPersonen;
+  private Set<Student> angemeldeteStudenten;
+
 
   private long ubungswocheConfig;
 
@@ -127,5 +129,16 @@ public class Zeitslot {
 
     return frei;
   }
+
+  public void addToAngemeldeteStudenten(final String login) {
+    angemeldeteStudenten.add(new Student(login));
+  }
+
+  public void gruppeErstellen() {
+
+  }
+
+
+
 
 }
