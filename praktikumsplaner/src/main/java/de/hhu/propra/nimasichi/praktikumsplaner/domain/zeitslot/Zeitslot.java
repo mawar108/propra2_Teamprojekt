@@ -80,6 +80,19 @@ public class Zeitslot {
     return belegt;
   }
 
+  public boolean istKomplettBelegt() {
+    boolean belegt = false;
+
+    for (final var gruppe : gruppen) {
+      if (gruppe.belegt(maxPersonen)) {
+        belegt = true;
+        break;
+      }
+    }
+
+    return belegt;
+  }
+
   public boolean hatRestplatze() {
     boolean hatRestplatze = false;
 

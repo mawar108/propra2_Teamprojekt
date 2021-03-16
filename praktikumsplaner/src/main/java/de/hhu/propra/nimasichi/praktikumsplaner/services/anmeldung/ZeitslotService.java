@@ -42,7 +42,7 @@ public class ZeitslotService {
 
   public List<Zeitslot> getAktuelleFreieZeitslotsSorted() {
     var zeitslots = getAktuelleZeitslots();
-    zeitslots = getFreieZeitslots(zeitslots);
+    zeitslots = getFreieGruppenZeitslots(zeitslots);
     return sortZeitslots(zeitslots);
   }
 
@@ -57,10 +57,15 @@ public class ZeitslotService {
         .collect(Collectors.toList());
   }
 
-  private List<Zeitslot> getFreieZeitslots(final List<Zeitslot> zeitslots) {
+  private List<Zeitslot> getFreieGruppenZeitslots(final List<Zeitslot> zeitslots) {
     return zeitslots.stream()
         .filter(Zeitslot::minEineFreieGruppe)
         .collect(Collectors.toList());
   }
 
+  public List<Zeitslot> getFreieIndividualZeitslots() {
+    return getAktuelleZeitslots().stream()
+            .filter(z -> !z.istKomplettBelegt())
+            .collect(Collectors.toList());
+  }
 }

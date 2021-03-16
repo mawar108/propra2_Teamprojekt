@@ -25,7 +25,7 @@ public class GitHubServiceTests {
   @Test
   @Disabled
   void testSingleUserExists() {
-    final var user   = "mawar108";
+    final var user = "mawar108";
     final var exists = ghService.doesUserExist(user);
 
     Assertions.assertTrue(exists);

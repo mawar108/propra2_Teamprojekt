@@ -70,7 +70,7 @@ public class ConfigContollerTests {
   @Test
   //@WithMockUser("hallo")
   @Disabled
-  void configIndexTest() throws Exception { // sollte fehlschlagen (403 Forbidden)
+  void configIndexTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .get("/konfiguration")
         .session(OauthFaker.makeUserSession()))

@@ -16,6 +16,8 @@ public final class StringConstants {
   public static final transient String
       ZEITSLOT_MODEL_NAME = "zeitslot";
   public static final transient String
+          ZEITSLOTS_MODEL_NAME = "zeitslots";
+  public static final transient String
       ALERTS_MODEL_NAME = "alerts";
   public static final transient String
       GRUPPENNAME_MODEL_NAME = "gruppenname";

@@ -43,4 +43,7 @@ class Gruppe {
     return mitglieder.isEmpty();
   }
 
+  public boolean belegt(final int maxPersonen) {
+    return mitglieder.size() == maxPersonen;
+  }
 }

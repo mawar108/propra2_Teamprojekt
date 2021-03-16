@@ -4,8 +4,9 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.HttpParseHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.web.form.MitgliedHinzufugenForm;
+import de.hhu.propra.nimasichi.praktikumsplaner.web.form.GruppenanmeldungForm;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -33,16 +34,19 @@ public class GruppenanmeldungController {
   private final transient GitHubService gitHubService;
   private final transient GruppenService grService;
   private final transient ZeitslotService zsService;
+  private final transient UbungswocheConfigService ubwoService;
 
   public GruppenanmeldungController(
       final ZeitslotRepo zsRepo,
       final GitHubService ghService,
       final GruppenService grService,
-      final ZeitslotService zsService) {
+      final ZeitslotService zsService,
+      final UbungswocheConfigService ubwoService) {
     this.zsRepo = zsRepo;
     this.gitHubService = ghService;
     this.grService = grService;
     this.zsService = zsService;
+    this.ubwoService = ubwoService;
   }
 
   @GetMapping("/ansicht/gruppe/zeitslot_belegen/{id}")
@@ -121,7 +125,9 @@ public class GruppenanmeldungController {
   public String handleAnmeldungAbschliessen(final Model model,
                                             final HttpServletRequest req,
                                             final String gruppenname,
-                                            final long zeitslotId) {
+                                            final long zeitslotId,
+                                            @AuthenticationPrincipal
+                                            final OAuth2User principal) {
     String html;
     if (zsService.zeitslotExists(zeitslotId)) {
       final var zeitslot = zsRepo.findZeitslotById(zeitslotId).get();
@@ -129,15 +135,21 @@ public class GruppenanmeldungController {
       final var parsedMitglieder
           = HttpParseHelper.parseMitgliederFromReq(req.getParameterMap());
 
+      final String login = principal.getAttribute("login");
+
       final var form
-          = new MitgliedHinzufugenForm(
-          zeitslotId,
-          parsedMitglieder,
-          gruppenname,
-          zsRepo
+          = new GruppenanmeldungForm(
+              gitHubService,
+              login,
+              zeitslotId,
+              zsRepo,
+              ubwoService,
+              parsedMitglieder,
+              gruppenname,
+              zeitslot.getMaxPersonen()
       );
 
-      form.validateForm(gitHubService, zeitslot.getMaxPersonen());
+      form.validateForm();
 
       final var alerts = form.getAlerts();
 

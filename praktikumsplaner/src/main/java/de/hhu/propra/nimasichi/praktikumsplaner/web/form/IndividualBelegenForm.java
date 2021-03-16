@@ -4,19 +4,18 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 
-public class RestplatzBelegenForm extends BelegenForm {
+public class IndividualBelegenForm extends BelegenForm {
 
-  public RestplatzBelegenForm(final GitHubService ghService,
-                              final String login,
-                              final long zeitslotId,
-                              final ZeitslotRepo zeitslotRepo,
-                              final UbungswocheConfigService ubwoService) {
+  public IndividualBelegenForm(final GitHubService ghService,
+                               final String login,
+                               final long zeitslotId,
+                               final ZeitslotRepo zeitslotRepo,
+                               final UbungswocheConfigService ubwoService) {
     super(ghService, login, zeitslotId, zeitslotRepo, ubwoService);
   }
 
   private void checkRestplatze() {
     final var maybeZeitslot = zsRepo.findZeitslotById(zeitslotId);
-
     if (maybeZeitslot.isEmpty()) {
       alerts.add("Es ist ein Fehler aufgetreten (maybeZeitslot.isEmpty() = true!)");
       isValid = false;
