@@ -4,7 +4,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 
-public class RestplatzBelegenForm extends BelegenForm {
+public class RestplatzBelegenForm extends AbstractBelegenForm {
 
   public RestplatzBelegenForm(final GitHubService ghService,
                               final String login,

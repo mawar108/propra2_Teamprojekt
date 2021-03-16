@@ -4,7 +4,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 
-public class IndividualBelegenForm extends BelegenForm {
+public class IndividualBelegenForm extends AbstractBelegenForm {
 
   public IndividualBelegenForm(final GitHubService ghService,
                                final String login,

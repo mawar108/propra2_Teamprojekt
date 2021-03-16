@@ -81,7 +81,7 @@ To Do
 
 === Entwurfsentscheidungen
 
-[.underline]#Warum wir einige Regeln durch ```@SuppressWarnings``` und checkstyle.xml ausgeschaltet haben#
+==== Warum wir einige Regeln durch ```@SuppressWarnings``` und checkstyle.xml ausgeschaltet haben
 
 * Checkstyle / PMD: Dokumentationsregeln ausgeschaltet, da wir eine eigene Dokumentation erstellen bzw. keine JavadocComments verwenden
 
@@ -92,6 +92,12 @@ To Do
 * ```PMD.AtLeastOneConstructor```: In manchen Klassen brauchen wir keinen Konstruktor.
 
 * ```PMD.LawOfDemeter```: Bei API-Klassen mit dem Builder-Pattern wäre die Einhaltung von LOD nicht umsetzbar (Beispiel: ```WebSecurityConfiguration```).
+
+==== Warum wir die Spring-Validation-API nicht verwendet haben
+
+* Da wir Form-Daten nicht serverseitig (und damit für jeweils einen Nutzer) speichern, speichern wir diese in ```<input type=hidden>```. Dadurch müssen wir neben dem Model auch ein ```HttpServletRequest``` in die Mappings injecten, um die Form-Daten auszulesen. Genau das verhindert aber leider die Verwendung von ```@Valid``` an einem Formobjekt. Spring hat dann die fehlerhaften Felder nicht in ein ```BindingResult``` injected, sondern einen ```FieldError``` geworfen.
+
+* In ```web.form``` haben wir daher eine abstrakte Base-Klasse ```AbstractBelegenForm``` erstellt, von der mehrere Klassen erben. Dort setzen wir einige Dinge, wie Zeitslot-IDs oder GitHub-Handles, die validiert werden sollen und rufen ```validateForm``` auf. Die fehlerhaften Werte werden dann erkannt und entsprechende Fehlermitteilungen ("Alerts") ausgewählt. Diese fügen wir dann einfach ins Model hinzu und iterieren via Thymeleaf über die Alerts.
 
 == Glossar
 

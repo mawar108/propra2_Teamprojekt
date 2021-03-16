@@ -12,7 +12,7 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.
 @SuppressWarnings({
     "PMD.LawOfDemeter"
 })
-public class GruppenanmeldungForm extends BelegenForm {
+public class GruppenanmeldungForm extends AbstractBelegenForm {
 
   private final List<String> mitglieder; // GitHub-Handles
   private final String gruppenName;

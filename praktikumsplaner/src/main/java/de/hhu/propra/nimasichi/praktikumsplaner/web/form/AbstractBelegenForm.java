@@ -8,7 +8,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.Ubungswoch
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BelegenForm {
+public abstract class AbstractBelegenForm {
 
   protected final GitHubService ghService;
   protected final String login;
@@ -19,11 +19,11 @@ public abstract class BelegenForm {
   protected final List<String> alerts;
   private final UbungswocheConfigService ubwoService;
 
-  public BelegenForm(final GitHubService ghService,
-                     final String login,
-                     final long zeitslotId,
-                     final ZeitslotRepo zeitslotRepo,
-                     final UbungswocheConfigService ubwoService) {
+  public AbstractBelegenForm(final GitHubService ghService,
+                             final String login,
+                             final long zeitslotId,
+                             final ZeitslotRepo zeitslotRepo,
+                             final UbungswocheConfigService ubwoService) {
     this.ghService = ghService;
     this.login = login;
     this.zeitslotId = zeitslotId;
