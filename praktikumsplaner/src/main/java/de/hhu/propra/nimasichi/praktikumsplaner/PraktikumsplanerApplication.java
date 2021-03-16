@@ -1,17 +1,16 @@
 package de.hhu.propra.nimasichi.praktikumsplaner;
 
+import com.google.common.collect.Lists;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -26,37 +25,44 @@ public class PraktikumsplanerApplication {
   public CommandLineRunner init(final GitHubService ghService) {
     return args -> {
       ghService.connect();
-      partition(6);
+      partition();
     };
   }
 
-
-  public static void partition(int n) {
-    int min = 3;
-    int max = 5;
-    List<String> studenten = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
-
+  public static void partition() {
+    final var min = 3;
+    final var max = 5;
+    final var studenten
+        = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
     List<List<String>> partition;
-    for (int i = 0; min+i <= max; i++) {
-      partition = Lists.partition(studenten, min+i);
+
+    Collections.shuffle(studenten);
+
+    for (int i = 0; min + i <= max; ++i) {
+      partition = Lists.partition(studenten, min + i);
       System.out.println(partition);
-      if (istOk(partition)) break;
+
+      if (istOk(partition)) {
+        break;
+      }
     }
-
-
   }
 
-  private static boolean istOk(List<List<String>> partition) {
-    int min = 3;
-    int max = 5;
+  private static boolean istOk(
+      final List<List<String>> partition
+  ) {
+    final var min = 3;
+    final var max = 5;
+    boolean ok = true;
 
-    for (var list : partition) {
+    for (final var list : partition) {
       if (list.size() < min || list.size() > max) {
-        return false;
+        ok = false;
+        break;
       }
-
     }
-    return true;
+
+    return ok;
   }
 
 }

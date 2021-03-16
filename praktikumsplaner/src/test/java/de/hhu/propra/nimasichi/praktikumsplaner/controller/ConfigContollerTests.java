@@ -68,17 +68,16 @@ public class ConfigContollerTests {
   @MockBean
   private HandleAuth handleAuth;
 
-
   private ConfigContollerTests() { }
 
   @Test
-  @WithMockUser(roles = {"USER"})
+  @WithMockUser(roles = {"ORGA"})
   void configIndexTest() throws Exception {
     mvc.perform(MockMvcRequestBuilders
         .get("/konfiguration")
         .session(OauthFaker.makeUserSession()))
         .andDo(print())
-        .andExpect(status().isForbidden());
+        .andExpect(status().isOk());
   }
 
   @Test
@@ -209,5 +208,15 @@ public class ConfigContollerTests {
             containsString("<td>Do 25.03. 03:03</td>")))
         .andExpect(content().string(
             containsString("<td>Max</td>")));
+  }
+
+  @Test
+  @WithMockUser(roles = {"USER"})
+  void konfigurationForbiddenForUser() throws Exception {
+    mvc.perform(MockMvcRequestBuilders
+        .get("/konfiguration")
+        .session(OauthFaker.makeUserSession()))
+        .andDo(print())
+        .andExpect(status().isForbidden());
   }
 }
