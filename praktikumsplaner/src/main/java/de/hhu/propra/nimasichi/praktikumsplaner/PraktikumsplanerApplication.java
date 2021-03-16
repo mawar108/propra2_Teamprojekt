@@ -33,10 +33,11 @@ public class PraktikumsplanerApplication {
 
   public static void partition(int n) {
     int min = 3;
+    int max = 5;
     List<String> studenten = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
 
     List<List<String>> partition;
-    for (int i = 0; i <= 20; i++) {
+    for (int i = 0; min+i <= max; i++) {
       partition = Lists.partition(studenten, min+i);
       System.out.println(partition);
       if (istOk(partition)) break;
