@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MODUS_GRUPPE;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MODUS_INDIVIDUAL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,7 +37,7 @@ public class UbungswocheRepoTests {
     assertEquals(latest.getAnmeldestart().getDayOfMonth(), 14);
     assertEquals(latest.getAnmeldeschluss().getDayOfMonth(), 17);
     assertEquals(latest.getName(), "Pue 8");
-    assertEquals(latest.getModus(), MODUS_GRUPPE);
+    assertEquals(latest.getModus(), MODUS_INDIVIDUAL);
     assertEquals(latest.getMinPersonen(), 3);
     assertEquals(latest.getMaxPersonen(), 5);
   }

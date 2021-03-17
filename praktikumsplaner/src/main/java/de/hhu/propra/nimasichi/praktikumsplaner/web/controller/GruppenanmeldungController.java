@@ -28,7 +28,8 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.G
 @Controller
 @SuppressWarnings({
     "PMD.LawOfDemeter",
-    "PMD.AvoidDuplicateLiterals"
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.TooManyStaticImports"
 })
 public class GruppenanmeldungController {
 

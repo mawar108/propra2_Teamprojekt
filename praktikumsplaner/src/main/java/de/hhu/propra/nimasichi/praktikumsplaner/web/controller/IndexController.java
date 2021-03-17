@@ -14,18 +14,14 @@ public class IndexController {
 
   private final transient AnmeldungsmodusService anmoService;
 
-  public IndexController(AnmeldungsmodusService anmoService) {
+  public IndexController(final AnmeldungsmodusService anmoService) {
     this.anmoService = anmoService;
   }
 
   @GetMapping("/")
   public String handleGetIndex(@AuthenticationPrincipal
                                  final OAuth2User principal) {
-
-    String html =
-        anmoService.getRedirectForStudentAnmeldung(principal);
-
-    return html;
+    return anmoService.getRedirectForStudentAnmeldung(principal);
   }
 
 }

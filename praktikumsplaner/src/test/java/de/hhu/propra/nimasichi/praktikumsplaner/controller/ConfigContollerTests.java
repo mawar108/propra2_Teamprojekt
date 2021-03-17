@@ -5,13 +5,13 @@ import de.hhu.propra.nimasichi.praktikumsplaner.config.HandleAuth;
 import de.hhu.propra.nimasichi.praktikumsplaner.config.MethodSecurityConfiguration;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.AnmeldungsmodusService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.RestplatzeService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,6 +66,9 @@ public class ConfigContollerTests {
 
   @MockBean
   private HandleAuth handleAuth;
+
+  @MockBean
+  private AnmeldungsmodusService anmoService;
 
   private ConfigContollerTests() { }
 

@@ -1,6 +1,5 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.web.controller;
 
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.ZeitslotService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOTS_MODEL_NAME;
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.CONFIG_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOTS_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
 
 @Controller
 @SuppressWarnings("PMD.LawOfDemeter")
@@ -40,7 +39,8 @@ public class IndividualanmeldungController {
 
   @GetMapping("/ansicht/individual/anmeldung")
   public String handleIndividualanmeldung(final Model model) {
-    var maybeConfig = ubwoService.getAktuelleUbungswocheConfig();
+    final var maybeConfig
+        = ubwoService.getAktuelleUbungswocheConfig();
 
     String html;
     if (maybeConfig.isPresent()) {
