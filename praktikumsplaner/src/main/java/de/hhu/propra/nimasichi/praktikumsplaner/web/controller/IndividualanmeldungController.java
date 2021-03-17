@@ -18,6 +18,7 @@ import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.Z
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
 
 @Controller
+@SuppressWarnings("PMD.LawOfDemeter")
 public class IndividualanmeldungController {
 
   private final transient ZeitslotRepo zsRepo;

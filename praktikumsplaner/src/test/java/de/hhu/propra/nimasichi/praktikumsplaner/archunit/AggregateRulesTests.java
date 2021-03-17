@@ -18,7 +18,9 @@ public class AggregateRulesTests {
           @Override
           public boolean apply(final Slice slice) {
             final var description = slice.getDescription();
-            return !description.contains("dutility") && !description.contains("annotations");
+            return !description.contains("dutility")
+                    && !description.contains("dto")
+                    && !description.contains("annotations");
           }
         };
 

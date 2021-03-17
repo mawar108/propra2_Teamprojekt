@@ -6,14 +6,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings({
     "PMD.ShortVariable",
-    "PMD.DefaultPackage"
+    "PMD.DefaultPackage",
+    "PMD.CommentDefaultAccessModifier",
+    "PMD.LawOfDemeter"
 })
 class Gruppe {
 
@@ -45,5 +49,16 @@ class Gruppe {
 
   public boolean belegt(final int maxPersonen) {
     return mitglieder.size() == maxPersonen;
+  }
+
+  public void addMitglieder(final List<Student> students) {
+    mitglieder.addAll(students);
+  }
+
+  Set<String> getMitgliederHandles() {
+    return mitglieder
+        .stream()
+        .map(Student::getGithubHandle)
+        .collect(Collectors.toSet());
   }
 }

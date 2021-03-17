@@ -9,6 +9,7 @@ public final class NumericConstants {
   public static final int MODUS_GRUPPE = 1;
 
   public static final int MIN_GRUPPEN_SIZE = 2;
+  public static final int SCHEDULED_RATE = 60_000;
 
   private NumericConstants() { }
 

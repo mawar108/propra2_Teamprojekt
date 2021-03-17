@@ -4,7 +4,8 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 
-public class IndividualBelegenForm extends AbstractBelegenForm {
+@SuppressWarnings("PMD.LawOfDemeter")
+public class IndividualBelegenForm extends BelegenForm {
 
   public IndividualBelegenForm(final GitHubService ghService,
                                final String login,
@@ -18,12 +19,12 @@ public class IndividualBelegenForm extends AbstractBelegenForm {
     final var maybeZeitslot = zsRepo.findZeitslotById(zeitslotId);
     if (maybeZeitslot.isEmpty()) {
       alerts.add("Es ist ein Fehler aufgetreten (maybeZeitslot.isEmpty() = true!)");
-      isValid = false;
+      valid = false;
     } else {
       zeitslot = maybeZeitslot.get();
       if (!zeitslot.hatRestplatze()) {
         alerts.add("Restplatz schon vergeben");
-        isValid = false;
+        valid = false;
       }
     }
   }

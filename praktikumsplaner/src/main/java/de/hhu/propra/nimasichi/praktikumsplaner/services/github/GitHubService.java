@@ -2,6 +2,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.services.github;
 
 import com.google.common.io.Files;
 import de.hhu.propra.nimasichi.praktikumsplaner.PraktikumsplanerApplication;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +24,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 @Service
 @SuppressWarnings({
@@ -94,19 +96,32 @@ public class GitHubService {
     return exist;
   }
 
-  public void createRepository(final String repoName,
-                               final String... collaborators) throws IOException {
-    final var ghRepository = organization
-            .createRepository(repoName).create();
+  public void createRepositories(final Set<GruppeDto> gruppenDto) {
+    gruppenDto.forEach(g -> createRepository(g.getGruppenName(), g.getMitglieder()));
+  }
 
-    final var users = new ArrayList<>();
-    final var connect = GitHub.connect();
+  private void createRepository(final String repoName,
+                                 final Set<String> collaborators) {
+    try {
+      if (organization == null) {
+        return;
+      }
+      final var ghRepository = organization
+          .createRepository(repoName).create();
 
-    for (final var collaborator : collaborators) {
-      users.add(connect.getUser(collaborator));
+      final var users = new ArrayList<>();
+      final var connect = GitHub.connect();
+
+      for (final var collaborator : collaborators) {
+        users.add(connect.getUser(collaborator));
+      }
+
+      ghRepository.addCollaborators(users.toArray(new GHUser[0]));
+    } catch (IOException e) {
+      LoggerFactory.getLogger(PraktikumsplanerApplication.class)
+          .error(e.getMessage());
     }
 
-    ghRepository.addCollaborators(users.toArray(new GHUser[0]));
   }
 
   private static PrivateKey get(final String filename) {
@@ -159,5 +174,19 @@ public class GitHubService {
     }
 
     return jwt;
+  }
+
+
+  public boolean isReady() {
+    boolean ready = true;
+    if (organization == null) {
+      ready = false;
+    }
+    try {
+      GitHub.connect();
+    } catch (IOException e) {
+      ready = false;
+    }
+    return ready;
   }
 }

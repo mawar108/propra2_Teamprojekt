@@ -34,7 +34,7 @@ public class UbungswocheRepoTests {
         = ubConfRepo.findByHighestId().get();
 
     assertEquals(latest.getAnmeldestart().getDayOfMonth(), 14);
-    assertEquals(latest.getAnmeldeschluss().getDayOfMonth(), 20);
+    assertEquals(latest.getAnmeldeschluss().getDayOfMonth(), 17);
     assertEquals(latest.getName(), "Pue 8");
     assertEquals(latest.getModus(), MODUS_GRUPPE);
     assertEquals(latest.getMinPersonen(), 3);

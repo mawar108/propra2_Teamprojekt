@@ -1,6 +1,8 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.GruppenVerteilungsHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -21,7 +24,8 @@ import java.util.stream.Collectors;
     "PMD.ShortVariable",
     "PMD.DataflowAnomalyAnalysis",
     "PMD.LawOfDemeter",
-    "PMD.DefaultPackage"
+    "PMD.DefaultPackage",
+    "PMD.LongVariable"
 })
 public class Zeitslot {
   @Id
@@ -31,8 +35,7 @@ public class Zeitslot {
   private Set<Gruppe> gruppen;
   private int minPersonen;
   private int maxPersonen;
-  private Set<Student> angemeldeteStudenten;
-
+  private Set<AngemeldeterStudent> angemeldeteStudenten;
 
   private long ubungswocheConfig;
 
@@ -131,14 +134,31 @@ public class Zeitslot {
   }
 
   public void addToAngemeldeteStudenten(final String login) {
-    angemeldeteStudenten.add(new Student(login));
+    angemeldeteStudenten.add(new AngemeldeterStudent(login));
   }
 
-  public void gruppeErstellen() {
+  public void gruppenErstellen() {
+    final var s = angemeldeteStudenten.stream()
+        .map(x -> new Student(x.getGithubHandle()))
+        .collect(Collectors.toList());
 
+    final List<List<Student>> partitions = GruppenVerteilungsHelper.partition(
+            new ArrayList<>(s),
+            minPersonen,
+            maxPersonen);
+
+    final ArrayList<Gruppe> gruppen = new ArrayList<>(this.gruppen);
+
+    for (int i = 0; i < partitions.size(); i++) {
+      gruppen.get(i).addMitglieder(partitions.get(i));
+    }
+    angemeldeteStudenten.clear();
   }
 
-
-
+  public Set<GruppeDto> getGruppenDto() {
+    return gruppen.stream()
+        .map(g -> new GruppeDto(g.getGruppenName(), g.getMitgliederHandles()))
+        .collect(Collectors.toSet());
+  }
 
 }

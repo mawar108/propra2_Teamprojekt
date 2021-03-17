@@ -33,6 +33,7 @@ public class UbungswocheConfig {
   private int modus;
   private int minPersonen;
   private int maxPersonen;
+  private boolean reposErstellt;
 
   public Set<Zeitslot> parseTutorTerminToZeitslots() {
     return tutorTermine.stream()
@@ -48,6 +49,11 @@ public class UbungswocheConfig {
         && anmeldeschluss.isAfter(LocalDateTime.now());
   }
 
+
+  public boolean anmeldeschlussAbgelaufen() {
+    return anmeldeschluss.isBefore(LocalDateTime.now());
+  }
+
   public static TutorTermin tutorTerminFrom(final String tutorenName,
                                             final String slotZeit,
                                             final String slotDatum) {
@@ -57,5 +63,4 @@ public class UbungswocheConfig {
   public static TutorTermin tutorTerminFromParseable(final String fmt) {
     return TutorTermin.fromParseable(fmt);
   }
-
 }

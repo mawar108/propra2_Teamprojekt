@@ -8,28 +8,29 @@ import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.Ubungswoch
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractBelegenForm {
+@SuppressWarnings("PMD.LawOfDemeter")
+public class BelegenForm {
 
-  protected final GitHubService ghService;
-  protected final String login;
-  protected final long zeitslotId;
-  protected final ZeitslotRepo zsRepo;
-  protected Zeitslot zeitslot;
-  protected boolean isValid;
-  protected final List<String> alerts;
-  private final UbungswocheConfigService ubwoService;
+  protected final transient GitHubService ghService;
+  protected final transient String login;
+  protected final transient long zeitslotId;
+  protected final transient ZeitslotRepo zsRepo;
+  protected transient Zeitslot zeitslot;
+  protected transient boolean valid;
+  protected final transient List<String> alerts;
+  private final transient UbungswocheConfigService ubwoService;
 
-  public AbstractBelegenForm(final GitHubService ghService,
-                             final String login,
-                             final long zeitslotId,
-                             final ZeitslotRepo zeitslotRepo,
-                             final UbungswocheConfigService ubwoService) {
+  protected BelegenForm(final GitHubService ghService,
+                        final String login,
+                        final long zeitslotId,
+                        final ZeitslotRepo zeitslotRepo,
+                        final UbungswocheConfigService ubwoService) {
     this.ghService = ghService;
     this.login = login;
     this.zeitslotId = zeitslotId;
     this.zsRepo = zeitslotRepo;
     this.zeitslot = new Zeitslot();
-    this.isValid = true;
+    this.valid = true;
     this.alerts = new ArrayList<>();
     this.ubwoService = ubwoService;
   }
@@ -41,12 +42,12 @@ public abstract class AbstractBelegenForm {
   private void checkHandle() {
     if (!ghService.doesUserExist(login)) {
       alerts.add("Der Github Handle " + login + " ist ungültig");
-      isValid = false;
+      valid = false;
     }
   }
 
   public final boolean isValid() {
-    return isValid;
+    return valid;
   }
 
   public final List<String> getAlerts() {
@@ -63,11 +64,11 @@ public abstract class AbstractBelegenForm {
     if (maybeConfig.isPresent()) {
       if (gruppenmodus != maybeConfig.get().getModus()) {
         alerts.add("Ein Fehler ist aufgetreten: 400");
-        isValid = false;
+        valid = false;
       }
     } else {
       alerts.add("Ein Fehler ist aufgetreten: 400");
-      isValid = false;
+      valid = false;
     }
   }
 

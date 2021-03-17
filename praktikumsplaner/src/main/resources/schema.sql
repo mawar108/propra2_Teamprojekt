@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS angemeldete_studenten;
+DROP TABLE IF EXISTS angemeldeter_student;
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS gruppe;
 DROP TABLE IF EXISTS zeitslot;
 
+
 DROP TABLE IF EXISTS tutor_termin;
 DROP TABLE IF EXISTS ubungswoche_config;
-
 
 CREATE TABLE ubungswoche_config
 (
@@ -15,7 +15,8 @@ CREATE TABLE ubungswoche_config
     name           varchar   NOT NULL,
     modus           integer   NOT NULL,
     min_personen    integer   NOT NULL,
-    max_personen    integer   NOT NUll
+    max_personen    integer   NOT NUll,
+    repos_erstellt    boolean   NOT NULL
 );
 
 CREATE TABLE tutor_termin
@@ -25,7 +26,6 @@ CREATE TABLE tutor_termin
     zeit                          TIMESTAMP NOT NULL,
     ubungswoche_config            integer references ubungswoche_config (id)
 );
-
 
 CREATE TABLE zeitslot
 (
@@ -51,10 +51,9 @@ CREATE TABLE student
     gruppe        integer references gruppe (id)
 );
 
-CREATE TABLE angemeldete_studenten
+CREATE TABLE angemeldeter_student
 (
-    student_id        integer references student (id),
-    zeitslot_id       integer references zeitslot (id),
-
-    PRIMARY KEY (student_id, zeitslot_id)
+    id                integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    github_handle     varchar NOT NULL,
+    zeitslot          integer references zeitslot (id)
 );
