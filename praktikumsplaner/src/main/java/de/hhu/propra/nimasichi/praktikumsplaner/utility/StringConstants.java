@@ -23,6 +23,8 @@ public final class StringConstants {
       GRUPPENNAME_MODEL_NAME = "gruppenname";
   public static final transient String
       RESTPLATZE_MODEL_NAME = "restplatze";
+  public static final transient String
+      CONFIG_MODEL_NAME = "config";
 
   public static final transient String
       ROLE_USER = "ROLE_USER";

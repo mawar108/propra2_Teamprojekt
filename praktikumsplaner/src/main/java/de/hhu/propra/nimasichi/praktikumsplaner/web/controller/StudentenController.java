@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class StudentenController {
 
   private final transient ZeitslotService zsService;
-  private final transient UbungswocheConfigService ucService;
+  private final transient UbungswocheConfigService ubwoService;
 
   public StudentenController(
       final ZeitslotService zsService,
       final UbungswocheConfigService ucService) {
     this.zsService = zsService;
-    this.ucService = ucService;
+    this.ubwoService = ucService;
   }
 
   @GetMapping("/student/ansicht")
   public String handleStudentenAnsicht(final Model model) {
     final var maybeUbWocheConf
-        = ucService.getAktuelleUbungswocheConfig();
+        = ubwoService.getAktuelleUbungswocheConfig();
 
     model.addAttribute("aktuelleUbung",
         maybeUbWocheConf);
@@ -38,21 +38,4 @@ public class StudentenController {
     return "/ansicht/error/keine_ubung";
   }
 
-  @GetMapping("/ansicht/gruppe/studenten_ansicht")
-  public String handleStudentGruppenansicht(final Model model) {
-    final var maybeUbConfig = ucService.getAktuelleUbungswocheConfig();
-
-    String html;
-    if (maybeUbConfig.isPresent()) {
-      html = "/ansicht/gruppe/studenten_ansicht";
-      final var freieZeitslots = zsService.getAktuelleFreieZeitslotsSorted();
-
-      model.addAttribute("freieZeitslots", freieZeitslots);
-      model.addAttribute("config", maybeUbConfig.get());
-    } else {
-      html = "redirect:/ansicht/error/keine_ubung";
-    }
-
-    return html;
-  }
 }

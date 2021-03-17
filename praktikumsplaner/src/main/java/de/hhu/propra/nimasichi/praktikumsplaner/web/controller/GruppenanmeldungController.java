@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOTS_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.CONFIG_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ALERTS_MODEL_NAME;
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.GRUPPENNAME_MODEL_NAME;
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOT_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.MITGLIEDER_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.GRUPPENNAME_MODEL_NAME;
 
 @Controller
 @SuppressWarnings({
@@ -47,6 +49,24 @@ public class GruppenanmeldungController {
     this.grService = grService;
     this.zsService = zsService;
     this.ubwoService = ubwoService;
+  }
+
+  @GetMapping("/ansicht/gruppe/studenten_ansicht")
+  public String handleStudentGruppenansicht(final Model model) {
+    final var maybeUbConfig = ubwoService.getAktuelleUbungswocheConfig();
+
+    String html;
+    if (maybeUbConfig.isPresent()) {
+      html = "/ansicht/gruppe/studenten_ansicht";
+      final var freieZeitslots = zsService.getAktuelleFreieZeitslotsSorted();
+
+      model.addAttribute(ZEITSLOTS_MODEL_NAME, freieZeitslots);
+      model.addAttribute(CONFIG_MODEL_NAME, maybeUbConfig.get());
+    } else {
+      html = "redirect:/ansicht/error/keine_ubung";
+    }
+
+    return html;
   }
 
   @GetMapping("/ansicht/gruppe/zeitslot_belegen/{id}")

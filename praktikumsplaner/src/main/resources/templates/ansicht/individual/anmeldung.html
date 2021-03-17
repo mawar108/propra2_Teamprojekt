@@ -28,7 +28,7 @@
                     <th>Belegen</th>
                 </tr>
 
-                <tr th:each="zeitslot : ${freieZeitslots}">
+                <tr th:each="zeitslot : ${zeitslots}">
                     <td th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}"></td>
                     <td>
                         <form th:action="@{/ansicht/individual/zeitslot_belegen/} + ${zeitslot.id}" method="post">

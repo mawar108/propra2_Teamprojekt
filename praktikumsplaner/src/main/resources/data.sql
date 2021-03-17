@@ -1,5 +1,5 @@
 insert into ubungswoche_config (anmeldestart, anmeldeschluss, name, modus, min_personen, max_personen, repos_erstellt)
-values ('2021-03-14 07:05', '2021-03-17 12:20', 'Pue 8', 1, 3, 5, false);
+values ('2021-03-14 07:05', '2021-03-17 15:50', 'Pue 8', 0, 3, 5, false);
 insert into tutor_termin (name, zeit, ubungswoche_config)
 values ('Max', '2021-03-20 07:05', 1);
 insert into tutor_termin (name, zeit, ubungswoche_config)
