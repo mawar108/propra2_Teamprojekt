@@ -26,27 +26,43 @@
 
             <h5 class="text-center">Zeitslots:</h5>
 
-           <div class="container"  th:each="zeitslot : ${zeitslots}">
 
+           <div class="container"  th:each="zeitslot : ${zeitslots}">
 
                <h6>Übungsanfang: <span
                        th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}"></span>
                </h6>
 
                <ul class="list-group">
-                   <li class="list-group-item" th:each="gruppe : ${zeitslot.getGruppenDto()}">
+                       <li class="list-group-item" th:each="gruppe : ${zeitslot.getGruppenDto()}">
 
-                       <span th:text="${gruppe.tutorName}"></span>
-                       <span th:text="${gruppe.gruppenName}"></span>
+                           <span th:text="'Tutor: ' + ${gruppe.tutorName}">Tutor: Max</span>
 
-                       <ul th:each="mitglied : ${gruppe.mitglieder}">
-                           <span th:text="${mitglied}"></span>
-                       </ul>
+                           <div class="container">
+                               <th:block th:if="${gruppe.mitglieder.isEmpty()}">
+                                   <span>Noch keine Gruppe angemeldet.</span>
+                               </th:block>
 
-                   </li>
+                               <th:block th:unless="${gruppe.mitglieder.isEmpty()}">
+                                   <span th:text="'Gruppenname: ' + ${gruppe.gruppenName}">Gruppenname: NiMaSiChi</span>
+
+                                   <ul th:each="mitglied : ${gruppe.mitglieder}">
+                                       <span th:text="${mitglied}">Peter</span>
+                                   </ul>
+
+                               </th:block>
+                           </div>
+                       </li>
                </ul>
 
+               <div class="container" th:unless="${zeitslot.angemeldeteStudenten.isEmpty()}">
+                    <span>Angemeldete Studenten: </span>
+                   <div class="container">
+                       <span th:each="student : ${zeitslot.angemeldeteStudenten}">Dieter</span>
+                   </div>
+               </div>
 
+            <hr>
            </div>
 
         </div>
