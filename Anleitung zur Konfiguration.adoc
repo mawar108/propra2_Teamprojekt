@@ -1,0 +1,54 @@
+= Anleitung zur Konfiguration
+:icons: font
+:icon-set: fa
+:source-highlighter: rouge
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:stem: latexmath
+endif::[]
+
+== Organisation und Apps erstellen
+
+* Organisation auf Github erstellen
+
+** Organisationsname eintragen unter applications.properties bei organization_name
+
+* Github OAuth2 App erstellen
+
+. Settings -> Developer Settings -> Register new OAuth2 App
+
+. Hompage URL und Authorization callback URL eingeben
+
+. Generate new Client secret
+
+. Client id und Client secret in .env datei speichern: +
+CLIENT_ID=[Ihre ID hier] +
+CLIENT_SECRET=[Ihr Secret hier]
+
+. Fügen Sie in intellij bei den environment variables die Client_id und das Client_secret ein
+
+* Github App erstellen
+
+. Settings -> Developer Settings -> Register new Github App
+
+. Hompage URL und Callback URL eingeben
+
+. Webhook Active ausschalten
+
+. Administration Access Read and write
+
+. Die App id fügen Sie jetzt bei den application.properties bei app_id ein
+
+. Github App -> Install App -> Install -> installation id aus der URL kopieren und bei den application.properties unter installation einfügen
+
+. Github App -> create new Client secret -> Secret einfügen in key.pem -> umwandeln in key.der und im obersten Verzeichnis speichern
+
+
+== Organisatoren und Tutoren konfigurieren
+
+* Github Handels in der auth.yml unter resources eingeben
