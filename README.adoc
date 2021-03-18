@@ -15,7 +15,7 @@ endif::[]
 
 == Hallo
 
-Herzlich Willkommen zu unseren Praktikumsplaner Projekt +
+Herzlich Willkommen zu unserem Praktikumsplaner Projekt +
 
 * Dokumentation: +
 include::arc.adoc[]
