@@ -50,6 +50,7 @@ public class AnmeldeschlussService {
         if (config.getModus() == MODUS_INDIVIDUAL) {
           zeitslots.forEach(Zeitslot::gruppenErstellen);
         }
+        // Hier erst ReopNameHelper.getRepoName() aufrufen
         zeitslots.forEach(z -> ghService.createRepositories(z.getGruppenDto()));
 
         config.setReposErstellt(true);
