@@ -62,7 +62,7 @@ public class BelegenForm {
 
     for (final var zs : zeitslots) {
       if (zs.isInAnyGruppe(login)) {
-        alerts.add("");
+        alerts.add(login + " ist bereits angemeldet.");
         valid = false;
         break;
       }
