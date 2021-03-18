@@ -17,6 +17,7 @@ endif::[]
 
 Herzlich Willkommen zu unseren Praktikumsplaner Projekt +
 
-include::arc.adoc[Dokumentation]
-
-include::Anleitung zur Konfiguration.adoc[]
+* Dokumentation: +
+include::arc.adoc[]
+* Anleitung zur Konfiguration: +
+include::Anleitung.adoc[]
