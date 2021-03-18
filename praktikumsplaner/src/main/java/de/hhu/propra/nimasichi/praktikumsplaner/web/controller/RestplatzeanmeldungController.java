@@ -76,6 +76,7 @@ public class RestplatzeanmeldungController {
       html = "ansicht/gruppe/restplatze/anmeldung_success";
     } else {
       model.addAttribute(ALERTS_MODEL_NAME, rbForm.getAlerts());
+      model.addAttribute(RESTPLATZE_MODEL_NAME, restplatzeService.getAktuelleRestplatze());
       html = "ansicht/gruppe/restplatze/anmeldung";
     }
 

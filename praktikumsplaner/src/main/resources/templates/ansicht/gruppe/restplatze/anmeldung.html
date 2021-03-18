@@ -7,6 +7,10 @@
 </head>
 <body>
 
+<div class="alert alert-danger" th:each="alert : ${alerts}">
+    <span th:text="${alert}">err</span>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="form-group col-md-6">
