@@ -4,6 +4,8 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
 
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MODUS_GRUPPE;
+
 @SuppressWarnings("PMD.LawOfDemeter")
 public class RestplatzBelegenForm extends BelegenForm {
 
@@ -35,6 +37,7 @@ public class RestplatzBelegenForm extends BelegenForm {
     super.validateForm();
     checkRestplatze();
     checkAlreadyInGroup(login);
+    checkConfig(MODUS_GRUPPE);
   }
 
 }

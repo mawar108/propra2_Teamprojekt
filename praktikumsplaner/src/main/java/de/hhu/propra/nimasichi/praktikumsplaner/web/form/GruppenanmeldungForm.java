@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MIN_GRUPPEN_SIZE;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MODUS_GRUPPE;
 
 @SuppressWarnings({
     "PMD.LawOfDemeter",
@@ -42,6 +43,7 @@ public class GruppenanmeldungForm extends BelegenForm {
     checkDuplicateMembers();
     checkCreatorIsMember();
     checkRaceCondition();
+    checkConfig(MODUS_GRUPPE);
     mitglieder.forEach(this::checkAlreadyInGroup);
   }
 

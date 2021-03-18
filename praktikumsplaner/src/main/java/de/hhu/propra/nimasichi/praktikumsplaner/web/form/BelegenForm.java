@@ -85,7 +85,8 @@ public class BelegenForm {
     final var maybeConfig = ubwoService.getAktuelleUbungswocheConfig();
 
     if (maybeConfig.isPresent()) {
-      if (gruppenmodus != maybeConfig.get().getModus()) {
+      final var config = maybeConfig.get();
+      if (!(gruppenmodus == config.getModus() && config.isAktuell())) {
         alerts.add("Ein Fehler ist aufgetreten: 400");
         valid = false;
       }
