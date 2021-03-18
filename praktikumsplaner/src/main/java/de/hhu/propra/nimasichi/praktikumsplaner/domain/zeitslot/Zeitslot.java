@@ -3,6 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.GruppenVerteilungsHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.RepoNameHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,29 +61,30 @@ public class Zeitslot {
   }
 
   public void addMitgliederToRandomGroup(
-      final List<String> mitglieder) {
+		  final List<String> mitglieder, final String gruppenname) {
     final var rand = new Random();
     final var emptyGruppen
         = gruppen.stream()
         .filter(Gruppe::isLeer)
         .collect(Collectors.toList());
     final var idx = rand.nextInt(emptyGruppen.size());
-    final var selection = emptyGruppen.get(idx);
+    final var selectedGruppe = emptyGruppen.get(idx);
 
-    mitglieder.forEach(selection::addMitglied);
+    selectedGruppe.setGruppenName(RepoNameHelper.getRepoName(gruppenname, ubungsAnfang));
+    mitglieder.forEach(selectedGruppe::addMitglied);
   }
 
   public boolean minEineFreieGruppe() {
-    boolean belegt = false;
+    boolean frei = false;
 
     for (final var gruppe : gruppen) {
       if (gruppe.isLeer()) {
-        belegt = true;
+        frei = true;
         break;
       }
     }
 
-    return belegt;
+    return frei;
   }
 
   public boolean istKomplettBelegt() {
@@ -138,12 +140,12 @@ public class Zeitslot {
   }
 
   public void gruppenErstellen() {
-    final var s = angemeldeteStudenten.stream()
-        .map(x -> new Student(x.getGithubHandle()))
-        .collect(Collectors.toList());
+    final var studenten = angemeldeteStudenten.stream()
+            .map(s -> new Student(s.getGithubHandle()))
+            .collect(Collectors.toList());
 
     final List<List<Student>> partitions = GruppenVerteilungsHelper.partition(
-            new ArrayList<>(s),
+            studenten,
             minPersonen,
             maxPersonen);
 
@@ -151,13 +153,15 @@ public class Zeitslot {
 
     for (int i = 0; i < partitions.size(); i++) {
       gruppen.get(i).addMitglieder(partitions.get(i));
+      gruppen.get(i).setGruppenName(RepoNameHelper
+              .getRepoName(String.valueOf(i+1), ubungsAnfang));
     }
     angemeldeteStudenten.clear();
   }
 
   public Set<GruppeDto> getGruppenDto() {
     return gruppen.stream()
-        .map(g -> new GruppeDto(g.getGruppenName(), g.getMitgliederHandles()))
+        .map(g -> new GruppeDto(g.getGruppenName(), g.getMitgliederHandles(), g.getTutorenName()))
         .collect(Collectors.toSet());
   }
 

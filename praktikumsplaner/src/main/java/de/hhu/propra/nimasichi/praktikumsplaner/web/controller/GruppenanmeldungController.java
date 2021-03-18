@@ -183,7 +183,8 @@ public class GruppenanmeldungController {
         html = "ansicht/gruppe/anmeldung_abschliessen";
         grService.saveGruppeToZeitslot(
             zeitslotId,
-            parsedMitglieder
+            parsedMitglieder,
+            gruppenname
         );
       } else {
         html = "ansicht/gruppe/anmeldung";

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.MODUS_INDIVIDUAL;
 import static de.hhu.propra.nimasichi.praktikumsplaner.utility.NumericConstants.SCHEDULED_RATE;
 
 @Service
@@ -35,24 +36,25 @@ public class AnmeldeschlussService {
     if (ghService.isReady()) {
       final Set<UbungswocheConfig> configs = ubwoRepo.findAll()
               .stream()
-              .filter(x -> !x.isReposErstellt())
+              .filter(c -> !c.isReposErstellt())
               .filter(UbungswocheConfig::anmeldeschlussAbgelaufen)
               .collect(Collectors.toSet());
 
-      configs.forEach(c -> c.setReposErstellt(true));
-      ubwoRepo.saveAll(configs);
+// sollte normalerweise nicht mehr als eine sein
+      for (UbungswocheConfig config : configs) {
+        final long configId = config.getId();
 
-      final Set<Long> configIds = configs.stream()
-              .map(UbungswocheConfig::getId)
-              .collect(Collectors.toSet());
+        final List<Zeitslot> zeitslots = zsRepo.findZeitslotsByUbungswocheConfigId(configId);
 
-      final Set<Zeitslot> zeitslots = configIds.stream()
-              .map(zsRepo::findZeitslotsByUbungswocheConfigId)
-              .flatMap(List::stream)
-              .collect(Collectors.toSet());
+        if (config.getModus() == MODUS_INDIVIDUAL) {
+          zeitslots.forEach(Zeitslot::gruppenErstellen);
+        }
+        zeitslots.forEach(z -> ghService.createRepositories(z.getGruppenDto()));
 
-      zeitslots.forEach(Zeitslot::gruppenErstellen);
-      zeitslots.forEach(z -> ghService.createRepositories(z.getGruppenDto()));
+        config.setReposErstellt(true);
+        ubwoRepo.save(config);
+        zsRepo.saveAll(zeitslots);
+      }
 
     }
 

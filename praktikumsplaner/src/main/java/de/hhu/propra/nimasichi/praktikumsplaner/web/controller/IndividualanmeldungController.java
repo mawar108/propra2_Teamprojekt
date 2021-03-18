@@ -54,7 +54,7 @@ public class IndividualanmeldungController {
     return html;
   }
 
-  @PostMapping("/ansicht/individual/belegen/{id}")
+  @PostMapping("/ansicht/individual/zeitslot_belegen/{id}")
   public String handleIndividualbelegen(final Model model,
                                         @PathVariable("id") final int zeitslotId,
                                         @AuthenticationPrincipal final OAuth2User principal) {
@@ -85,7 +85,16 @@ public class IndividualanmeldungController {
       html = "ansicht/individual/anmeldung_success";
     } else {
       model.addAttribute(ALERTS_MODEL_NAME, ibForm.getAlerts());
-      html = "ansicht/individual/anmeldung";
+      final var maybeConfig
+          = ubwoService.getAktuelleUbungswocheConfig();
+
+      if (maybeConfig.isPresent()) {
+        model.addAttribute(ZEITSLOTS_MODEL_NAME, zsService.getFreieIndividualZeitslots());
+        model.addAttribute(CONFIG_MODEL_NAME, maybeConfig.get());
+        html = "ansicht/individual/anmeldung";
+      } else {
+        html = "ansicht/error/keine_ubung";
+      }
     }
 
     return html;

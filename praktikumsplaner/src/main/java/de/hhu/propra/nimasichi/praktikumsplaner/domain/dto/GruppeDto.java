@@ -9,5 +9,6 @@ public class GruppeDto {
 
   private final String gruppenName;
   private final Set<String> mitglieder;
+  private final String tutorName;
 
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Übersicht zur praktischen Übung</title>
+</head>
+<body>
+
+<div class="container">
+    <h4 th:text="'Übersicht zur ' + ${config.name} ">Übersicht zur praktischen Übung</h4>
+
+    <br>
+
+    <h5>Anmeldestart: <span th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(config.anmeldestart)}"></span></h5>
+    <h5>Anmeldeschluss: <span th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(config.anmeldeschluss)}"></span></h5>
+
+    <h5>Gruppengröße: <span th:text="${config.minPersonen} + '-' + ${config.maxPersonen}">3-5</span></h5>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+            <h5 class="text-center">Zeitslots:</h5>
+
+           <div class="container"  th:each="zeitslot : ${zeitslots}">
+
+
+               <h6>Übungsanfang: <span
+                       th:text="${T(de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper).formatTime(zeitslot.ubungsAnfang)}"></span>
+               </h6>
+
+               <ul class="list-group">
+                   <li class="list-group-item" th:each="gruppe : ${zeitslot.getGruppenDto()}">
+
+                       <span th:text="${gruppe.tutorName}"></span>
+                       <span th:text="${gruppe.gruppenName}"></span>
+
+                       <ul th:each="mitglied : ${gruppe.mitglieder}">
+                           <span th:text="${mitglied}"></span>
+                       </ul>
+
+                   </li>
+               </ul>
+
+
+           </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

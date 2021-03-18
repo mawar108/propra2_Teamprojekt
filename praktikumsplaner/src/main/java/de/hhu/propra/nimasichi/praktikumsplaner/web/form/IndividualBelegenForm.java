@@ -22,8 +22,8 @@ public class IndividualBelegenForm extends BelegenForm {
       valid = false;
     } else {
       zeitslot = maybeZeitslot.get();
-      if (!zeitslot.hatRestplatze()) {
-        alerts.add("Restplatz schon vergeben");
+      if (zeitslot.istKomplettBelegt()) {
+        alerts.add("Zeitslot komplett belegt!");
         valid = false;
       }
     }

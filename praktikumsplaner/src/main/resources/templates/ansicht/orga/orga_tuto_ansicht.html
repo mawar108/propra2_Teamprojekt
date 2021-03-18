@@ -10,7 +10,9 @@
 <div class="container">
     <h1>Tutorenübersicht</h1>
     <ul>
-        <li th:each="eintrag : ${tutorTermine}"><span th:text="${eintrag.name} + ${eintrag.zeit}"></span></li>
+        <li th:each="config : ${configs}">
+            <a th:href="'/praktische_ubung/' + ${config.id}" th:text="${config.name}">Praktische Übung 1</a>
+        </li>
     </ul>
 </div>
 

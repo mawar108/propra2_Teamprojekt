@@ -20,12 +20,13 @@ public class GruppenService {
   }
 
   public void saveGruppeToZeitslot(final long zeitslotId,
-                                   final List<String> mitglieder) {
+                                   final List<String> mitglieder,
+                                   final String gruppenname) {
     final Optional<Zeitslot> maybeZeitslot = zsRepo.findZeitslotById(zeitslotId);
 
     if (maybeZeitslot.isPresent()) {
       final Zeitslot zeitslot = maybeZeitslot.get();
-      zeitslot.addMitgliederToRandomGroup(mitglieder);
+      zeitslot.addMitgliederToRandomGroup(mitglieder, gruppenname);
       zsRepo.save(zeitslot);
     }
   }

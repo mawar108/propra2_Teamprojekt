@@ -39,19 +39,19 @@ class Gruppe {
         && mitglieder.size() < maxPersonen;
   }
 
-  public void addMitglied(final String login) {
+  void addMitglied(final String login) {
     mitglieder.add(new Student(login));
   }
 
-  public boolean isLeer() {
+  boolean isLeer() {
     return mitglieder.isEmpty();
   }
 
-  public boolean belegt(final int maxPersonen) {
+  boolean belegt(final int maxPersonen) {
     return mitglieder.size() == maxPersonen;
   }
 
-  public void addMitglieder(final List<Student> students) {
+  void addMitglieder(final List<Student> students) {
     mitglieder.addAll(students);
   }
 
