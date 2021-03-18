@@ -29,7 +29,6 @@ public class BelegenForm {
     this.login = login;
     this.zeitslotId = zeitslotId;
     this.zsRepo = zeitslotRepo;
-    this.zeitslot = null;
     this.valid = true;
     this.alerts = new ArrayList<>();
     this.ubwoService = ubwoService;

@@ -16,11 +16,9 @@ public class IndividualBelegenForm extends BelegenForm {
   }
 
   private void checkRestplatze() {
-    if (zeitslot != null) {
-      if (zeitslot.istKomplettBelegt()) {
-        alerts.add("Zeitslot komplett belegt!");
-        valid = false;
-      }
+    if (zeitslot != null && zeitslot.istKomplettBelegt()) {
+      alerts.add("Zeitslot komplett belegt!");
+      valid = false;
     }
   }
 
