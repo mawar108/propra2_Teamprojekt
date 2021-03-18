@@ -12,17 +12,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.*;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_TUTOR;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ROLE_ORGA;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.ZEITSLOTS_MODEL_NAME;
+import static de.hhu.propra.nimasichi.praktikumsplaner.utility.StringConstants.CONFIG_MODEL_NAME;
 
 @Controller
-@SuppressWarnings("PMD.AtLeastOneConstructor")
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.ShortVariable", "PMD.LawOfDemeter"})
 @Secured({ROLE_TUTOR, ROLE_ORGA})
 public class TutorenController {
 
   private final transient UbungswocheConfigRepo ubwoRepo;
   private final transient ZeitslotRepo zsRepo;
 
-  public TutorenController(final UbungswocheConfigRepo ubwoRepo, ZeitslotRepo zsRepo) {
+  public TutorenController(final UbungswocheConfigRepo ubwoRepo, final ZeitslotRepo zsRepo) {
     this.ubwoRepo = ubwoRepo;
     this.zsRepo = zsRepo;
   }
@@ -46,7 +49,7 @@ public class TutorenController {
     if (maybeConfig.isPresent()) {
       final UbungswocheConfig config = maybeConfig.get();
 
-      List<Zeitslot> zeitslots =
+      final List<Zeitslot> zeitslots =
           zsRepo.findZeitslotsByUbungswocheConfigId(config.getId());
 
       model.addAttribute(ZEITSLOTS_MODEL_NAME, zeitslots);

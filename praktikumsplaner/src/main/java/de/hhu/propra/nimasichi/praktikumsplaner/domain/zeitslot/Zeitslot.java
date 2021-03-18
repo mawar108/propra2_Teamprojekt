@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings({
-    "PMD.ShortVariable",
-    "PMD.DataflowAnomalyAnalysis",
-    "PMD.LawOfDemeter",
-    "PMD.DefaultPackage",
-    "PMD.LongVariable"
+        "PMD.ShortVariable",
+        "PMD.DataflowAnomalyAnalysis",
+        "PMD.LawOfDemeter",
+        "PMD.DefaultPackage",
+        "PMD.LongVariable"
 })
 public class Zeitslot {
   @Id
@@ -47,9 +47,9 @@ public class Zeitslot {
 
     final var zeitslot = new Zeitslot();
     final var gruppen
-        = tutorTermine.stream()
-        .map(x -> new Gruppe(x.getName()))
-        .collect(Collectors.toSet());
+            = tutorTermine.stream()
+            .map(x -> new Gruppe(x.getName()))
+            .collect(Collectors.toSet());
 
     zeitslot.setUbungsAnfang(tutorTermine.get(0).getZeit());
     zeitslot.setGruppen(gruppen);
@@ -61,12 +61,12 @@ public class Zeitslot {
   }
 
   public void addMitgliederToRandomGroup(
-		  final List<String> mitglieder, final String gruppenname) {
+          final List<String> mitglieder, final String gruppenname) {
     final var rand = new Random();
     final var emptyGruppen
-        = gruppen.stream()
-        .filter(Gruppe::isLeer)
-        .collect(Collectors.toList());
+            = gruppen.stream()
+            .filter(Gruppe::isLeer)
+            .collect(Collectors.toList());
     final var idx = rand.nextInt(emptyGruppen.size());
     final var selectedGruppe = emptyGruppen.get(idx);
 
@@ -154,15 +154,17 @@ public class Zeitslot {
     for (int i = 0; i < partitions.size(); i++) {
       gruppen.get(i).addMitglieder(partitions.get(i));
       gruppen.get(i).setGruppenName(RepoNameHelper
-              .getRepoName(String.valueOf(i+1), ubungsAnfang));
+              .getRepoName(String.valueOf(i + 1), ubungsAnfang));
     }
     angemeldeteStudenten.clear();
   }
 
   public Set<GruppeDto> getGruppenDto() {
     return gruppen.stream()
-        .map(g -> new GruppeDto(g.getGruppenName(), g.getMitgliederHandles(), g.getTutorenName()))
-        .collect(Collectors.toSet());
+            .map(g -> new GruppeDto(g.getGruppenName(),
+                    g.getMitgliederHandles(),
+                    g.getTutorenName()))
+            .collect(Collectors.toSet());
   }
 
 }

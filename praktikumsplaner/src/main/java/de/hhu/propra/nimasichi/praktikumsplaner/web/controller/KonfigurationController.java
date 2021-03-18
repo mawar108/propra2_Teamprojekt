@@ -110,7 +110,7 @@ public class KonfigurationController {
     return "konfiguration/konfiguration_abschliessen";
   }
 
-  @PostMapping("/tutorenansicht")
+  @PostMapping("/konfiguration_success")
   public String handlePraUebungPost(final Model model,
                                     final ConfigParamsForm params,
                                     final HttpServletRequest req) {
@@ -129,7 +129,7 @@ public class KonfigurationController {
     model.addAttribute(TUTOREN_TERMINE_MODEL_NAME,
         parsedTermine);
 
-    return "ansicht/orga/orga_tuto_ansicht";
+    return "konfiguration/konfiguration_success";
   }
 
 

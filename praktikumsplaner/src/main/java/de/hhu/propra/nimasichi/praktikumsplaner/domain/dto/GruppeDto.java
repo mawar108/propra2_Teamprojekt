@@ -1,14 +1,14 @@
 package de.hhu.propra.nimasichi.praktikumsplaner.domain.dto;
 
-import lombok.Data;
+import lombok.Value;
 
 import java.util.Set;
 
-@Data
+@Value
 public class GruppeDto {
 
-  private final String gruppenName;
-  private final Set<String> mitglieder;
-  private final String tutorName;
+  private String gruppenName;
+  private Set<String> mitglieder;
+  private String tutorName;
 
 }

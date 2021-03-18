@@ -40,8 +40,8 @@ public class AnmeldeschlussService {
               .filter(UbungswocheConfig::anmeldeschlussAbgelaufen)
               .collect(Collectors.toSet());
 
-// sollte normalerweise nicht mehr als eine sein
-      for (UbungswocheConfig config : configs) {
+      // sollte normalerweise nicht mehr als eine sein
+      for (final UbungswocheConfig config : configs) {
         final long configId = config.getId();
 
         final List<Zeitslot> zeitslots = zsRepo.findZeitslotsByUbungswocheConfigId(configId);
