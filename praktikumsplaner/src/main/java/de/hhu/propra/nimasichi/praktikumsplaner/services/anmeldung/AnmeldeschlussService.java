@@ -33,15 +33,16 @@ public class AnmeldeschlussService {
 
   @Scheduled(fixedRate = SCHEDULED_RATE)
   private void checkAnmeldeschluss() {
-    if (ghService.isReady()) {
-      final Set<UbungswocheConfig> configs = ubwoRepo.findAll()
-              .stream()
-              .filter(c -> !c.isReposErstellt())
-              .filter(UbungswocheConfig::anmeldeschlussAbgelaufen)
-              .collect(Collectors.toSet());
 
-      // sollte normalerweise nicht mehr als eine sein
-      for (final UbungswocheConfig config : configs) {
+    final Set<UbungswocheConfig> configs = ubwoRepo.findAll()
+        .stream()
+        .filter(c -> !c.isReposErstellt())
+        .filter(UbungswocheConfig::anmeldeschlussAbgelaufen)
+        .collect(Collectors.toSet());
+
+    // sollte normalerweise nicht mehr als eine sein
+    for (final UbungswocheConfig config : configs) {
+      if (ghService.isReady()) {
         final long configId = config.getId();
 
         final List<Zeitslot> zeitslots = zsRepo.findZeitslotsByUbungswocheConfigId(configId);
@@ -55,7 +56,6 @@ public class AnmeldeschlussService {
         ubwoRepo.save(config);
         zsRepo.saveAll(zeitslots);
       }
-
     }
 
   }
