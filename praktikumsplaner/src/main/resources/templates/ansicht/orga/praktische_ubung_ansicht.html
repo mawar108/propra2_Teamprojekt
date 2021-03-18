@@ -22,7 +22,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
 
             <h5 class="text-center">Zeitslots:</h5>
 
@@ -58,7 +58,9 @@
                <div class="container" th:unless="${zeitslot.angemeldeteStudenten.isEmpty()}">
                     <span>Angemeldete Studenten: </span>
                    <div class="container">
-                       <span th:each="student : ${zeitslot.angemeldeteStudenten}">Dieter</span>
+                       <th:block th:each="student : ${zeitslot.angemeldeteStudenten}">
+                           <span th:text="${student.githubHandle}">Dieter</span>
+                       </th:block>
                    </div>
                </div>
 
