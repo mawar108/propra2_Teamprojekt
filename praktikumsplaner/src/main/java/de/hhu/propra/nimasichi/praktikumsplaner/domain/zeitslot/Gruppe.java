@@ -61,4 +61,11 @@ class Gruppe {
         .map(Student::getGithubHandle)
         .collect(Collectors.toSet());
   }
+
+  boolean containsMitglied(final String login) {
+    return mitglieder.stream()
+        .map(Student::getGithubHandle)
+        .collect(Collectors.toList())
+        .contains(login);
+  }
 }

@@ -74,6 +74,19 @@ public class Zeitslot {
     mitglieder.forEach(selectedGruppe::addMitglied);
   }
 
+  public boolean isInAnyGruppe(final String login) {
+    boolean inGruppe = false;
+
+    for (final var gruppe : gruppen) {
+      if (gruppe.containsMitglied(login)) {
+        inGruppe = true;
+        break;
+      }
+    }
+
+    return inGruppe;
+  }
+
   public boolean minEineFreieGruppe() {
     boolean frei = false;
 

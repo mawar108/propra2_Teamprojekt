@@ -42,6 +42,7 @@ public class GruppenanmeldungForm extends BelegenForm {
     checkDuplicateMembers();
     checkCreatorIsMember();
     checkRaceCondition();
+    mitglieder.forEach(this::checkAlreadyInGroup);
   }
 
   private void checkDuplicateMembers() {

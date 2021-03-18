@@ -16,12 +16,7 @@ public class IndividualBelegenForm extends BelegenForm {
   }
 
   private void checkRestplatze() {
-    final var maybeZeitslot = zsRepo.findZeitslotById(zeitslotId);
-    if (maybeZeitslot.isEmpty()) {
-      alerts.add("Es ist ein Fehler aufgetreten (maybeZeitslot.isEmpty() = true!)");
-      valid = false;
-    } else {
-      zeitslot = maybeZeitslot.get();
+    if (zeitslot != null) {
       if (zeitslot.istKomplettBelegt()) {
         alerts.add("Zeitslot komplett belegt!");
         valid = false;
@@ -33,6 +28,7 @@ public class IndividualBelegenForm extends BelegenForm {
   public void validateForm() {
     super.validateForm();
     checkRestplatze();
+    checkAlreadyInGroup(login);
   }
 
 }

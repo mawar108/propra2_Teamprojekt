@@ -34,6 +34,7 @@ public class RestplatzBelegenForm extends BelegenForm {
   public void validateForm() {
     super.validateForm();
     checkRestplatze();
+    checkAlreadyInGroup(login);
   }
 
 }

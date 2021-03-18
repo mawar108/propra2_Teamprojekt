@@ -29,13 +29,14 @@ public class BelegenForm {
     this.login = login;
     this.zeitslotId = zeitslotId;
     this.zsRepo = zeitslotRepo;
-    this.zeitslot = new Zeitslot();
+    this.zeitslot = null;
     this.valid = true;
     this.alerts = new ArrayList<>();
     this.ubwoService = ubwoService;
   }
 
   public void validateForm() {
+    checkZeitslot();
     checkHandle();
   }
 
@@ -43,6 +44,29 @@ public class BelegenForm {
     if (!ghService.doesUserExist(login)) {
       alerts.add("Der Github Handle " + login + " ist ungültig");
       valid = false;
+    }
+  }
+
+  private void checkZeitslot() {
+    final var maybeZeitslot = zsRepo.findZeitslotById(zeitslotId);
+    if (maybeZeitslot.isEmpty()) {
+      alerts.add("Es ist ein Fehler aufgetreten (maybeZeitslot.isEmpty() = true!)");
+      valid = false;
+    } else {
+      zeitslot = maybeZeitslot.get();
+    }
+  }
+
+  protected void checkAlreadyInGroup(final String login) {
+    final var zeitslots =
+        zsRepo.findZeitslotsByUbungswocheConfigId(zeitslot.getUbungswocheConfig());
+
+    for (final var zs : zeitslots) {
+      if (zs.isInAnyGruppe(login)) {
+        alerts.add("");
+        valid = false;
+        break;
+      }
     }
   }
 
