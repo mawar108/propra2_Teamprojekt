@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.unit;
+package de.hhu.propra.nimasichi.praktikumsplaner.service;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.UbungswocheConfig;

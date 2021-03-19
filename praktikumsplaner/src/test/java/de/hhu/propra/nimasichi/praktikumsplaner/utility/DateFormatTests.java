@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.unit;
+package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.utility.DateFormatHelper;
 import org.junit.jupiter.api.Test;
