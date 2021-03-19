@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GruppenVerteilungsTest {
 
   private List<String> getListOfSize(int size) {
-    return Stream.iterate(0, x -> x+1)
+    return Stream.iterate(0, x -> x + 1)
       .limit(size)
       .map(String::valueOf)
       .collect(Collectors.toList());
