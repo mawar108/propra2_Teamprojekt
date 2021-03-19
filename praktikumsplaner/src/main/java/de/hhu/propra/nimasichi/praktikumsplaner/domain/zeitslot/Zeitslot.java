@@ -3,7 +3,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.GruppenVerteilungsHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.RepoNameHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -179,4 +178,21 @@ public class Zeitslot {
             .collect(Collectors.toSet());
   }
 
+  public void addMitgliedToGruppe(final String gruppenName, final String studentenName) {
+    final List<Gruppe> gruppe = gruppen.stream()
+            .filter(x -> x.getGruppenName().equals(gruppenName))
+            .collect(Collectors.toList());
+    if (!gruppe.isEmpty()) {
+      gruppe.get(0).addMitglied(studentenName);
+    }
+  }
+
+  public void deleteMitgliedFromGruppe(final String gruppenName, final String studentenName) {
+    final List<Gruppe> gruppe = gruppen.stream()
+            .filter(x -> x.getGruppenName().equals(gruppenName))
+            .collect(Collectors.toList());
+    if (!gruppe.isEmpty()) {
+      gruppe.get(0).deleteMitglied(studentenName);
+    }
+  }
 }
