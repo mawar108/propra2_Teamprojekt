@@ -3,6 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.services.github;
 import com.google.common.io.Files;
 import de.hhu.propra.nimasichi.praktikumsplaner.PraktikumsplanerApplication;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.RepoNameHelper;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
@@ -96,8 +98,11 @@ public class GitHubService {
     return exist;
   }
 
-  public void createRepositories(final Set<GruppeDto> gruppenDto) {
-    gruppenDto.forEach(g -> createRepository(g.getGruppenName(), g.getMitglieder()));
+  public void createRepositories(final Set<GruppeDto> gruppenDto,
+                                 final LocalDateTime ubungsAnfang) {
+    gruppenDto.forEach(g -> createRepository(
+        RepoNameHelper.getRepoName(g.getGruppenName(), ubungsAnfang),
+        g.getMitglieder()));
   }
 
   private void createRepository(final String repoName,

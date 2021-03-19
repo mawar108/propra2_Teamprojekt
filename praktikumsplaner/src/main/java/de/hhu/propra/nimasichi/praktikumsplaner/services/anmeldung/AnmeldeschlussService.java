@@ -5,6 +5,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.RepoNameHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +51,11 @@ public class AnmeldeschlussService {
         if (config.getModus() == MODUS_INDIVIDUAL) {
           zeitslots.forEach(Zeitslot::gruppenErstellen);
         }
-        // Hier erst RepoNameHelper.getRepoName() aufrufen
-        zeitslots.forEach(z -> ghService.createRepositories(z.getGruppenDto()));
+
+        zeitslots.forEach(z -> ghService.createRepositories(
+            z.getGruppenDto(),
+            z.getUbungsAnfang())
+        );
 
         config.setReposErstellt(true);
         ubwoRepo.save(config);

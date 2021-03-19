@@ -3,7 +3,7 @@ package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.GruppenVerteilungsHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.RepoNameHelper;
+import de.hhu.propra.nimasichi.praktikumsplaner.utility.RepoNameHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -70,7 +70,7 @@ public class Zeitslot {
     final var idx = rand.nextInt(emptyGruppen.size());
     final var selectedGruppe = emptyGruppen.get(idx);
 
-    selectedGruppe.setGruppenName(RepoNameHelper.getRepoName(gruppenname, ubungsAnfang));
+    selectedGruppe.setGruppenName(gruppenname);
     mitglieder.forEach(selectedGruppe::addMitglied);
   }
 
@@ -166,8 +166,7 @@ public class Zeitslot {
 
     for (int i = 0; i < partitions.size(); i++) {
       gruppen.get(i).addMitglieder(partitions.get(i));
-      gruppen.get(i).setGruppenName(RepoNameHelper
-              .getRepoName(String.valueOf(i + 1), ubungsAnfang));
+      gruppen.get(i).setGruppenName(String.valueOf(i + 1));
     }
     angemeldeteStudenten.clear();
   }

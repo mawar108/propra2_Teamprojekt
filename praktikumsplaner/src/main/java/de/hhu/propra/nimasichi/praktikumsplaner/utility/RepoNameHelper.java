@@ -1,4 +1,4 @@
-package de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility;
+package de.hhu.propra.nimasichi.praktikumsplaner.utility;
 
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.Utility;
 
