@@ -101,11 +101,11 @@ public class Zeitslot {
   }
 
   public boolean istKomplettBelegt() {
-    boolean belegt = false;
+    boolean belegt = true;
 
     for (final var gruppe : gruppen) {
-      if (gruppe.belegt(maxPersonen)) {
-        belegt = true;
+      if (!gruppe.belegt(maxPersonen)) {
+        belegt = false;
         break;
       }
     }
