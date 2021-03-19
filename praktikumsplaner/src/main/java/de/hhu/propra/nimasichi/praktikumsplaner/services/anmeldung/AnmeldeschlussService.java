@@ -5,7 +5,6 @@ import de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot.Zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.github.GitHubService;
-import de.hhu.propra.nimasichi.praktikumsplaner.utility.RepoNameHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
