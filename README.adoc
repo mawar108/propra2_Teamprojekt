@@ -12,7 +12,6 @@ ifdef::env-github[]
 :stem: latexmath
 endif::[]
 
-
 == Hallo
 
 Herzlich Willkommen zu unserem Praktikumsplaner Projekt +
