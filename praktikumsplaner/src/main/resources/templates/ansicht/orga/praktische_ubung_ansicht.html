@@ -40,15 +40,15 @@
 
                            <div th:if="${is_orga}">
                                <form method="post" action="/orga/gruppe/andern/mitglied_hinzufugen">
-                                   <input type="submit" class="btn btn-success" value="mitglied hinzufügen">
                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                                    <input type="hidden" name="gruppenName" th:value="${gruppe.gruppenName}">
                                    <input type="hidden" name="zeitslotId" th:value="${zeitslot.id}">
                                    <input type="hidden" name="configId" th:value="${config.id}">
                                    <label>
                                        Mitgliedname:
-                                       <input type="text" name="mitglied_name">
+                                       <input type="text" name="mitgliedName">
                                    </label>
+                                   <input type="submit" class="btn btn-success" value="Mitglied hinzufügen">
                                </form>
 
                            </div>
