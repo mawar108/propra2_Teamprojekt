@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AggregateRoot
@@ -179,20 +180,31 @@ public class Zeitslot {
   }
 
   public void addMitgliedToGruppe(final String gruppenName, final String studentenName) {
-    final List<Gruppe> gruppe = gruppen.stream()
-            .filter(x -> x.getGruppenName().equals(gruppenName))
-            .collect(Collectors.toList());
-    if (!gruppe.isEmpty()) {
-      gruppe.get(0).addMitglied(studentenName);
+    final var maybeGruppe = getGruppeByName(gruppenName);
+    if (maybeGruppe.isPresent()) {
+      maybeGruppe.get().addMitglied(studentenName);
     }
   }
 
   public void deleteMitgliedFromGruppe(final String gruppenName, final String studentenName) {
-    final List<Gruppe> gruppe = gruppen.stream()
-            .filter(x -> x.getGruppenName().equals(gruppenName))
-            .collect(Collectors.toList());
-    if (!gruppe.isEmpty()) {
-      gruppe.get(0).deleteMitglied(studentenName);
+    final var maybeGruppe = getGruppeByName(gruppenName);
+    if (maybeGruppe.isPresent()) {
+      maybeGruppe.get().deleteMitglied(studentenName);
     }
+  }
+
+  private Optional<Gruppe> getGruppeByName(final String gruppenName) {
+    final List<Gruppe> gruppe = gruppen.stream()
+        .filter(g -> g.getGruppenName().equals(gruppenName))
+        .collect(Collectors.toList());
+
+    Optional<Gruppe> maybeGruppe;
+    if (gruppe.isEmpty()) {
+      maybeGruppe = Optional.empty();
+    } else {
+      maybeGruppe = Optional.of(gruppe.get(0));
+    }
+
+    return maybeGruppe;
   }
 }

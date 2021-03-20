@@ -69,14 +69,8 @@ class Gruppe {
         .contains(login);
   }
 
-  public void deleteMitglied(final String studentenName) {
-    final List<Student> mitglied = mitglieder.stream()
-            .filter(x -> x.getGithubHandle().equals(studentenName))
-            .collect(Collectors.toList());
-
-    if (!mitglied.isEmpty()) {
-      mitglieder.remove(mitglied.get(0));
-    }
+  void deleteMitglied(final String studentenName) {
+    mitglieder.removeIf(s -> s.getGithubHandle().equals(studentenName));
   }
 
 }
