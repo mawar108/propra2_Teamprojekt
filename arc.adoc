@@ -59,11 +59,6 @@ endif::[]
 * Docker
 * Datenbank im externen Prozess
 
-=== Kontextabgrenzung
-
-* Kommunikation mit GitHub
-* OAuth2
-
 === Fachlicher Kontext
 
 image::fachlicher_kontext.png[link = http://www.plantuml.com/plantuml/png/VSsn2i8m4CRnFKyHkcVn0QH5GPqgg9DqEDkZXhINSBsRn7UtOC15il--_rSl0YmwJoP17s14MvqPWlYWyv8c8EJAleorztti0xBRHHBmXDoPj_cD3bwE-iYqRLIUcyuwj_stMyMNkoQbhChr6_cSleWE7Xbfm5B_gXBvH8HKKYsFKFYlrnUTfmy0]
