@@ -68,19 +68,30 @@ endif::[]
 
 image::fachlicher_kontext.png[link = http://www.plantuml.com/plantuml/png/VSsn2i8m4CRnFKyHkcVn0QH5GPqgg9DqEDkZXhINSBsRn7UtOC15il--_rSl0YmwJoP17s14MvqPWlYWyv8c8EJAleorztti0xBRHHBmXDoPj_cD3bwE-iYqRLIUcyuwj_stMyMNkoQbhChr6_cSleWE7Xbfm5B_gXBvH8HKKYsFKFYlrnUTfmy0]
 
-* Orgamitglied     -> Loginseite -> Orgaansicht (z.B. neue Übung erstellen oder Gruppenaufteilung ändern)
-* Tutoren   -> Loginseite -> Tutorenansicht (Liste der Gruppen mit Tutoren)
-* Studenten -> Loginseite -> Studentenansicht (belegen eines Zeitslots)
-* Studenten -> Loginseite -> Restplatzanmeldung
-
 === Ebene 1 der Bausteinsicht
-image::baustein.png[link = https://www.planttext.com/api/plantuml/img/VO-n2W8n38RtFaLmFzmTv3Ov41pq1N8cra0lTxIf-lYs5XGTN4Boy_r_aZuPHijJS4vdOjZFNZIn6BVP8s22rIxcPM7jreEIt8Go1jI90sNrgqQUiisH5JN9-MfDEqIFeiGFvpx1q7NRchk1esLYDRXNEOPQzHVyZYscb_3NyjvQwDfFOZu84uo57mqmNs1eL_MiL9v_0W00]
+image::bausteinsicht.png[link = https://www.planttext.com/api/plantuml/img/VO-n2W8n38RtFaLmFzmTv3Ov41pq1N8cra0lTxIf-lYs5XGTN4Boy_r_aZuPHijJS4vdOjZFNZIn6BVP8s22rIxcPM7jreEIt8Go1jI90sNrgqQUiisH5JN9-MfDEqIFeiGFvpx1q7NRchk1esLYDRXNEOPQzHVyZYscb_3NyjvQwDfFOZu84uo57mqmNs1eL_MiL9v_0W00]
 
 === Risiken
 
 * Datensicherheit
 
 === Entwurfsentscheidungen
+* Wir haben uns für eine Schichtenarchitektur entschieden.
+
+image::Schichtenarchitektur.png[link = http://www.plantuml.com/plantuml/png/SoWkIImgAStDuOeEJqsALT3LjLE83aujAijCJYsEvO8peJAX9PavcIMLG0ae2oeUb5gGNvnPab-K2TQ5uC9rkkJd9cRcnN8vfEQb0Aq30000]
+
+* Wir haben unsere Domaine in zwei Aggregate aufgeteilt und diese werden durch Spring Data JDBC persistiert.
+
+* Im UbungswocheConfig Aggregat werden Information zur einer praktischen Übung gespeichert, dazu gehören auch die Übungstermine der Tutoren.
+
+
+image::UbungswocheAggregat.png[link = http://www.plantuml.com/plantuml/png/TOzTIaD138NVPnNPG3SWKYhgcm-YrmMaznwd0vb4aWmLYtltfw8MyIqV8L_EsKIov-XIPk48UjWEhR6tUOTBqyTMwVoYLaVb1DsPvVfGRcnckUB4r3g8jKCMV7h-MSqx6H7bFhrf9UMEqZIfspBYE3MzXOSfzCZy_CrRCm4hEPuihZqI8bbUl_9E8yqd-BlXSFBWDCaBsiVDttQhnVQwMl_sq1db3w5ieCleyWO0]
+
+* Im Zeitslot Aggregat wird die Gruppenverteilung der Studenten gespeichert.
+
+image::ZeitslotAggregat.png[link = http://www.plantuml.com/plantuml/png/TP31IaCn44Nt-OfPwg8_859Q57GX8gqhTzFclcaWcPHaWgBuxxxMF1-2BkVcd9bBLjMuM4lHxIFNIYy8LcCskbwB50WRQ9EpBUd3FUGznrisF8S4QhkcKjSwi8eBQfI2Fg7KhD3lcT-cULHLkl6QzmVSP1s2qCK60mhqdRWDnEfHK6cwVEa-NQzrLzhnYB73rafG8MkMooCdJ86S0Jr5ixMrvg4sQnBiq7Rth3wUiSwjLP0GFGobE_yhFp-qM2odNbVJ_T-lV-mTKPxJ7a9TNtIoPZ85anZWKTmAwbkANm00]
+
+
 
 ==== Warum wir einige Regeln durch ```@SuppressWarnings``` und checkstyle.xml ausgeschaltet haben
 
