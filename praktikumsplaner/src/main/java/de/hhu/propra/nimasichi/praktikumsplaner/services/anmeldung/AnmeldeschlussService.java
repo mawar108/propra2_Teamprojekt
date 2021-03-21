@@ -50,8 +50,11 @@ public class AnmeldeschlussService {
         if (config.getModus() == MODUS_INDIVIDUAL) {
           zeitslots.forEach(Zeitslot::gruppenErstellen);
         }
-        // Hier erst RepoNameHelper.getRepoName() aufrufen
-        zeitslots.forEach(z -> ghService.createRepositories(z.getGruppenDto()));
+
+        zeitslots.forEach(z -> ghService.createRepositories(
+            z.getGruppenDto(),
+            z.getUbungsAnfang())
+        );
 
         config.setReposErstellt(true);
         ubwoRepo.save(config);

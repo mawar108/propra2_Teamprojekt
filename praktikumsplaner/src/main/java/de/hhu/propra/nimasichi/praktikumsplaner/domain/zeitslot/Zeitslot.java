@@ -3,7 +3,6 @@ package de.hhu.propra.nimasichi.praktikumsplaner.domain.zeitslot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.annotations.AggregateRoot;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dto.GruppeDto;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.GruppenVerteilungsHelper;
-import de.hhu.propra.nimasichi.praktikumsplaner.domain.dutility.RepoNameHelper;
 import de.hhu.propra.nimasichi.praktikumsplaner.domain.ubungswocheconfig.TutorTermin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AggregateRoot
@@ -70,7 +70,7 @@ public class Zeitslot {
     final var idx = rand.nextInt(emptyGruppen.size());
     final var selectedGruppe = emptyGruppen.get(idx);
 
-    selectedGruppe.setGruppenName(RepoNameHelper.getRepoName(gruppenname, ubungsAnfang));
+    selectedGruppe.setGruppenName(gruppenname);
     mitglieder.forEach(selectedGruppe::addMitglied);
   }
 
@@ -101,11 +101,11 @@ public class Zeitslot {
   }
 
   public boolean istKomplettBelegt() {
-    boolean belegt = false;
+    boolean belegt = true;
 
     for (final var gruppe : gruppen) {
-      if (gruppe.belegt(maxPersonen)) {
-        belegt = true;
+      if (!gruppe.belegt(maxPersonen)) {
+        belegt = false;
         break;
       }
     }
@@ -166,8 +166,7 @@ public class Zeitslot {
 
     for (int i = 0; i < partitions.size(); i++) {
       gruppen.get(i).addMitglieder(partitions.get(i));
-      gruppen.get(i).setGruppenName(RepoNameHelper
-              .getRepoName(String.valueOf(i + 1), ubungsAnfang));
+      gruppen.get(i).setGruppenName(String.valueOf(i + 1));
     }
     angemeldeteStudenten.clear();
   }
@@ -180,4 +179,32 @@ public class Zeitslot {
             .collect(Collectors.toSet());
   }
 
+  public void addMitgliedToGruppe(final String gruppenName, final String studentenName) {
+    final var maybeGruppe = getGruppeByName(gruppenName);
+    if (maybeGruppe.isPresent()) {
+      maybeGruppe.get().addMitglied(studentenName);
+    }
+  }
+
+  public void deleteMitgliedFromGruppe(final String gruppenName, final String studentenName) {
+    final var maybeGruppe = getGruppeByName(gruppenName);
+    if (maybeGruppe.isPresent()) {
+      maybeGruppe.get().deleteMitglied(studentenName);
+    }
+  }
+
+  private Optional<Gruppe> getGruppeByName(final String gruppenName) {
+    final List<Gruppe> gruppe = gruppen.stream()
+        .filter(g -> g.getGruppenName().equals(gruppenName))
+        .collect(Collectors.toList());
+
+    Optional<Gruppe> maybeGruppe;
+    if (gruppe.isEmpty()) {
+      maybeGruppe = Optional.empty();
+    } else {
+      maybeGruppe = Optional.of(gruppe.get(0));
+    }
+
+    return maybeGruppe;
+  }
 }

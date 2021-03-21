@@ -7,6 +7,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRe
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.AnmeldungsmodusService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.orga.GruppenAndernService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.RestplatzeService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.UbungswocheConfigService;
@@ -69,6 +70,9 @@ public class ConfigContollerTests {
 
   @MockBean
   private AnmeldungsmodusService anmoService;
+
+  @MockBean
+  private GruppenAndernService grAnService;
 
   private ConfigContollerTests() { }
 

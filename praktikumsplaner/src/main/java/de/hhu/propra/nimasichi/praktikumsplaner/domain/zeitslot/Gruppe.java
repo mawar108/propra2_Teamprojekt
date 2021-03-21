@@ -28,13 +28,13 @@ class Gruppe {
   private String tutorenName;
   private Set<Student> mitglieder;
 
-  /* default */ Gruppe(final String tutorenName) {
+  Gruppe(final String tutorenName) {
     this.tutorenName = tutorenName;
     this.gruppenName = "";
     this.mitglieder  = new HashSet<>();
   }
 
-  /* default */ boolean hatRestplatze(final int maxPersonen) {
+  boolean hatRestplatze(final int maxPersonen) {
     return !mitglieder.isEmpty()
         && mitglieder.size() < maxPersonen;
   }
@@ -68,4 +68,9 @@ class Gruppe {
         .collect(Collectors.toList())
         .contains(login);
   }
+
+  void deleteMitglied(final String studentenName) {
+    mitglieder.removeIf(s -> s.getGithubHandle().equals(studentenName));
+  }
+
 }

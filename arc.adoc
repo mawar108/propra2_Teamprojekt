@@ -66,15 +66,15 @@ endif::[]
 
 === Fachlicher Kontext
 
-image::uml.png[link = http://www.plantuml.com/plantuml/png/VSsn2i8m4CRnFKyHkcVn0QH5GPqgg9DqEDkZXhINSBsRn7UtOC15il--_rSl0YmwJoP17s14MvqPWlYWyv8c8EJAleorztti0xBRHHBmXDoPj_cD3bwE-iYqRLIUcyuwj_stMyMNkoQbhChr6_cSleWE7Xbfm5B_gXBvH8HKKYsFKFYlrnUTfmy0]
+image::fachlicher_kontext.png[link = http://www.plantuml.com/plantuml/png/VSsn2i8m4CRnFKyHkcVn0QH5GPqgg9DqEDkZXhINSBsRn7UtOC15il--_rSl0YmwJoP17s14MvqPWlYWyv8c8EJAleorztti0xBRHHBmXDoPj_cD3bwE-iYqRLIUcyuwj_stMyMNkoQbhChr6_cSleWE7Xbfm5B_gXBvH8HKKYsFKFYlrnUTfmy0]
 
-* Admin     -> Loginseite -> Adminansicht (z.B. neue Übung erstellen oder Gruppenaufteilung ändern)
+* Orgamitglied     -> Loginseite -> Orgaansicht (z.B. neue Übung erstellen oder Gruppenaufteilung ändern)
 * Tutoren   -> Loginseite -> Tutorenansicht (Liste der Gruppen mit Tutoren)
 * Studenten -> Loginseite -> Studentenansicht (belegen eines Zeitslots)
 * Studenten -> Loginseite -> Restplatzanmeldung
 
 === Ebene 1 der Bausteinsicht
-To Do
+image::baustein.png[link = https://www.planttext.com/api/plantuml/img/VO-n2W8n38RtFaLmFzmTv3Ov41pq1N8cra0lTxIf-lYs5XGTN4Boy_r_aZuPHijJS4vdOjZFNZIn6BVP8s22rIxcPM7jreEIt8Go1jI90sNrgqQUiisH5JN9-MfDEqIFeiGFvpx1q7NRchk1esLYDRXNEOPQzHVyZYscb_3NyjvQwDfFOZu84uo57mqmNs1eL_MiL9v_0W00]
 
 === Risiken
 
