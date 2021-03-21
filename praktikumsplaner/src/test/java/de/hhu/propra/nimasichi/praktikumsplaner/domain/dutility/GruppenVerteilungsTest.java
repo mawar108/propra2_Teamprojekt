@@ -71,7 +71,4 @@ public class GruppenVerteilungsTest {
     assertThat(partition.get(1).size()).isEqualTo(3);
   }
 
-
-
-
 }
