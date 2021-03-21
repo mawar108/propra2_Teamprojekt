@@ -5,7 +5,7 @@ import de.hhu.propra.nimasichi.praktikumsplaner.config.HandleAuth;
 import de.hhu.propra.nimasichi.praktikumsplaner.config.MethodSecurityConfiguration;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.UbungswocheConfigRepo;
 import de.hhu.propra.nimasichi.praktikumsplaner.repositories.ZeitslotRepo;
-import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.AnmeldungsmodusService;
+import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.IndexRedirectService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.anmeldung.GruppenService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.orga.GruppenAndernService;
 import de.hhu.propra.nimasichi.praktikumsplaner.services.ubungsconfig.LetzteTutorTermineService;
@@ -69,7 +69,7 @@ public class ConfigContollerTests {
   private HandleAuth handleAuth;
 
   @MockBean
-  private AnmeldungsmodusService anmoService;
+  private IndexRedirectService anmoService;
 
   @MockBean
   private GruppenAndernService grAnService;
