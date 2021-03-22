@@ -60,7 +60,7 @@ public class IndexRedirectService {
       if (config.getModus() == MODUS_INDIVIDUAL) {
         html = "redirect:/ansicht/individual/anmeldung";
       } else {
-        html = "redirect:/ansicht/gruppe/studenten_ansicht";
+        html = "redirect:/ansicht/gruppe/index";
       }
     } else {
       html = "ansicht/error/keine_ubung";

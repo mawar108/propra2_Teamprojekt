@@ -52,6 +52,11 @@ public class GruppenanmeldungController {
     this.ubwoService = ubwoService;
   }
 
+  @GetMapping("/ansicht/gruppe/index")
+  public String handleGruppenanmeldungIndex() {
+    return "/ansicht/gruppe/index";
+  }
+
   @GetMapping("/ansicht/gruppe/studenten_ansicht")
   public String handleStudentGruppenansicht(final Model model) {
     final var maybeUbConfig = ubwoService.getAktuelleUbungswocheConfig();
