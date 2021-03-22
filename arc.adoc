@@ -86,6 +86,11 @@ image::UbungswocheAggregat.png[link = http://www.plantuml.com/plantuml/png/TOzTI
 
 image::ZeitslotAggregat.png[link = http://www.plantuml.com/plantuml/png/TP31IaCn44Nt-OfPwg8_859Q57GX8gqhTzFclcaWcPHaWgBuxxxMF1-2BkVcd9bBLjMuM4lHxIFNIYy8LcCskbwB50WRQ9EpBUd3FUGznrisF8S4QhkcKjSwi8eBQfI2Fg7KhD3lcT-cULHLkl6QzmVSP1s2qCK60mhqdRWDnEfHK6cwVEa-NQzrLzhnYB73rafG8MkMooCdJ86S0Jr5ixMrvg4sQnBiq7Rth3wUiSwjLP0GFGobE_yhFp-qM2odNbVJ_T-lV-mTKPxJ7a9TNtIoPZ85anZWKTmAwbkANm00]
 
+* Im Set angemeldeteStudenten werden für die Individualanmeldung Studenten zwischengespeichert. Nach Ablauf des Abmeldeschlusses werden dann die Studenten automatisch auf die Gruppen verteilt. Da Spring Data JDBC die gleiche Klasse nicht zweimal in einem Aggregat unterstützt mussten wir dafür die neue Klasse AngemeldeterStudent erstellen.
+
+==== Docker
+
+* Docker hatte nicht die höchste Priorität für uns. Aus Zeitmangel konnten wir Docker nicht mehr hinzufügen.
 
 
 ==== Warum wir einige Regeln durch ```@SuppressWarnings``` und checkstyle.xml ausgeschaltet haben
